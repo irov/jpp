@@ -6,15 +6,19 @@ static size_t musage = 0;
 
 static void * my_jpp_malloc( size_t _size )
 {
+#if define(WIN32)
     musage += _size;
+#endif
 
     return malloc( _size );
 }
 
 static void my_jpp_free( void* _free )
 {
+#if define(WIN32)
     size_t size = _msize( _free );
     musage -= size;
+#endif
 
     free( _free );
 }
