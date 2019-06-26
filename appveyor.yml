@@ -29,6 +29,6 @@ environment:
 build_script:
 - mkdir build_cmake
 - cd build_cmake
-- cmake .. -G "%env_cmake_generator%" -DCMAKE_BUILD_TYPE=%env_cmake_configuration%
+- cmake .. -G "%env_cmake_generator%" -T %TOOLSET% -DCMAKE_BUILD_TYPE=%env_cmake_configuration%
 - cmake --build . --config %env_cmake_configuration%
-- ctest --output-on-failure
+- ctest -C %env_cmake_configuration% --output-on-failure
