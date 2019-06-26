@@ -1,7 +1,6 @@
 #include "jpp/jpp.hpp"
 
 #include <stdlib.h>
-#include <Windows.h>
 
 static size_t musage = 0;
 
