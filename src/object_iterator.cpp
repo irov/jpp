@@ -62,10 +62,6 @@ namespace jpp
     {
         return {json_object_iter_key( m_iter ), object( json_object_iter_value( m_iter ) )};
     }
-}
-
-namespace std
-{
     //////////////////////////////////////////////////////////////////////////
     jpp::object_iterator begin( const jpp::object& _object )
     {
