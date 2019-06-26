@@ -6,21 +6,24 @@ static size_t musage = 0;
 
 static void * my_jpp_malloc( size_t _size )
 {
-#if define(WIN32)
-    musage += _size;
-#endif
+    void * ptr = malloc( _size + sizeof( size_t ) );
 
-    return malloc( _size );
+    *(size_t*)ptr = _size;
+
+    musage += _size;
+
+    return (size_t*)ptr + 1;
 }
 
 static void my_jpp_free( void* _free )
 {
-#if define(WIN32)
-    size_t size = _msize( _free );
-    musage -= size;
-#endif
+    size_t* ptr = (size_t*)_free - 1;
 
-    free( _free );
+    size_t size = *ptr;
+
+    musage -= size;
+
+    free( ptr );
 }
 
 static size_t my_jpp_load_callback( void* _buffer, size_t _size, void* _data )
@@ -41,7 +44,7 @@ void jpp_printf( const jpp::object& _obj, uint32_t _ident = 0 )
     case jpp::e_type::JPP_OBJECT:
         {
             printf( "{\n" );
-            for( auto [key, value] : _obj )
+            for( auto && [key, value] : _obj )
             {
                 printf( "%*c%s = ", _ident + 2, ' ', key );
                 jpp_printf( value, _ident + 2 );
