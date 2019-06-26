@@ -53,14 +53,14 @@ namespace jpp
         return tmp;
     }
     //////////////////////////////////////////////////////////////////////////
-    std::pair<const char*, object> object_iterator::operator -> () const
+    object_iterator_pair object_iterator::operator -> () const
     {
-        return std::make_pair( json_object_iter_key( m_iter ), object( json_object_iter_value( m_iter ) ) );
+        return {json_object_iter_key( m_iter ), object( json_object_iter_value( m_iter ) )};
     }
     //////////////////////////////////////////////////////////////////////////
-    std::pair<const char*, object> object_iterator::operator * () const
+    object_iterator_pair object_iterator::operator * () const
     {
-        return std::make_pair( json_object_iter_key( m_iter ), object( json_object_iter_value( m_iter ) ) );
+        return {json_object_iter_key( m_iter ), object( json_object_iter_value( m_iter ) )};
     }
 }
 
