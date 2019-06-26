@@ -12,10 +12,10 @@ compiler:
     - clang
 
 env:
-    - TARGET_CPU=amd64 BUILD_CONFIGURATION=Debug BUILD_ARCHITECTURE=Win64
-    - TARGET_CPU=amd64 BUILD_CONFIGURATION=Release BUILD_ARCHITECTURE=Win64
-    - TARGET_CPU=x86 BUILD_CONFIGURATION=Debug BUILD_ARCHITECTURE=Win32
-    - TARGET_CPU=x86 BUILD_CONFIGURATION=Release BUILD_ARCHITECTURE=Win32
+    - TARGET_CPU=amd64 BUILD_CONFIGURATION=Debug
+    - TARGET_CPU=amd64 BUILD_CONFIGURATION=Release
+    - TARGET_CPU=x86 BUILD_CONFIGURATION=Debug
+    - TARGET_CPU=x86 BUILD_CONFIGURATION=Release
 
 matrix:
     exclude:
@@ -23,14 +23,14 @@ matrix:
           compiler: gcc
 
         - os:  osx
-          env: TARGET_CPU=x86 BUILD_CONFIGURATION=Debug BUILD_ARCHITECTURE=Win32
+          env: TARGET_CPU=x86 BUILD_CONFIGURATION=Debug
 
         - os:  osx
-          env: TARGET_CPU=x86 BUILD_CONFIGURATION=Release BUILD_ARCHITECTURE=Win32
+          env: TARGET_CPU=x86 BUILD_CONFIGURATION=Release
 
 script:
     - mkdir build_cmake
     - cd build_cmake
-    - cmake .. -A $BUILD_ARCHITECTURE -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DTARGET_CPU=$TARGET_CPU
+    - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DTARGET_CPU=$TARGET_CPU
     - cmake --build .
     - ctest --output-on-failure
