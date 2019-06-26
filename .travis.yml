@@ -38,6 +38,14 @@ matrix:
           env: TARGET_CPU=x86 BUILD_CONFIGURATION=Release
 
 script:
+    # Export CC and CXX to tell cmake which compiler to use
+    - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+        export CC=/usr/bin/gcc-7
+        export CXX=/usr/bin/g++-7
+        # Check versions of gcc, g++ and cmake
+        gcc -v && g++ -v && cmake --version
+        fi
+    # run
     - mkdir build_cmake
     - cd build_cmake
     - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DTARGET_CPU=$TARGET_CPU
