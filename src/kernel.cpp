@@ -13,9 +13,9 @@ namespace jpp
 
         if( jroot == nullptr )
         {
-            return object();
+            return object( detail::invalid );
         }
 
-        return object( jroot, borrowed_t() );
+        return object( jroot, detail::borrowed );
     }
 }

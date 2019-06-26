@@ -1,29 +1,13 @@
 #pragma once
 
-#include "jpp/types.hpp"
+#include "jpp/base.hpp"
 
 namespace jpp
 {
-    struct borrowed_t
-    {
-    };
-
     class object
+        : public base
     {
-    public:
-        object();
-        ~object();
-
-    public:
-        object(nullptr_t);
-        explicit object(json_t* _object);
-        object( json_t* _object, borrowed_t );
-        object(const object & _object);
-        object(object && _object);
-        
-    public:
-        json_t* ptr() const;
-        void reset();
+        using base::base;
 
     public:
         operator bool() const;
@@ -35,8 +19,5 @@ namespace jpp
 
     public:
         object operator [] ( const char* _name ) const;
-
-    protected:
-        json_t* m_object;
     };
 }

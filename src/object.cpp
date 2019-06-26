@@ -5,53 +5,6 @@
 namespace jpp
 {
     //////////////////////////////////////////////////////////////////////////
-    object::object()
-        : m_object(nullptr)
-    {
-    }
-    //////////////////////////////////////////////////////////////////////////
-    object::~object()
-    {
-        json_decref(m_object);
-    }
-    //////////////////////////////////////////////////////////////////////////
-    object::object(nullptr_t)
-        : object()
-    {
-    }
-    //////////////////////////////////////////////////////////////////////////
-    object::object(json_t* _object)
-        : m_object(_object)
-    {
-        json_incref(m_object);
-    }
-    //////////////////////////////////////////////////////////////////////////
-    object::object( json_t* _object, borrowed_t )
-        : m_object( _object )
-    {
-    }
-    //////////////////////////////////////////////////////////////////////////
-    object::object(const object& _object)
-        : object(_object.ptr())
-    {
-    }
-    //////////////////////////////////////////////////////////////////////////
-    object::object(object&& _object)
-        : m_object(_object.ptr())
-    {
-        _object.reset();
-    }
-    //////////////////////////////////////////////////////////////////////////
-    json_t* object::ptr() const
-    {
-        return m_object;
-    }
-    //////////////////////////////////////////////////////////////////////////
-    void object::reset()
-    {
-        m_object = nullptr;
-    }
-    //////////////////////////////////////////////////////////////////////////
     object::operator bool() const
     {
         return json_is_true(m_object);
@@ -86,6 +39,6 @@ namespace jpp
     {
         json_t * j = json_object_get( m_object, _name );
 
-        return object( j, borrowed_t() );
+        return object( j, detail::borrowed );
     }
 }
