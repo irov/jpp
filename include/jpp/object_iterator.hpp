@@ -14,9 +14,6 @@ namespace jpp
     class object_iterator
     {
     public:
-        typedef uint32_t size_type;
-
-    public:
         object_iterator( const object_iterator& _r );
         ~object_iterator();
 
