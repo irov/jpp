@@ -31,15 +31,32 @@ namespace jpp
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    base::base( const base& _object )
-        : base( _object.ptr() )
+    base::base( const base& _base )
+        : base( _base.ptr() )
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    base::base( base&& _object )
-        : base( _object.ptr(), detail::borrowed )
+    base::base( base&& _base )
+        : base( _base.ptr(), detail::borrowed )
     {
-        _object.reset();
+        _base.reset();
+    }
+    //////////////////////////////////////////////////////////////////////////
+    const base& base::operator = ( const base& _base )
+    {
+        if( m_object != nullptr )
+        {
+            json_decref( m_object );
+        }
+
+        m_object = _base.ptr();
+
+        if( m_object != nullptr )
+        {
+            json_incref( m_object );
+        }
+
+        return *this;
     }
     //////////////////////////////////////////////////////////////////////////
     bool base::invalid() const
