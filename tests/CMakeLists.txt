@@ -4,6 +4,9 @@ macro(ADD_MOVIE_TEST testname)
     ENDIF()
     
     ADD_EXECUTABLE(test_${testname} test_${testname}.cpp example.json)
+    
+    set_property(TARGET test_${testname} PROPERTY CXX_STANDARD 17)
+    
     TARGET_LINK_LIBRARIES(test_${testname} jpp jansson)
 
     set_target_properties (test_${testname} PROPERTIES
