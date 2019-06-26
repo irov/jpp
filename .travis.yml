@@ -4,8 +4,8 @@ sudo: required
 addons:
   apt:
     packages:
-      - gcc-7
-      - g++-7
+      - gcc-6
+      - g++-6
       - cmake
 
 language: cpp
