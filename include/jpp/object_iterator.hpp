@@ -3,12 +3,16 @@
 #include "jpp/types.hpp"
 #include "jpp/object.hpp"
 
-#include <utility>
-
 namespace jpp
 {
     struct object_iterator_end_t
     {
+    };
+
+    struct object_iterator_pair
+    {
+        const char* key;
+        object value;
     };
 
     class object_iterator
@@ -29,8 +33,8 @@ namespace jpp
         object_iterator& operator ++ ();
         object_iterator operator ++ ( int );
 
-        std::pair<const char *, object> operator -> () const;
-        std::pair<const char*, object> operator * () const;
+        object_iterator_pair operator -> () const;
+        object_iterator_pair operator * () const;
 
     protected:        
         json_t* m_object;
