@@ -1,6 +1,11 @@
 dist: trusty
 sudo: required 
 
+addons:
+    apt:
+      packages:
+        - cmake
+
 language: cpp
 
 os:
