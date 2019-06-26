@@ -29,10 +29,7 @@ namespace jpp
         json_t* m_object;
         size_t m_iter;
     };
-}
-
-namespace std
-{
+    //////////////////////////////////////////////////////////////////////////
     jpp::array_iterator begin( const jpp::array& _array );
     jpp::array_iterator end( const jpp::array& _array );
 }

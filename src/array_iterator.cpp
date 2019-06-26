@@ -56,10 +56,6 @@ namespace jpp
     {
         return object( json_array_get( m_object, m_iter ), detail::borrowed );
     }
-}
-
-namespace std
-{
     //////////////////////////////////////////////////////////////////////////
     jpp::array_iterator begin( const jpp::array& _array )
     {

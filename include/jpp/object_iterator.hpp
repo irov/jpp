@@ -40,10 +40,7 @@ namespace jpp
         json_t* m_object;
         void* m_iter;
     };
-}
-
-namespace std
-{
+    //////////////////////////////////////////////////////////////////////////
     jpp::object_iterator begin( const jpp::object& _object );
     jpp::object_iterator end( const jpp::object& _object );
 }
