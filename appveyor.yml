@@ -16,16 +16,15 @@ environment:
   ToolsVersion: 15.0
   VCVARSALL: '%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat'
 
-environment:
   matrix:
-  - env_cmake_generator: "Visual Studio 15 2017"
-    env_cmake_configuration: Debug
-  - env_cmake_generator: "Visual Studio 15 2017"
-    env_cmake_configuration: Release
-  - env_cmake_generator: "Visual Studio 15 2017 Win64"
-    env_cmake_configuration: Debug
-  - env_cmake_generator: "Visual Studio 15 2017 Win64"
-    env_cmake_configuration: Release
+    - env_cmake_generator: "Visual Studio 15 2017"
+      env_cmake_configuration: Debug
+    - env_cmake_generator: "Visual Studio 15 2017"
+      env_cmake_configuration: Release
+    - env_cmake_generator: "Visual Studio 15 2017 Win64"
+      env_cmake_configuration: Debug
+    - env_cmake_generator: "Visual Studio 15 2017 Win64"
+      env_cmake_configuration: Release
 
 build_script:
 - mkdir build_cmake
