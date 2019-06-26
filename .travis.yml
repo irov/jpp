@@ -2,9 +2,11 @@ dist: trusty
 sudo: required 
 
 addons:
-    apt:
-      packages:
-        - cmake
+  apt:
+    packages:
+      - gcc-7
+      - g++-7
+      - cmake
 
 language: cpp
 
