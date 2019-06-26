@@ -44,7 +44,7 @@ script:
         export CXX=/usr/bin/g++-7
         # Check versions of gcc, g++ and cmake
         gcc -v && g++ -v && cmake --version
-        fi
+      fi
     # run
     - mkdir build_cmake
     - cd build_cmake
