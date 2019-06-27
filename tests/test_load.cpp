@@ -4,9 +4,19 @@
 
 static size_t musage = 0;
 
-static void * my_jpp_malloc( size_t _size )
+//////////////////////////////////////////////////////////////////////////
+static size_t my_jpp_load_callback( void* _buffer, size_t _size, void* _ud )
 {
-    void * ptr = malloc( _size + sizeof( size_t ) );
+    FILE* f = (FILE*)_ud;
+
+    size_t r = fread( _buffer, 1, _size, f );
+
+    return r;
+}
+//////////////////////////////////////////////////////////////////////////
+static void* my_jpp_malloc( size_t _size )
+{
+    void* ptr = malloc( _size + sizeof( size_t ) );
 
     *(size_t*)ptr = _size;
 
@@ -14,7 +24,7 @@ static void * my_jpp_malloc( size_t _size )
 
     return (size_t*)ptr + 1;
 }
-
+//////////////////////////////////////////////////////////////////////////
 static void my_jpp_free( void* _free )
 {
     size_t* ptr = (size_t*)_free - 1;
@@ -25,16 +35,20 @@ static void my_jpp_free( void* _free )
 
     free( ptr );
 }
-
-static size_t my_jpp_load_callback( void* _buffer, size_t _size, void* _data )
+//////////////////////////////////////////////////////////////////////////
+static void my_jpp_error( int line, int column, int position, const char* source, const char* text, void* _ud )
 {
-    FILE* f = (FILE*)_data;
+    (void)_ud;
 
-    size_t r = fread( _buffer, 1, _size, f );
-
-    return r;
+    printf( "error: %s\nline: %d\n column: %d\nposition: %d\nsource: %s\n"
+        , text
+        , line
+        , column
+        , position
+        , source        
+    );
 }
-
+//////////////////////////////////////////////////////////////////////////
 void jpp_printf( const jpp::object& _obj, uint32_t _ident = 0 )
 {
     jpp::e_type type = _obj.type();
@@ -90,7 +104,7 @@ void jpp_printf( const jpp::object& _obj, uint32_t _ident = 0 )
         }break;
     }
 }
-
+//////////////////////////////////////////////////////////////////////////
 bool jpp_test( const char * _filepath )
 {
     FILE* f = fopen( _filepath, "rb" );
@@ -100,7 +114,7 @@ bool jpp_test( const char * _filepath )
         return false;
     }
 
-    jpp::object root = jpp::load( &my_jpp_load_callback, my_jpp_malloc, my_jpp_free, f );
+    jpp::object root = jpp::load( &my_jpp_load_callback, &my_jpp_malloc, &my_jpp_free, &my_jpp_error, f );
 
     fclose( f );
 
@@ -113,7 +127,7 @@ bool jpp_test( const char * _filepath )
 
     return true;
 }
-
+//////////////////////////////////////////////////////////////////////////
 int main(int argc, char* argv[])
 {
     char full_example_file_path[256];

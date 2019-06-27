@@ -53,8 +53,6 @@ IF(NOT JPP_EXTERNAL_BUILD)
     endif()
 ENDIF()
 
-MESSAGE(${CMAKE_CXX_FLAGS})
-
 IF(NOT JPP_EXTERNAL_BUILD)
     include(cmake/jansson_download.cmake)
     
