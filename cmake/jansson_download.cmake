@@ -7,7 +7,7 @@ ExternalProject_Add(jansson_download PREFIX jansson
     
     CMAKE_ARGS 
         -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
-        -DJANSSON_STATIC_CRT=ON
+        -DJANSSON_STATIC_CRT=${JPP_STATIC_CRT}
         -DJANSSON_EXAMPLES=OFF
         -DJANSSON_BUILD_DOCS=OFF
         -DJANSSON_WITHOUT_TESTS=ON

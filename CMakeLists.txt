@@ -11,6 +11,10 @@ OPTION(JPP_JANSSON_INCLUDE_PATH "JPP_JANSSON_INCLUDE_PATH" OFF)
 OPTION(JPP_TEST "JPP_TEST" ON)
 OPTION(JPP_INSTALL "JPP_INSTALL" OFF)
 
+if (MSVC)
+   option(JPP_STATIC_CRT "Link the static CRT libraries" ON)
+endif ()
+
 PROJECT(jpp)
 
 IF(NOT JPP_EXTERNAL_BUILD)
@@ -50,6 +54,10 @@ IF(NOT JPP_EXTERNAL_BUILD)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4 /WX")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4710") #function not inlined 
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4738") #storing 32-bit float result in memory, possible loss of performance
+        if (JPP_STATIC_CRT)
+            set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} /MTd")
+            set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} /MT")            
+        endif()        
     endif()
 ENDIF()
 
