@@ -1,5 +1,6 @@
 #include "jpp/jpp.hpp"
 
+#include <stdio.h>
 #include <stdlib.h>
 
 static size_t musage = 0;
@@ -36,16 +37,16 @@ static void my_jpp_free( void* _free )
     free( ptr );
 }
 //////////////////////////////////////////////////////////////////////////
-static void my_jpp_error( int line, int column, int position, const char* source, const char* text, void* _ud )
+static void my_jpp_error( int32_t _line, int32_t _column, int32_t _position, const char * _source, const char * _text, void* _ud )
 {
     (void)_ud;
 
     printf( "error: %s\nline: %d\n column: %d\nposition: %d\nsource: %s\n"
-        , text
-        , line
-        , column
-        , position
-        , source        
+        , _text
+        , _line
+        , _column
+        , _position
+        , _source
     );
 }
 //////////////////////////////////////////////////////////////////////////
