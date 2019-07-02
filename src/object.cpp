@@ -39,6 +39,6 @@ namespace jpp
     {
         json_t * j = json_object_get( m_object, _name );
 
-        return object( j, detail::borrowed );
+        return object( j );
     }
 }
