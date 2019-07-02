@@ -23,6 +23,6 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     object array::operator [] ( array::size_type _index ) const
     {
-        return object( json_array_get( m_object, _index ), detail::borrowed );
+        return object( json_array_get( m_object, _index ) );
     }
 }

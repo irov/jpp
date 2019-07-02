@@ -57,6 +57,7 @@ namespace jpp
         void reset();
 
     public:
+        bool operator == ( invalid_t ) const;
         bool operator == ( const base& _base ) const;
         bool operator != ( const base& _base ) const;
 
