@@ -38,13 +38,13 @@ namespace jpp
 
     public:
         base( invalid_t );
-        explicit base( json_t* _object );
-        base( json_t* _object, borrowed_t );
-        base( const base& _base );
-        base( base&& _base );
+        explicit base( json_t * _object );
+        base( json_t * _object, borrowed_t );
+        base( const base & _base );
+        base( base && _base );
 
     public:
-        const base& operator = ( const base& _base );
+        const base & operator = ( const base & _base );
 
     public:
         bool invalid() const;
@@ -53,15 +53,15 @@ namespace jpp
         e_type type() const;
 
     public:
-        json_t* ptr() const;
+        json_t * ptr() const;
         void reset();
 
     public:
         bool operator == ( invalid_t ) const;
-        bool operator == ( const base& _base ) const;
-        bool operator != ( const base& _base ) const;
+        bool operator == ( const base & _base ) const;
+        bool operator != ( const base & _base ) const;
 
     protected:
-        json_t* m_object;
+        json_t * m_object;
     };
 }

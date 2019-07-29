@@ -15,9 +15,9 @@ namespace jpp
         operator uint32_t() const;
         operator float() const;
         operator double() const;
-        operator const char *() const;
+        operator const char * () const;
 
     public:
-        object operator [] ( const char* _name ) const;
+        object operator [] ( const char * _name ) const;
     };
 }

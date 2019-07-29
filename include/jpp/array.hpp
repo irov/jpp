@@ -11,8 +11,8 @@ namespace jpp
         using base::base;
 
     public:
-        array( const object& _obj );
-        array( object&& _obj );
+        array( const object & _obj );
+        array( object && _obj );
 
     public:
         typedef size_t size_type;
