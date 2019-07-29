@@ -5,34 +5,33 @@
 namespace jpp
 {
     //////////////////////////////////////////////////////////////////////////
-    array_iterator::array_iterator( const array_iterator& _it )
+    array_iterator::array_iterator( const array_iterator & _it )
+        : m_object( _it.m_object )
+        , m_iter( _it.m_iter )
     {
-        m_object = _it.m_object;
-        m_iter = _it.m_iter;
     }
     //////////////////////////////////////////////////////////////////////////
-    array_iterator::array_iterator( json_t* _obj, size_t _iter )
+    array_iterator::array_iterator( json_t * _obj, size_t _iter )
         : m_object( _obj )
         , m_iter( _iter )
     {
-
     }
     //////////////////////////////////////////////////////////////////////////
     array_iterator::~array_iterator()
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    bool array_iterator::operator == ( const array_iterator& _it ) const
+    bool array_iterator::operator == ( const array_iterator & _it ) const
     {
         return m_iter == _it.m_iter;
     }
     //////////////////////////////////////////////////////////////////////////
-    bool array_iterator::operator != ( const array_iterator& _it ) const
+    bool array_iterator::operator != ( const array_iterator & _it ) const
     {
         return !this->operator ==( _it );
     }
     //////////////////////////////////////////////////////////////////////////
-    array_iterator& array_iterator::operator ++ ()
+    array_iterator & array_iterator::operator ++ ()
     {
         ++m_iter;
 
@@ -42,27 +41,27 @@ namespace jpp
     array_iterator array_iterator::operator ++ ( int )
     {
         array_iterator tmp = *this;
-        ++* this;
+        ++ * this;
 
         return tmp;
     }
     //////////////////////////////////////////////////////////////////////////
     object array_iterator::operator -> () const
     {
-        return object( json_array_get( m_object, m_iter ), detail::borrowed );
+        return object( json_array_get( m_object, m_iter ) );
     }
     //////////////////////////////////////////////////////////////////////////
     object array_iterator::operator * () const
     {
-        return object( json_array_get( m_object, m_iter ), detail::borrowed );
+        return object( json_array_get( m_object, m_iter ) );
     }
     //////////////////////////////////////////////////////////////////////////
-    jpp::array_iterator begin( const jpp::array& _array )
+    jpp::array_iterator begin( const jpp::array & _array )
     {
         return jpp::array_iterator( _array.ptr(), 0 );
     }
     //////////////////////////////////////////////////////////////////////////
-    jpp::array_iterator end( const jpp::array& _array )
+    jpp::array_iterator end( const jpp::array & _array )
     {
         return jpp::array_iterator( _array.ptr(), _array.size() );
     }

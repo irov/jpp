@@ -5,12 +5,12 @@
 namespace jpp
 {
     //////////////////////////////////////////////////////////////////////////
-    array::array( const object& _obj )
+    array::array( const object & _obj )
         : base( _obj.ptr() )
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    array::array( object&& _obj )
+    array::array( object && _obj )
         : base( _obj.ptr(), detail::borrowed )
     {
         _obj.reset();
