@@ -22,12 +22,12 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     object::operator float() const
     {
-        return (float)json_real_value( m_object );
+        return (float)json_number_value( m_object );
     }
     //////////////////////////////////////////////////////////////////////////
     object::operator double() const
     {
-        return (double)json_real_value( m_object );
+        return (double)json_number_value( m_object );
     }
     //////////////////////////////////////////////////////////////////////////
     object::operator const char * () const
