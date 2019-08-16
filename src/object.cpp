@@ -35,6 +35,13 @@ namespace jpp
         return json_string_value( m_object );
     }
     //////////////////////////////////////////////////////////////////////////
+    size_t object::size() const
+    {
+        size_t size = json_object_size( m_object );
+
+        return size;
+    }
+    //////////////////////////////////////////////////////////////////////////
     object object::operator [] ( const char * _name ) const
     {
         json_t * j = json_object_get( m_object, _name );

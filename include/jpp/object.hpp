@@ -20,6 +20,9 @@ namespace jpp
         operator const char * () const;
 
     public:
+        size_t size() const;
+
+    public:
         object operator [] ( const char * _name ) const;
     };
 }
