@@ -37,13 +37,14 @@ namespace jpp
         ~base();
 
     public:
-        base( invalid_t );
+        explicit base( invalid_t );
         explicit base( json_t * _object );
         base( json_t * _object, borrowed_t );
         base( const base & _base );
         base( base && _base );
 
     public:
+        const base & operator = ( invalid_t );
         const base & operator = ( const base & _base );
 
     public:
