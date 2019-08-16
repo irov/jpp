@@ -7,7 +7,9 @@ namespace jpp
     class object
         : public base
     {
+    public:
         using base::base;
+        using base::operator=;
 
     public:
         operator bool() const;
