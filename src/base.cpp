@@ -96,6 +96,11 @@ namespace jpp
         return this->invalid();
     }
     //////////////////////////////////////////////////////////////////////////
+    bool base::operator != ( invalid_t ) const
+    {
+        return !this->operator ==( detail::invalid );
+    }
+    //////////////////////////////////////////////////////////////////////////
     bool base::operator == ( const base & _base ) const
     {
         return m_object == _base.ptr();
