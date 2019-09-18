@@ -59,6 +59,7 @@ namespace jpp
 
     public:
         bool operator == ( invalid_t ) const;
+        bool operator != ( invalid_t ) const;
         bool operator == ( const base & _base ) const;
         bool operator != ( const base & _base ) const;
 
