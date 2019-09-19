@@ -6,9 +6,10 @@ namespace jpp
 {
     //////////////////////////////////////////////////////////////////////////
     object_iterator::object_iterator( const object_iterator & _it )
+        : m_object( _it.m_object )
+        , m_iter( _it.m_iter )
     {
-        m_object = _it.m_object;
-        m_iter = _it.m_iter;
+
     }
     //////////////////////////////////////////////////////////////////////////
     object_iterator::object_iterator( json_t * _obj )
