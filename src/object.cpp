@@ -12,22 +12,30 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     object::operator int32_t() const
     {
-        return (int32_t)json_integer_value( m_object );
+        json_int_t integer = json_integer_value( m_object );
+
+        return (int32_t)integer;
     }
     //////////////////////////////////////////////////////////////////////////
     object::operator uint32_t() const
     {
-        return (uint32_t)json_integer_value( m_object );
+        json_int_t integer = json_integer_value( m_object );
+
+        return (uint32_t)integer;
     }
     //////////////////////////////////////////////////////////////////////////
     object::operator float() const
     {
-        return (float)json_number_value( m_object );
+        double number = json_number_value( m_object );
+
+        return (float)number;
     }
     //////////////////////////////////////////////////////////////////////////
     object::operator double() const
     {
-        return (double)json_number_value( m_object );
+        double number = json_number_value( m_object );
+
+        return number;
     }
     //////////////////////////////////////////////////////////////////////////
     object::operator const char * () const
