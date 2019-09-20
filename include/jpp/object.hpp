@@ -4,6 +4,14 @@
 
 namespace jpp
 {
+    class object;
+
+    template<class T>
+    struct cast_object
+    {
+        void operator()( const jpp::object & _obj, T & _value ) const;
+    };
+
     class object
         : public base
     {
@@ -58,11 +66,5 @@ namespace jpp
 
     public:
         object operator [] ( const char * _key ) const;
-    };
-
-    template<class T>
-    struct cast_object
-    {
-        void operator()( const jpp::object & _obj, T & _value ) const;
-    };
+    };    
 }
