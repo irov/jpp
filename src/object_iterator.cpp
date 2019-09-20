@@ -22,7 +22,6 @@ namespace jpp
         : m_object( _obj )
         , m_iter( nullptr )
     {
-
     }
     //////////////////////////////////////////////////////////////////////////
     object_iterator::~object_iterator()
