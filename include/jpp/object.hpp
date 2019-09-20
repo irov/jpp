@@ -24,7 +24,7 @@ namespace jpp
         operator T () const
         {
             T value;
-            jpp::cast( *this, value );
+            jpp::cast_object<T>()(*this, value);
             return value;
         }
 
@@ -49,7 +49,7 @@ namespace jpp
             }
 
             T value;
-            jpp::cast( object( j ), value );
+            jpp::cast_object<T>()(object( j ), value);
             return value;
         }
 
@@ -61,5 +61,8 @@ namespace jpp
     };
 
     template<class T>
-    void cast( const object & _obj, T & _value );
+    struct cast_object
+    {
+        void operator()( const jpp::object & _obj, T & _value ) const;
+    };
 }
