@@ -11,14 +11,23 @@ namespace jpp
         using base::base;
 
     public:
-        array( const object & _obj );
-        array( object && _obj );
+        typedef size_t size_type;
 
     public:
-        typedef size_t size_type;
+        array( const object & _obj );
+        array( object && _obj );
 
     public:
         size_type size() const;
         object operator [] ( size_type _index ) const;
     };
+
+    template<class T>
+    void to_array( const jpp::array & _obj, T & _array )
+    {
+        for( const jpp::object & v : _obj )
+        {
+            _array.push_back( v );
+        }
+    }
 }
