@@ -11,7 +11,7 @@ namespace jpp
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    array_iterator::array_iterator( json_t * _obj, size_t _iter )
+    array_iterator::array_iterator( json_t * _obj, jpp_size_t _iter )
         : m_object( _obj )
         , m_iter( _iter )
     {

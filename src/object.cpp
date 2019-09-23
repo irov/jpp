@@ -5,68 +5,77 @@
 namespace jpp
 {
     //////////////////////////////////////////////////////////////////////////
-    object::operator bool() const
+    object::operator jpp_bool_t() const
     {
-        return json_is_true( m_object );
+        bool result = json_is_true( m_object );
+
+        return (jpp_bool_t)result;
     }
     //////////////////////////////////////////////////////////////////////////
-    object::operator int32_t() const
+    object::operator jpp_int32_t() const
     {
         json_int_t integer = json_integer_value( m_object );
 
-        return (int32_t)integer;
+        return (jpp_int32_t)integer;
     }
     //////////////////////////////////////////////////////////////////////////
-    object::operator uint32_t() const
+    object::operator jpp_uint32_t() const
     {
         json_int_t integer = json_integer_value( m_object );
 
-        return (uint32_t)integer;
+        return (jpp_uint32_t)integer;
     }
     //////////////////////////////////////////////////////////////////////////
-    object::operator float() const
+    object::operator jpp_float_t() const
+    {
+        jpp_double_t number = json_number_value( m_object );
+
+        return (jpp_float_t)number;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    object::operator jpp_double_t() const
     {
         double number = json_number_value( m_object );
 
-        return (float)number;
+        return (jpp_double_t)number;
     }
     //////////////////////////////////////////////////////////////////////////
-    object::operator double() const
+    object::operator jpp_string_t () const
     {
-        double number = json_number_value( m_object );
-
-        return number;
-    }
-    //////////////////////////////////////////////////////////////////////////
-    object::operator const char * () const
-    {
-        const char * string = json_string_value( m_object );
+        jpp_string_t string = json_string_value( m_object );
 
         return string;
     }
     //////////////////////////////////////////////////////////////////////////
-    size_t object::size() const
+    jpp_size_t object::size() const
     {
         size_t size = json_object_size( m_object );
 
-        return size;
+        return (jpp_size_t)size;
     }
     //////////////////////////////////////////////////////////////////////////
-    object object::operator [] ( const char * _key ) const
+    bool object::exist( jpp_string_t _key ) const
+    {
+        json_t * j = json_object_get( m_object, _key );
+
+        return j == nullptr;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    object object::operator [] ( jpp_string_t _key ) const
     {
         json_t * j = json_object_get( m_object, _key );
 
         return object( j );
     }
     //////////////////////////////////////////////////////////////////////////
-    json_t * object::get( const char * _key ) const
+    json_t * object::get( jpp_string_t _key ) const
     {
         json_t * j = json_object_get( m_object, _key );
 
         return j;
     }
     //////////////////////////////////////////////////////////////////////////
-    bool object::get( const char * _key, bool _default ) const
+    jpp_bool_t object::get( jpp_string_t _key, jpp_bool_t _default ) const
     {
         json_t * j = this->get( _key );
 
@@ -75,24 +84,12 @@ namespace jpp
             return _default;
         }
 
-        return json_is_true( m_object );
+        bool result = json_is_true( m_object );
+
+        return result;
     }
     //////////////////////////////////////////////////////////////////////////
-    int32_t object::get( const char * _key, int32_t _default ) const
-    {
-        json_t * j = this->get( _key );
-
-        if( j == nullptr )
-        {
-            return _default;
-        }
-
-        json_int_t integer = json_integer_value( j );
-
-        return (int32_t)integer;
-    }
-    //////////////////////////////////////////////////////////////////////////
-    uint32_t object::get( const char * _key, uint32_t _default ) const
+    jpp_int32_t object::get( jpp_string_t _key, jpp_int32_t _default ) const
     {
         json_t * j = this->get( _key );
 
@@ -103,10 +100,24 @@ namespace jpp
 
         json_int_t integer = json_integer_value( j );
 
-        return (uint32_t)integer;
+        return (jpp_int32_t)integer;
     }
     //////////////////////////////////////////////////////////////////////////
-    float object::get( const char * _key, float _default ) const
+    jpp_uint32_t object::get( jpp_string_t _key, jpp_uint32_t _default ) const
+    {
+        json_t * j = this->get( _key );
+
+        if( j == nullptr )
+        {
+            return _default;
+        }
+
+        json_int_t integer = json_integer_value( j );
+
+        return (jpp_uint32_t)integer;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    jpp_float_t object::get( jpp_string_t _key, jpp_float_t _default ) const
     {
         json_t * j = this->get( _key );
 
@@ -117,10 +128,10 @@ namespace jpp
 
         double number = json_number_value( j );
 
-        return (float)number;
+        return (jpp_float_t)number;
     }
     //////////////////////////////////////////////////////////////////////////
-    double object::get( const char * _key, double _default ) const
+    jpp_double_t object::get( jpp_string_t _key, jpp_double_t _default ) const
     {
         json_t * j = this->get( _key );
 
@@ -131,10 +142,10 @@ namespace jpp
 
         double number = json_number_value( j );
 
-        return number;
+        return (jpp_double_t)number;
     }
     //////////////////////////////////////////////////////////////////////////
-    const char * object::get( const char * _key, const char * _default ) const
+    jpp_string_t object::get( jpp_string_t _key, jpp_string_t _default ) const
     {
         json_t * j = this->get( _key );
 
@@ -145,7 +156,7 @@ namespace jpp
 
         const char * string = json_string_value( j );
 
-        return string;
+        return (jpp_string_t)string;
     }
     //////////////////////////////////////////////////////////////////////////
 }
