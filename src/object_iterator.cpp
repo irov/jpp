@@ -55,12 +55,18 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     object_iterator_pair object_iterator::operator -> () const
     {
-        return { json_object_iter_key( m_iter ), object( json_object_iter_value( m_iter ) ) };
+        const char * it_key = json_object_iter_key( m_iter );
+        json_t * it_value = json_object_iter_value( m_iter );
+
+        return { it_key, object( it_value ) };
     }
     //////////////////////////////////////////////////////////////////////////
     object_iterator_pair object_iterator::operator * () const
     {
-        return { json_object_iter_key( m_iter ), object( json_object_iter_value( m_iter ) ) };
+        const char * it_key = json_object_iter_key( m_iter );
+        json_t * it_value = json_object_iter_value( m_iter );
+
+        return { it_key, object( it_value ) };
     }
     //////////////////////////////////////////////////////////////////////////
     jpp::object_iterator begin( const jpp::object & _object )

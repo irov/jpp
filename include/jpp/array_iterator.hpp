@@ -12,7 +12,7 @@ namespace jpp
         ~array_iterator();
 
     public:
-        array_iterator( json_t * _obj, size_t _iter );
+        array_iterator( json_t * _obj, jpp_size_t _iter );
 
     public:
         bool operator == ( const array_iterator & _it ) const;
@@ -27,7 +27,7 @@ namespace jpp
 
     protected:
         json_t * m_object;
-        size_t m_iter;
+        jpp_size_t m_iter;
     };
     //////////////////////////////////////////////////////////////////////////
     jpp::array_iterator begin( const jpp::array & _array );

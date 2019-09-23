@@ -20,12 +20,12 @@ namespace jpp
         using base::operator=;
 
     public:
-        operator bool() const;
-        operator int32_t() const;
-        operator uint32_t() const;
-        operator float() const;
-        operator double() const;
-        operator const char * () const;
+        operator jpp_bool_t() const;
+        operator jpp_int32_t() const;
+        operator jpp_uint32_t() const;
+        operator jpp_float_t() const;
+        operator jpp_double_t() const;
+        operator jpp_string_t () const;
 
     public:
         template<class T>
@@ -37,17 +37,17 @@ namespace jpp
         }
 
     public:
-        json_t * get( const char * _key ) const;
-        bool get( const char * _key, bool _default ) const;
-        int32_t get( const char * _key, int32_t _default ) const;
-        uint32_t get( const char * _key, uint32_t _default ) const;
-        float get( const char * _key, float _default ) const;
-        double get( const char * _key, double _default ) const;
-        const char * get( const char * _key, const char * _default ) const;
+        json_t * get( jpp_string_t _key ) const;
+        jpp_bool_t get( jpp_string_t _key, jpp_bool_t _default ) const;
+        jpp_int32_t get( jpp_string_t _key, jpp_int32_t _default ) const;
+        jpp_uint32_t get( jpp_string_t _key, jpp_uint32_t _default ) const;
+        jpp_float_t get( jpp_string_t _key, jpp_float_t _default ) const;
+        jpp_double_t get( jpp_string_t _key, jpp_double_t _default ) const;
+        jpp_string_t get( jpp_string_t _key, jpp_string_t _default ) const;
 
     public:
         template<class T>
-        T get( const char * _key, const T & _default ) const
+        T get( jpp_string_t _key, const T & _default ) const
         {
             json_t * j = this->get( _key );
 
@@ -65,6 +65,8 @@ namespace jpp
         size_t size() const;
 
     public:
-        object operator [] ( const char * _key ) const;
+        bool exist( jpp_string_t _key ) const;
+
+        object operator [] ( jpp_string_t _key ) const;
     };    
 }
