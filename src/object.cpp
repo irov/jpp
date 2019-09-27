@@ -84,7 +84,7 @@ namespace jpp
             return _default;
         }
 
-        bool result = json_is_true( m_object );
+        bool result = json_is_true( j );
 
         return result;
     }
