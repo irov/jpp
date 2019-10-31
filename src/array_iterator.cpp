@@ -46,14 +46,14 @@ namespace jpp
         return tmp;
     }
     //////////////////////////////////////////////////////////////////////////
-    object array_iterator::operator -> () const
+    jpp::conversion array_iterator::operator -> () const
     {
-        return object( json_array_get( m_object, m_iter ) );
+        return jpp::conversion( json_array_get( m_object, m_iter ) );
     }
     //////////////////////////////////////////////////////////////////////////
-    object array_iterator::operator * () const
+    jpp::conversion array_iterator::operator * () const
     {
-        return object( json_array_get( m_object, m_iter ) );
+        return jpp::conversion( json_array_get( m_object, m_iter ) );
     }
     //////////////////////////////////////////////////////////////////////////
     jpp::array_iterator begin( const jpp::array & _array )

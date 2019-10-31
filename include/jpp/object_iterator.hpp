@@ -12,7 +12,7 @@ namespace jpp
     struct object_iterator_pair
     {
         jpp_string_t key;
-        object value;
+        jpp::object value;
     };
 
     class object_iterator
