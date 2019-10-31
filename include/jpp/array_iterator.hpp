@@ -2,6 +2,7 @@
 
 #include "jpp/types.hpp"
 #include "jpp/array.hpp"
+#include "jpp/conversion.hpp"
 
 namespace jpp
 {
@@ -22,8 +23,8 @@ namespace jpp
         array_iterator & operator ++ ();
         array_iterator operator ++ ( int );
 
-        object operator -> () const;
-        object operator * () const;
+        jpp::conversion operator -> () const;
+        jpp::conversion operator * () const;
 
     protected:
         json_t * m_object;
