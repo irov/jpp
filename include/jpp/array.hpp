@@ -18,6 +18,9 @@ namespace jpp
         array( object && _obj );
 
     public:
+        static const array & none();
+
+    public:
         size_type size() const;
         object operator [] ( size_type _index ) const;
     };

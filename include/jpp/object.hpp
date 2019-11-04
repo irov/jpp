@@ -28,6 +28,9 @@ namespace jpp
         operator jpp_string_t () const;
 
     public:
+        static const object & none();
+
+    public:
         template<class T>
         operator T () const
         {
