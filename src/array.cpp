@@ -16,6 +16,13 @@ namespace jpp
         _obj.reset();
     }
     //////////////////////////////////////////////////////////////////////////
+    const array & array::none()
+    {
+        static array a( detail::invalid );
+
+        return a;
+    }
+    //////////////////////////////////////////////////////////////////////////
     array::size_type array::size() const
     {
         return json_array_size( m_object );

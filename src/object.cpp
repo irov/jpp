@@ -5,6 +5,13 @@
 namespace jpp
 {
     //////////////////////////////////////////////////////////////////////////
+    const object & object::none()
+    {
+        static object o( detail::invalid );
+
+        return o;
+    }
+    //////////////////////////////////////////////////////////////////////////
     object::operator jpp_bool_t() const
     {
         bool result = json_is_true( m_object );
