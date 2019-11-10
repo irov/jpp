@@ -61,11 +61,21 @@ namespace jpp
         return (jpp_size_t)size;
     }
     //////////////////////////////////////////////////////////////////////////
-    bool object::exist( jpp_string_t _key ) const
+    bool object::exist( jpp_string_t _key, jpp::object * _obj ) const
     {
         json_t * j = json_object_get( m_object, _key );
 
-        return j == nullptr;
+        if( j == nullptr )
+        {
+            return false;
+        }
+
+        if( _obj != nullptr )
+        {
+            *_obj = jpp::object( j );
+        }
+
+        return true;
     }
     //////////////////////////////////////////////////////////////////////////
     object object::operator [] ( jpp_string_t _key ) const
