@@ -227,8 +227,11 @@ namespace jpp
     {
         const char * string = json_string_value( m_object );
 
-        bool successful = strcmp( string, _value );
+        if( strcmp( string, _value ) != 0 )
+        {
+            return false;
+        }
 
-        return successful;
+        return true;
     }
 }
