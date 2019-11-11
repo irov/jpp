@@ -2,6 +2,8 @@
 
 #include "jansson.h"
 
+#include <string.h>
+
 namespace jpp
 {
     //////////////////////////////////////////////////////////////////////////
@@ -101,9 +103,9 @@ namespace jpp
             return _default;
         }
 
-        bool result = json_is_true( j );
+        bool value = json_is_true( j );
 
-        return result;
+        return value;
     }
     //////////////////////////////////////////////////////////////////////////
     jpp_int32_t object::get( jpp_string_t _key, jpp_int32_t _default ) const
@@ -176,4 +178,57 @@ namespace jpp
         return (jpp_string_t)string;
     }
     //////////////////////////////////////////////////////////////////////////
+    bool object::operator == ( bool _value ) const
+    {
+        bool value = json_is_true( m_object );
+        
+        bool successful = value == _value;
+
+        return successful;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    bool object::operator == ( jpp_int32_t _value ) const
+    {
+        json_int_t integer = json_integer_value( m_object );
+
+        bool successful = (jpp_int32_t)integer == _value;
+
+        return successful;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    bool object::operator == ( jpp_uint32_t _value ) const
+    {
+        json_int_t integer = json_integer_value( m_object );
+
+        bool successful = (jpp_uint32_t)integer == _value;
+
+        return successful;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    bool object::operator == ( jpp_float_t _value ) const
+    {
+        double number = json_number_value( m_object );
+
+        bool successful = (jpp_float_t)number == _value;
+
+        return successful;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    bool object::operator == ( jpp_double_t _value ) const
+    {
+        double number = json_number_value( m_object );
+
+        bool successful = number == _value;
+
+        return successful;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    bool object::operator == ( jpp_string_t _value ) const
+    {
+        const char * string = json_string_value( m_object );
+
+        bool successful = strcmp( string, _value );
+
+        return successful;
+    }
 }
