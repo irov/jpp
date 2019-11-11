@@ -65,6 +65,14 @@ namespace jpp
         }
 
     public:
+        bool operator == ( bool _value ) const;
+        bool operator == ( jpp_int32_t _value ) const;
+        bool operator == ( jpp_uint32_t _value ) const;
+        bool operator == ( jpp_float_t _value ) const;
+        bool operator == ( jpp_double_t _value ) const;
+        bool operator == ( jpp_string_t _value ) const;
+
+    public:
         size_t size() const;
 
     public:
