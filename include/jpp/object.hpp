@@ -18,6 +18,7 @@ namespace jpp
     public:
         using base::base;
         using base::operator=;
+        using base::operator==;
 
     public:
         operator jpp_bool_t() const;
