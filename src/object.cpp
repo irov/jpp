@@ -35,6 +35,13 @@ namespace jpp
         return (jpp_uint32_t)integer;
     }
     //////////////////////////////////////////////////////////////////////////
+    object::operator jpp_long_t() const
+    {
+        json_int_t integer = json_integer_value( m_object );
+
+        return (jpp_long_t)integer;
+    }
+    //////////////////////////////////////////////////////////////////////////
     object::operator jpp_float_t() const
     {
         jpp_double_t number = json_number_value( m_object );
@@ -47,6 +54,13 @@ namespace jpp
         double number = json_number_value( m_object );
 
         return (jpp_double_t)number;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    object::operator jpp_long_double_t() const
+    {
+        double number = json_number_value( m_object );
+
+        return (jpp_long_double_t)number;
     }
     //////////////////////////////////////////////////////////////////////////
     object::operator jpp_string_t () const
@@ -136,6 +150,20 @@ namespace jpp
         return (jpp_uint32_t)integer;
     }
     //////////////////////////////////////////////////////////////////////////
+    jpp_long_t object::get( jpp_string_t _key, jpp_long_t _default ) const
+    {
+        json_t * j = this->get( _key );
+
+        if( j == nullptr )
+        {
+            return _default;
+        }
+
+        json_int_t integer = json_integer_value( j );
+
+        return (jpp_long_t)integer;
+    }
+    //////////////////////////////////////////////////////////////////////////
     jpp_float_t object::get( jpp_string_t _key, jpp_float_t _default ) const
     {
         json_t * j = this->get( _key );
@@ -162,6 +190,20 @@ namespace jpp
         double number = json_number_value( j );
 
         return (jpp_double_t)number;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    jpp_long_double_t object::get( jpp_string_t _key, jpp_long_double_t _default ) const
+    {
+        json_t * j = this->get( _key );
+
+        if( j == nullptr )
+        {
+            return _default;
+        }
+
+        double number = json_number_value( j );
+
+        return (jpp_long_double_t)number;
     }
     //////////////////////////////////////////////////////////////////////////
     jpp_string_t object::get( jpp_string_t _key, jpp_string_t _default ) const

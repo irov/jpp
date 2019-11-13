@@ -24,8 +24,10 @@ namespace jpp
         operator jpp_bool_t() const;
         operator jpp_int32_t() const;
         operator jpp_uint32_t() const;
+        operator jpp_long_t() const;
         operator jpp_float_t() const;
         operator jpp_double_t() const;
+        operator jpp_long_double_t() const;
         operator jpp_string_t () const;
 
     public:
@@ -45,8 +47,10 @@ namespace jpp
         jpp_bool_t get( jpp_string_t _key, jpp_bool_t _default ) const;
         jpp_int32_t get( jpp_string_t _key, jpp_int32_t _default ) const;
         jpp_uint32_t get( jpp_string_t _key, jpp_uint32_t _default ) const;
+        jpp_long_t get( jpp_string_t _key, jpp_long_t _default ) const;
         jpp_float_t get( jpp_string_t _key, jpp_float_t _default ) const;
         jpp_double_t get( jpp_string_t _key, jpp_double_t _default ) const;
+        jpp_long_double_t get( jpp_string_t _key, jpp_long_double_t _default ) const;
         jpp_string_t get( jpp_string_t _key, jpp_string_t _default ) const;
 
     public:
