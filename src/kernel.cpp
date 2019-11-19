@@ -15,6 +15,14 @@ namespace jpp
         json_set_alloc_funcs( _malloc, _free );
     }
     //////////////////////////////////////////////////////////////////////////
+    object make_object()
+    {
+        json_t * j = json_object();
+        object o( j, detail::borrowed );
+
+        return o;
+    }
+    //////////////////////////////////////////////////////////////////////////
     object load( const void * _buffer, size_t _size, jpp_error_t _error, void * _ud )
     {
         json_error_t er;
@@ -49,5 +57,17 @@ namespace jpp
         }
 
         return object( jroot, detail::borrowed );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    bool dump( const object & _obj, jpp_dump_callback_t _callback, void * _ud )
+    {
+        int writebytes = json_dump_callback( _obj.ptr(), _callback, _ud, JSON_INDENT( 2 ) );
+
+        if( writebytes == -1 )
+        {
+            return false;
+        }
+
+        return true;
     }
 }
