@@ -21,6 +21,9 @@ namespace jpp
         using base::operator==;
 
     public:
+        const object & operator = ( const object & _obj );
+
+    public:
         operator jpp_bool_t() const;
         operator jpp_int32_t() const;
         operator jpp_uint32_t() const;
@@ -70,11 +73,24 @@ namespace jpp
         }
 
     public:
+        object set( jpp_string_t _key, const object & _obj ) const;
+        object set( jpp_string_t _key, jpp_bool_t _value ) const;
+        object set( jpp_string_t _key, jpp_int32_t _value ) const;
+        object set( jpp_string_t _key, jpp_uint32_t _value ) const;
+        object set( jpp_string_t _key, jpp_long_t _value ) const;
+        object set( jpp_string_t _key, jpp_float_t _value ) const;
+        object set( jpp_string_t _key, jpp_double_t _value ) const;
+        object set( jpp_string_t _key, jpp_long_double_t _value ) const;
+        object set( jpp_string_t _key, jpp_string_t _value ) const;
+
+    public:
         bool operator == ( bool _value ) const;
         bool operator == ( jpp_int32_t _value ) const;
         bool operator == ( jpp_uint32_t _value ) const;
+        bool operator == ( jpp_long_t _value ) const;
         bool operator == ( jpp_float_t _value ) const;
         bool operator == ( jpp_double_t _value ) const;
+        bool operator == ( jpp_long_double_t _value ) const;
         bool operator == ( jpp_string_t _value ) const;
 
     public:
