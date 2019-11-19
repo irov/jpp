@@ -3,6 +3,15 @@ sudo: required
 
 language: cpp
 
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - cmake
+      - gcc-7
+      - g++-7
+
 os:
     - linux
     - osx
@@ -10,15 +19,6 @@ os:
 compiler:
     - gcc
     - clang
-    
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test  
-    packages:
-      - gcc-7
-      - g++-7
-      - cmake    
 
 env:
     - TARGET_CPU=amd64 BUILD_CONFIGURATION=Debug

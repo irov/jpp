@@ -108,6 +108,8 @@ void jpp_printf( const jpp::object& _obj, uint32_t _ident = 0 )
 //////////////////////////////////////////////////////////////////////////
 bool jpp_test( const char * _filepath )
 {
+    jpp::set_alloc_funcs( &my_jpp_malloc, &my_jpp_free );
+
     FILE* f = fopen( _filepath, "rb" );
 
     if( f == nullptr )
@@ -115,7 +117,7 @@ bool jpp_test( const char * _filepath )
         return false;
     }
 
-    jpp::object root = jpp::load( &my_jpp_load_callback, &my_jpp_malloc, &my_jpp_free, &my_jpp_error, f );
+    jpp::object root = jpp::load( &my_jpp_load_callback, &my_jpp_error, f );
 
     fclose( f );
 
