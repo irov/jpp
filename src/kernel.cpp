@@ -70,4 +70,28 @@ namespace jpp
 
         return true;
     }
+    //////////////////////////////////////////////////////////////////////////
+    void merge( const object & _obj, const object & _merge, merge_mode_e _mode )
+    {
+        json_t * jb = _obj.ptr();
+        json_t * jm = _merge.ptr();
+
+        switch( _mode )
+        {
+        case merge_mode_e::update:
+            {
+                json_object_update( jb, jm );
+            }break;
+        case merge_mode_e::existing:
+            {
+                json_object_update_existing( jb, jm );
+            }break;
+        case merge_mode_e::missing:
+            {
+                json_object_update_missing( jb, jm );
+            }break;
+        default:
+            break;
+        }
+    }
 }
