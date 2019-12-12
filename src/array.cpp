@@ -30,6 +30,8 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     object array::operator [] ( array::size_type _index ) const
     {
-        return object( json_array_get( m_object, _index ) );
+        json_t * j = json_array_get( m_object, _index );
+
+        return object( j );
     }
 }
