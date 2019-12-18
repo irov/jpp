@@ -27,6 +27,7 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     array::size_type array::size() const
     {
+        assert( m_object != nullptr );
         assert( json_is_array( m_object ) == true );
 
         return json_array_size( m_object );
@@ -34,6 +35,7 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     object array::operator [] ( array::size_type _index ) const
     {
+        assert( m_object != nullptr );
         assert( json_is_array( m_object ) == true );
 
         json_t * j = json_array_get( m_object, _index );
