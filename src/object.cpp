@@ -3,6 +3,7 @@
 #include "jansson.h"
 
 #include <string.h>
+#include <assert.h>
 
 namespace jpp
 {
@@ -33,6 +34,8 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     object::operator jpp_bool_t() const
     {
+        assert( json_is_boolean( m_object ) == true );
+
         bool result = json_is_true( m_object );
 
         return (jpp_bool_t)result;
@@ -40,6 +43,8 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     object::operator jpp_int32_t() const
     {
+        assert( json_is_number( m_object ) == true );
+
         json_int_t integer = json_integer_value( m_object );
 
         return (jpp_int32_t)integer;
@@ -47,6 +52,8 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     object::operator jpp_uint32_t() const
     {
+        assert( json_is_number( m_object ) == true );
+
         json_int_t integer = json_integer_value( m_object );
 
         return (jpp_uint32_t)integer;
@@ -54,6 +61,8 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     object::operator jpp_long_t() const
     {
+        assert( json_is_number( m_object ) == true );
+
         json_int_t integer = json_integer_value( m_object );
 
         return (jpp_long_t)integer;
@@ -61,6 +70,8 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     object::operator jpp_float_t() const
     {
+        assert( json_is_number( m_object ) == true );
+
         jpp_double_t number = json_number_value( m_object );
 
         return (jpp_float_t)number;
@@ -68,6 +79,8 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     object::operator jpp_double_t() const
     {
+        assert( json_is_number( m_object ) == true );
+
         double number = json_number_value( m_object );
 
         return (jpp_double_t)number;
@@ -75,6 +88,8 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     object::operator jpp_long_double_t() const
     {
+        assert( json_is_number( m_object ) == true );
+
         double number = json_number_value( m_object );
 
         return (jpp_long_double_t)number;
@@ -82,6 +97,8 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     object::operator jpp_string_t () const
     {
+        assert( json_is_string( m_object ) == true );
+
         jpp_string_t string = json_string_value( m_object );
 
         return string;
@@ -89,6 +106,8 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     jpp_size_t object::size() const
     {
+        assert( json_is_object( m_object ) == true );
+
         size_t size = json_object_size( m_object );
 
         return (jpp_size_t)size;
@@ -96,6 +115,8 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     bool object::exist( jpp_string_t _key, jpp::object * _obj ) const
     {
+        assert( json_is_object( m_object ) == true );
+
         json_t * j = json_object_get( m_object, _key );
 
         if( j == nullptr )
@@ -113,6 +134,8 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     object object::operator [] ( jpp_string_t _key ) const
     {
+        assert( json_is_object( m_object ) == true );
+
         json_t * j = json_object_get( m_object, _key );
 
         return object( j );
@@ -120,6 +143,8 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     json_t * object::get( jpp_string_t _key ) const
     {
+        assert( json_is_object( m_object ) == true );
+
         json_t * j = json_object_get( m_object, _key );
 
         return j;
@@ -133,6 +158,8 @@ namespace jpp
         {
             return _default;
         }
+
+        assert( json_is_boolean( j ) == true );
 
         bool value = json_is_true( j );
 
@@ -148,6 +175,8 @@ namespace jpp
             return _default;
         }
 
+        assert( json_is_number( j ) == true );
+
         json_int_t integer = json_integer_value( j );
 
         return (jpp_int32_t)integer;
@@ -161,6 +190,8 @@ namespace jpp
         {
             return _default;
         }
+
+        assert( json_is_number( j ) == true );
 
         json_int_t integer = json_integer_value( j );
 
@@ -176,6 +207,8 @@ namespace jpp
             return _default;
         }
 
+        assert( json_is_number( j ) == true );
+
         json_int_t integer = json_integer_value( j );
 
         return (jpp_long_t)integer;
@@ -189,6 +222,8 @@ namespace jpp
         {
             return _default;
         }
+
+        assert( json_is_number( j ) == true );
 
         double number = json_number_value( j );
 
@@ -204,6 +239,8 @@ namespace jpp
             return _default;
         }
 
+        assert( json_is_number( j ) == true );
+
         double number = json_number_value( j );
 
         return (jpp_double_t)number;
@@ -217,6 +254,8 @@ namespace jpp
         {
             return _default;
         }
+
+        assert( json_is_number( j ) == true );
 
         double number = json_number_value( j );
 
@@ -232,6 +271,8 @@ namespace jpp
             return _default;
         }
 
+        assert( json_is_string( j ) == true );
+
         const char * string = json_string_value( j );
 
         return (jpp_string_t)string;
@@ -239,6 +280,8 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     object object::set( jpp_string_t _key, const object & _value ) const
     {
+        assert( json_is_object( m_object ) == true );
+
         json_t * j = _value.ptr();
 
         json_object_set( m_object, _key, j );
@@ -248,6 +291,8 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     object object::set( jpp_string_t _key, jpp_bool_t _value ) const
     {
+        assert( json_is_object( m_object ) == true );
+
         json_t * j = json_boolean( _value );
 
         json_object_set( m_object, _key, j );
@@ -257,6 +302,8 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     object object::set( jpp_string_t _key, jpp_int32_t _value ) const
     {
+        assert( json_is_object( m_object ) == true );
+
         json_t * j = json_integer( _value );
 
         json_object_set( m_object, _key, j );
@@ -266,6 +313,8 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     object object::set( jpp_string_t _key, jpp_uint32_t _value ) const
     {
+        assert( json_is_object( m_object ) == true );
+
         json_t * j = json_integer( _value );
 
         json_object_set( m_object, _key, j );
@@ -275,6 +324,8 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     object object::set( jpp_string_t _key, jpp_long_t _value ) const
     {
+        assert( json_is_object( m_object ) == true );
+
         json_t * j = json_integer( _value );
 
         json_object_set( m_object, _key, j );
@@ -284,6 +335,8 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     object object::set( jpp_string_t _key, jpp_float_t _value ) const
     {
+        assert( json_is_object( m_object ) == true );
+
         json_t * j = json_real( _value );
 
         json_object_set( m_object, _key, j );
@@ -293,6 +346,8 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     object object::set( jpp_string_t _key, jpp_double_t _value ) const
     {
+        assert( json_is_object( m_object ) == true );
+
         json_t * j = json_real( _value );
 
         json_object_set( m_object, _key, j );
@@ -302,6 +357,8 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     object object::set( jpp_string_t _key, jpp_long_double_t _value ) const
     {
+        assert( json_is_object( m_object ) == true );
+
         json_t * j = json_real( (double)_value );
 
         json_object_set( m_object, _key, j );
@@ -311,6 +368,8 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     object object::set( jpp_string_t _key, jpp_string_t _value ) const
     {
+        assert( json_is_object( m_object ) == true );
+
         json_t * j = json_string( _value );
 
         json_object_set( m_object, _key, j );
