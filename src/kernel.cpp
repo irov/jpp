@@ -71,7 +71,38 @@ namespace jpp
         return true;
     }
     //////////////////////////////////////////////////////////////////////////
-    void merge( const object & _obj, const object & _merge, merge_mode_e _mode )
+    static int __json_object_update( json_t * object, json_t * other )
+    {
+        const char * key;
+        json_t * value;
+
+        if( !json_is_object( object ) || !json_is_object( other ) )
+            return -1;
+
+        json_object_foreach( other, key, value )
+        {
+            json_t * j = json_object_get( object, key );
+
+            if( json_is_object( j ) && json_is_object( value ) )
+            {
+                if( __json_object_update( j, value ) == -1 )
+                {
+                    return -1;
+                }
+            }
+            else
+            {
+                if( json_object_set_nocheck( object, key, value ) == -1 )
+                {
+                    return -1;
+                }
+            }
+        }
+
+        return 0;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    bool merge( const object & _obj, const object & _merge, merge_mode_e _mode )
     {
         json_t * jb = _obj.ptr();
         json_t * jm = _merge.ptr();
@@ -80,18 +111,30 @@ namespace jpp
         {
         case merge_mode_e::update:
             {
-                json_object_update( jb, jm );
+                if( __json_object_update( jb, jm ) == -1 )
+                {
+                    return false;
+                }
             }break;
         case merge_mode_e::existing:
             {
-                json_object_update_existing( jb, jm );
+                if( json_object_update_existing( jb, jm ) == -1 )
+                {
+                    return false;
+                }
             }break;
         case merge_mode_e::missing:
             {
-                json_object_update_missing( jb, jm );
+                if( json_object_update_missing( jb, jm ) == -1 )
+                {
+                    return false;
+                }
             }break;
         default:
+            return false;
             break;
         }
+
+        return true;
     }
 }
