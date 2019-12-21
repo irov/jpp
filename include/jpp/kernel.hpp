@@ -24,5 +24,5 @@ namespace jpp
         missing
     };
 
-    void merge( const object & _obj, const object & _merge, merge_mode_e _mode );
+    bool merge( const object & _obj, const object & _merge, merge_mode_e _mode );
 }
