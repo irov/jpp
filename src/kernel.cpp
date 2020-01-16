@@ -110,7 +110,7 @@ namespace jpp
 
             if( json_is_object( j ) && json_is_object( value ) )
             {
-                if( __json_object_update( j, value ) == -1 )
+                if( __json_object_update_with_array( j, value ) == -1 )
                 {
                     return -1;
                 }
