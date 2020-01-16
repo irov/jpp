@@ -20,6 +20,7 @@ namespace jpp
     enum class merge_mode_e
     {
         update,
+        update_with_array,
         existing,
         missing
     };
