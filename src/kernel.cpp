@@ -76,8 +76,33 @@ namespace jpp
         const char * key;
         json_t * value;
 
-        if( !json_is_object( object ) || !json_is_object( other ) )
-            return -1;
+        json_object_foreach( other, key, value )
+        {
+            json_t * j = json_object_get( object, key );
+
+            if( json_is_object( j ) && json_is_object( value ) )
+            {
+                if( __json_object_update( j, value ) == -1 )
+                {
+                    return -1;
+                }
+            }
+            else
+            {
+                if( json_object_set_nocheck( object, key, value ) == -1 )
+                {
+                    return -1;
+                }
+            }
+        }
+
+        return 0;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    static int __json_object_update_with_array( json_t * object, json_t * other )
+    {
+        const char * key;
+        json_t * value;
 
         json_object_foreach( other, key, value )
         {
@@ -86,6 +111,13 @@ namespace jpp
             if( json_is_object( j ) && json_is_object( value ) )
             {
                 if( __json_object_update( j, value ) == -1 )
+                {
+                    return -1;
+                }
+            }
+            else if( json_is_array( j ) && json_is_array( value ) )
+            {
+                if( json_array_extend( j, value ) == -1 )
                 {
                     return -1;
                 }
@@ -111,7 +143,24 @@ namespace jpp
         {
         case merge_mode_e::update:
             {
+                if( !json_is_object( jb ) || !json_is_object( jm ) )
+                {
+                    return false;
+                }
+
                 if( __json_object_update( jb, jm ) == -1 )
+                {
+                    return false;
+                }
+            }break;
+        case merge_mode_e::update_with_array:
+            {
+                if( !json_is_object( jb ) || !json_is_object( jm ) )
+                {
+                    return false;
+                }
+
+                if( __json_object_update_with_array( jb, jm ) == -1 )
                 {
                     return false;
                 }
