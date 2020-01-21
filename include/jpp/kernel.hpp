@@ -10,6 +10,15 @@ namespace jpp
     typedef void (*jpp_free_t)(void *);
     typedef void (*jpp_error_t)(jpp_int32_t _line, jpp_int32_t _column, jpp_int32_t _position, jpp_string_t _source, jpp_string_t _text, void * _ud);
 
+    object make_string( const char * value );
+    object make_stringn( const char * value, size_t len );
+    object make_integer( jpp_long_t value );
+    object make_real( jpp_double_t value );
+    object make_true();
+    object make_false();
+    object make_boolean( jpp_bool_t _value );
+    object make_null();
+
     void set_object_seed( size_t _seed );
     void set_alloc_funcs( jpp_malloc_t _malloc, jpp_free_t _free );
     object make_object();
