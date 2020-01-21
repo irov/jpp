@@ -389,7 +389,7 @@ namespace jpp
         return object( j, detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
-    bool object::operator == ( bool _value ) const
+    bool object::operator == ( jpp_bool_t _value ) const
     {
         bool value = json_is_true( m_object );
         

@@ -84,7 +84,7 @@ namespace jpp
         object set( jpp_string_t _key, jpp_string_t _value ) const;
 
     public:
-        bool operator == ( bool _value ) const;
+        bool operator == ( jpp_bool_t _value ) const;
         bool operator == ( jpp_int32_t _value ) const;
         bool operator == ( jpp_uint32_t _value ) const;
         bool operator == ( jpp_long_t _value ) const;
