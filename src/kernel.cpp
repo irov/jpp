@@ -5,6 +5,46 @@
 namespace jpp
 {
     //////////////////////////////////////////////////////////////////////////
+    object make_string( const char * value )
+    {
+        return jpp::object( json_string( value ), detail::borrowed );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    object make_stringn( const char * value, size_t len )
+    {
+        return jpp::object( json_stringn( value, len ), detail::borrowed );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    object make_integer( jpp_long_t value )
+    {
+        return jpp::object( json_integer( value ), detail::borrowed );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    object make_real( jpp_double_t value )
+    {
+        return jpp::object( json_real( value ), detail::borrowed );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    object make_true()
+    {
+        return jpp::object( json_true(), detail::borrowed );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    object make_false()
+    {
+        return jpp::object( json_false(), detail::borrowed );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    object make_boolean( jpp_bool_t _value )
+    {
+        return jpp::object( json_boolean( _value ), detail::borrowed );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    object make_null()
+    {
+        return jpp::object( json_null(), detail::borrowed );
+    }
+    //////////////////////////////////////////////////////////////////////////
     void set_object_seed( size_t _seed )
     {
         json_object_seed( _seed );
