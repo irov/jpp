@@ -63,6 +63,9 @@ namespace jpp
         bool operator == ( const base & _base ) const;
         bool operator != ( const base & _base ) const;
 
+    public:
+        bool equal( const base & _base ) const;
+
     protected:
         json_t * m_object;
     };
