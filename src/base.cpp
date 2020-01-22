@@ -110,4 +110,17 @@ namespace jpp
     {
         return !this->operator ==( _base );
     }
+    //////////////////////////////////////////////////////////////////////////
+    bool base::equal( const base & _base ) const
+    {
+        json_t * jbase = _base.ptr();
+        json_t * jthis = this->ptr();
+
+        if( json_equal( jbase, jthis ) == 0 )
+        {
+            return false;
+        }
+
+        return true;
+    }
 }

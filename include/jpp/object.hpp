@@ -84,12 +84,6 @@ namespace jpp
         object set( jpp_string_t _key, jpp_string_t _value ) const;
 
     public:
-        bool is_same( const object & _obj ) const;
-
-    public:
-        bool operator == ( const object & _obj ) const;
-
-    public:
         bool operator == ( jpp_bool_t _value ) const;
         bool operator == ( jpp_int32_t _value ) const;
         bool operator == ( jpp_uint32_t _value ) const;
