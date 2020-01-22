@@ -389,6 +389,26 @@ namespace jpp
         return object( j, detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
+    bool object::is_same( const object & _obj ) const
+    {
+        json_t * jobj = _obj.ptr();
+
+        return m_object == jobj;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    bool object::operator == ( const object & _obj ) const
+    {
+        json_t * jobj = _obj.ptr();
+        json_t * jthis = this->ptr();
+
+        if( json_equal( jobj, jthis ) == 0 )
+        {
+            return false;
+        }
+
+        return true;
+    }
+    //////////////////////////////////////////////////////////////////////////
     bool object::operator == ( jpp_bool_t _value ) const
     {
         bool value = json_is_true( m_object );
