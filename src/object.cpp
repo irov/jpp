@@ -152,6 +152,16 @@ namespace jpp
         return object( j );
     }
     //////////////////////////////////////////////////////////////////////////
+    object object::operator [] ( jpp_mutable_string_t _key ) const
+    {
+        assert( m_object != nullptr );
+        assert( json_is_object( m_object ) == true );
+
+        json_t * j = json_object_get( m_object, _key );
+
+        return object( j );
+    }
+    //////////////////////////////////////////////////////////////////////////
     json_t * object::get( jpp_string_t _key ) const
     {
         assert( m_object != nullptr );
