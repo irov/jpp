@@ -100,5 +100,6 @@ namespace jpp
         bool exist( jpp_string_t _key, jpp::object * _obj ) const;
 
         object operator [] ( jpp_string_t _key ) const;
+        object operator [] ( jpp_mutable_string_t _key ) const;
     };    
 }
