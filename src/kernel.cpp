@@ -185,13 +185,18 @@ namespace jpp
 
         json_t * jcopy = json_deep_copy( j );
 
-        return jpp::object( jcopy );
+        return jpp::object( jcopy, jpp::detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
-    bool merge( const object & _obj, const object & _merge, merge_mode_e _mode )
+    bool merge( const object & _obj, const object & _merge, jpp_bool_t _copy, merge_mode_e _mode )
     {
         json_t * jb = _obj.ptr();
         json_t * jm = _merge.ptr();
+
+        if( _copy == true )
+        {
+            jm = json_deep_copy( jm );
+        }
 
         switch( _mode )
         {
@@ -236,6 +241,11 @@ namespace jpp
         default:
             return false;
             break;
+        }
+
+        if( _copy == true )
+        {
+            json_decref( jm );
         }
 
         return true;
