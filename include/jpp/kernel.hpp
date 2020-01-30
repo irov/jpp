@@ -35,5 +35,5 @@ namespace jpp
     };
 
     object copy( const object & _obj );
-    bool merge( const object & _obj, const object & _merge, merge_mode_e _mode );
+    bool merge( const object & _obj, const object & _merge, jpp_bool_t _copy, merge_mode_e _mode );
 }
