@@ -174,6 +174,20 @@ namespace jpp
         return 0;
     }
     //////////////////////////////////////////////////////////////////////////
+    object copy( const object & _obj )
+    {
+        json_t * j = _obj.ptr();
+
+        if( j == nullptr )
+        {
+            return make_object();
+        }
+
+        json_t * jcopy = json_deep_copy( j );
+
+        return jpp::object( jcopy );
+    }
+    //////////////////////////////////////////////////////////////////////////
     bool merge( const object & _obj, const object & _merge, merge_mode_e _mode )
     {
         json_t * jb = _obj.ptr();
