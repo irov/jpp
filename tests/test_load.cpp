@@ -106,7 +106,7 @@ void jpp_printf( const jpp::object& _obj, uint32_t _ident = 0 )
     }
 }
 //////////////////////////////////////////////////////////////////////////
-bool jpp_test( const char * _filepath )
+jpp::jpp_bool_t jpp_test( const char * _filepath )
 {
     jpp::set_alloc_funcs( &my_jpp_malloc, &my_jpp_free );
 

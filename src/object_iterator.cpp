@@ -28,12 +28,12 @@ namespace jpp
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    bool object_iterator::operator == ( const object_iterator & _it ) const
+    jpp_bool_t object_iterator::operator == ( const object_iterator & _it ) const
     {
         return m_iter == _it.m_iter;
     }
     //////////////////////////////////////////////////////////////////////////
-    bool object_iterator::operator != ( const object_iterator & _it ) const
+    jpp_bool_t object_iterator::operator != ( const object_iterator & _it ) const
     {
         return !this->operator ==( _it );
     }

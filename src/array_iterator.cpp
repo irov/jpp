@@ -21,12 +21,12 @@ namespace jpp
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    bool array_iterator::operator == ( const array_iterator & _it ) const
+    jpp_bool_t array_iterator::operator == ( const array_iterator & _it ) const
     {
         return m_iter == _it.m_iter;
     }
     //////////////////////////////////////////////////////////////////////////
-    bool array_iterator::operator != ( const array_iterator & _it ) const
+    jpp_bool_t array_iterator::operator != ( const array_iterator & _it ) const
     {
         return !this->operator ==( _it );
     }

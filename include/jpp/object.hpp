@@ -84,21 +84,25 @@ namespace jpp
         object set( jpp_string_t _key, jpp_string_t _value ) const;
 
     public:
-        bool operator == ( jpp_bool_t _value ) const;
-        bool operator == ( jpp_int32_t _value ) const;
-        bool operator == ( jpp_uint32_t _value ) const;
-        bool operator == ( jpp_long_t _value ) const;
-        bool operator == ( jpp_float_t _value ) const;
-        bool operator == ( jpp_double_t _value ) const;
-        bool operator == ( jpp_long_double_t _value ) const;
-        bool operator == ( jpp_string_t _value ) const;
+        jpp_bool_t operator == ( jpp_bool_t _value ) const;
+        jpp_bool_t operator == ( jpp_int32_t _value ) const;
+        jpp_bool_t operator == ( jpp_uint32_t _value ) const;
+        jpp_bool_t operator == ( jpp_long_t _value ) const;
+        jpp_bool_t operator == ( jpp_float_t _value ) const;
+        jpp_bool_t operator == ( jpp_double_t _value ) const;
+        jpp_bool_t operator == ( jpp_long_double_t _value ) const;
+        jpp_bool_t operator == ( jpp_string_t _value ) const;
 
     public:
         size_t size() const;
 
     public:
-        bool exist( jpp_string_t _key, jpp::object * _obj ) const;
+        jpp_bool_t exist( jpp_string_t _key, jpp::object * _obj ) const;
 
+    public:
+        jpp_bool_t is_enter( const jpp::object & _obj ) const;
+
+    public:
         object operator [] ( jpp_string_t _key ) const;
         object operator [] ( jpp_mutable_string_t _key ) const;
     };    

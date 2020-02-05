@@ -71,7 +71,7 @@ namespace jpp
         return *this;
     }
     //////////////////////////////////////////////////////////////////////////
-    bool base::invalid() const
+    jpp_bool_t base::invalid() const
     {
         return m_object == nullptr;
     }
@@ -91,27 +91,27 @@ namespace jpp
         m_object = nullptr;
     }
     //////////////////////////////////////////////////////////////////////////
-    bool base::operator == ( invalid_t ) const
+    jpp_bool_t base::operator == ( invalid_t ) const
     {
         return this->invalid();
     }
     //////////////////////////////////////////////////////////////////////////
-    bool base::operator != ( invalid_t ) const
+    jpp_bool_t base::operator != ( invalid_t ) const
     {
         return !this->operator ==( detail::invalid );
     }
     //////////////////////////////////////////////////////////////////////////
-    bool base::operator == ( const base & _base ) const
+    jpp_bool_t base::operator == ( const base & _base ) const
     {
         return m_object == _base.ptr();
     }
     //////////////////////////////////////////////////////////////////////////
-    bool base::operator != ( const base & _base ) const
+    jpp_bool_t base::operator != ( const base & _base ) const
     {
         return !this->operator ==( _base );
     }
     //////////////////////////////////////////////////////////////////////////
-    bool base::equal( const base & _base ) const
+    jpp_bool_t base::equal( const base & _base ) const
     {
         json_t * jbase = _base.ptr();
         json_t * jthis = this->ptr();

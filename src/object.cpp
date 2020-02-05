@@ -37,7 +37,7 @@ namespace jpp
         assert( m_object != nullptr );
         assert( json_is_boolean( m_object ) == true );
 
-        bool result = json_is_true( m_object );
+        jpp_bool_t result = json_is_true( m_object );
 
         return (jpp_bool_t)result;
     }
@@ -122,7 +122,7 @@ namespace jpp
         return (jpp_size_t)size;
     }
     //////////////////////////////////////////////////////////////////////////
-    bool object::exist( jpp_string_t _key, jpp::object * _obj ) const
+    jpp_bool_t object::exist( jpp_string_t _key, jpp::object * _obj ) const
     {
         assert( m_object != nullptr );
         assert( json_is_object( m_object ) == true );
@@ -137,6 +137,34 @@ namespace jpp
         if( _obj != nullptr )
         {
             *_obj = jpp::object( j );
+        }
+
+        return true;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    jpp_bool_t object::is_enter( const jpp::object & _obj ) const
+    {
+        json_t * jb = _obj.ptr();
+
+        assert( json_is_object( m_object ) == true );
+        assert( json_is_object( jb ) == true );
+
+        const char * key;
+        json_t * value;
+
+        json_object_foreach( jb, key, value )
+        {
+            json_t * j = json_object_get( m_object, key );
+
+            if( j == nullptr )
+            {
+                continue;
+            }
+
+            if( json_equal( j, value ) == 0 )
+            {
+                return false;
+            }
         }
 
         return true;
@@ -183,7 +211,7 @@ namespace jpp
 
         assert( json_is_boolean( j ) == true );
 
-        bool value = json_is_true( j );
+        jpp_bool_t value = json_is_true( j );
 
         return value;
     }
@@ -399,70 +427,70 @@ namespace jpp
         return object( j, detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
-    bool object::operator == ( jpp_bool_t _value ) const
+    jpp_bool_t object::operator == ( jpp_bool_t _value ) const
     {
-        bool value = json_is_true( m_object );
+        jpp_bool_t value = json_is_true( m_object );
         
-        bool successful = value == _value;
+        jpp_bool_t successful = value == _value;
 
         return successful;
     }
     //////////////////////////////////////////////////////////////////////////
-    bool object::operator == ( jpp_int32_t _value ) const
+    jpp_bool_t object::operator == ( jpp_int32_t _value ) const
     {
         json_int_t integer = json_integer_value( m_object );
 
-        bool successful = (jpp_int32_t)integer == _value;
+        jpp_bool_t successful = (jpp_int32_t)integer == _value;
 
         return successful;
     }
     //////////////////////////////////////////////////////////////////////////
-    bool object::operator == ( jpp_uint32_t _value ) const
+    jpp_bool_t object::operator == ( jpp_uint32_t _value ) const
     {
         json_int_t integer = json_integer_value( m_object );
 
-        bool successful = (jpp_uint32_t)integer == _value;
+        jpp_bool_t successful = (jpp_uint32_t)integer == _value;
 
         return successful;
     }
     //////////////////////////////////////////////////////////////////////////
-    bool object::operator == ( jpp_long_t _value ) const
+    jpp_bool_t object::operator == ( jpp_long_t _value ) const
     {
         json_int_t integer = json_integer_value( m_object );
 
-        bool successful = (jpp_long_t)integer == _value;
+        jpp_bool_t successful = (jpp_long_t)integer == _value;
 
         return successful;
     }
     //////////////////////////////////////////////////////////////////////////
-    bool object::operator == ( jpp_float_t _value ) const
+    jpp_bool_t object::operator == ( jpp_float_t _value ) const
     {
         double number = json_number_value( m_object );
 
-        bool successful = (jpp_float_t)number == _value;
+        jpp_bool_t successful = (jpp_float_t)number == _value;
 
         return successful;
     }
     //////////////////////////////////////////////////////////////////////////
-    bool object::operator == ( jpp_double_t _value ) const
+    jpp_bool_t object::operator == ( jpp_double_t _value ) const
     {
         double number = json_number_value( m_object );
 
-        bool successful = number == _value;
+        jpp_bool_t successful = number == _value;
 
         return successful;
     }
     //////////////////////////////////////////////////////////////////////////
-    bool object::operator == ( jpp_long_double_t _value ) const
+    jpp_bool_t object::operator == ( jpp_long_double_t _value ) const
     {
         double number = json_number_value( m_object );
 
-        bool successful = (jpp_long_double_t)number == _value;
+        jpp_bool_t successful = (jpp_long_double_t)number == _value;
 
         return successful;
     }
     //////////////////////////////////////////////////////////////////////////
-    bool object::operator == ( jpp_string_t _value ) const
+    jpp_bool_t object::operator == ( jpp_string_t _value ) const
     {
         const char * string = json_string_value( m_object );
 

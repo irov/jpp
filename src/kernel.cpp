@@ -99,7 +99,7 @@ namespace jpp
         return object( jroot, detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
-    bool dump( const object & _obj, jpp_dump_callback_t _callback, void * _ud )
+    jpp_bool_t dump( const object & _obj, jpp_dump_callback_t _callback, void * _ud )
     {
         int writebytes = json_dump_callback( _obj.ptr(), _callback, _ud, JSON_INDENT( 2 ) );
 
@@ -188,7 +188,7 @@ namespace jpp
         return jpp::object( jcopy, jpp::detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
-    bool merge( const object & _obj, const object & _merge, jpp_bool_t _copy, merge_mode_e _mode )
+    jpp_bool_t merge( const object & _obj, const object & _merge, jpp_bool_t _copy, merge_mode_e _mode )
     {
         json_t * jb = _obj.ptr();
         json_t * jm = _merge.ptr();
