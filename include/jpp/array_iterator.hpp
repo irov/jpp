@@ -16,8 +16,8 @@ namespace jpp
         array_iterator( json_t * _obj, jpp_size_t _iter );
 
     public:
-        bool operator == ( const array_iterator & _it ) const;
-        bool operator != ( const array_iterator & _it ) const;
+        jpp_bool_t operator == ( const array_iterator & _it ) const;
+        jpp_bool_t operator != ( const array_iterator & _it ) const;
 
     public:
         array_iterator & operator ++ ();

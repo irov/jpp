@@ -26,8 +26,8 @@ namespace jpp
         object_iterator( json_t * _obj, object_iterator_end_t );
 
     public:
-        bool operator == ( const object_iterator & _it ) const;
-        bool operator != ( const object_iterator & _it ) const;
+        jpp_bool_t operator == ( const object_iterator & _it ) const;
+        jpp_bool_t operator != ( const object_iterator & _it ) const;
 
     public:
         object_iterator & operator ++ ();

@@ -24,7 +24,7 @@ namespace jpp
     object make_object();
     object load( const void * _buffer, size_t _size, jpp_error_t _err, void * _ud );
     object load( jpp_load_callback_t _callback, jpp_error_t _err, void * _ud );
-    bool dump( const object & _obj, jpp_dump_callback_t _callback, void * _ud );
+    jpp_bool_t dump( const object & _obj, jpp_dump_callback_t _callback, void * _ud );
 
     enum class merge_mode_e
     {
@@ -35,5 +35,5 @@ namespace jpp
     };
 
     object copy( const object & _obj );
-    bool merge( const object & _obj, const object & _merge, jpp_bool_t _copy, merge_mode_e _mode );
+    jpp_bool_t merge( const object & _obj, const object & _merge, jpp_bool_t _copy, merge_mode_e _mode );
 }

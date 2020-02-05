@@ -48,7 +48,7 @@ namespace jpp
         const base & operator = ( const base & _base );
 
     public:
-        bool invalid() const;
+        jpp_bool_t invalid() const;
 
     public:
         e_type type() const;
@@ -58,13 +58,13 @@ namespace jpp
         void reset();
 
     public:
-        bool operator == ( invalid_t ) const;
-        bool operator != ( invalid_t ) const;
-        bool operator == ( const base & _base ) const;
-        bool operator != ( const base & _base ) const;
+        jpp_bool_t operator == ( invalid_t ) const;
+        jpp_bool_t operator != ( invalid_t ) const;
+        jpp_bool_t operator == ( const base & _base ) const;
+        jpp_bool_t operator != ( const base & _base ) const;
 
     public:
-        bool equal( const base & _base ) const;
+        jpp_bool_t equal( const base & _base ) const;
 
     protected:
         json_t * m_object;
