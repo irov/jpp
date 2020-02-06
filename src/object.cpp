@@ -142,35 +142,6 @@ namespace jpp
         return true;
     }
     //////////////////////////////////////////////////////////////////////////
-    jpp_bool_t object::is_enter( const jpp::object & _obj ) const
-    {
-        json_t * jb = _obj.ptr();
-
-        assert( json_is_object( m_object ) == true );
-        assert( json_is_object( jb ) == true );
-
-        const char * key;
-        json_t * value;
-
-        json_object_foreach( jb, key, value )
-        {
-            json_t * j = json_object_get( m_object, key );
-
-            if( j == nullptr )
-            {
-                continue;
-            }
-
-            if( json_equal( j, value ) == 0 )
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    //////////////////////////////////////////////////////////////////////////
     jpp_bool_t object::includes( const jpp::object & _obj ) const
     {
         json_t * jb = _obj.ptr();
@@ -459,7 +430,7 @@ namespace jpp
     jpp_bool_t object::operator == ( jpp_bool_t _value ) const
     {
         jpp_bool_t value = json_is_true( m_object );
-        
+
         jpp_bool_t successful = value == _value;
 
         return successful;
