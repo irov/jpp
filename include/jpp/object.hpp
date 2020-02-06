@@ -100,7 +100,6 @@ namespace jpp
         jpp_bool_t exist( jpp_string_t _key, jpp::object * _obj ) const;
 
     public:
-        jpp_bool_t is_enter( const jpp::object & _obj ) const;
         jpp_bool_t includes( const jpp::object & _obj ) const;
 
     public:
