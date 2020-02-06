@@ -169,6 +169,35 @@ namespace jpp
 
         return true;
     }
+
+    //////////////////////////////////////////////////////////////////////////
+    jpp_bool_t object::includes( const jpp::object & _obj ) const
+    {
+        json_t * jb = _obj.ptr();
+
+        assert( json_is_object( m_object ) == true );
+        assert( json_is_object( jb ) == true );
+
+        const char * key;
+        json_t * value;
+
+        json_object_foreach( jb, key, value )
+        {
+            json_t * j = json_object_get( m_object, key );
+
+            if( j == nullptr )
+            {
+                return false;
+            }
+
+            if( json_equal( j, value ) == 0 )
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
     //////////////////////////////////////////////////////////////////////////
     object object::operator [] ( jpp_string_t _key ) const
     {
