@@ -60,6 +60,11 @@ namespace jpp
         template<class T>
         T get( jpp_string_t _key, const T & _default ) const
         {
+            if( m_object == nullptr )
+            {
+                return _default;
+            }
+
             json_t * j = this->get( _key );
 
             if( j == nullptr )
@@ -69,6 +74,7 @@ namespace jpp
 
             T value;
             jpp::cast_object<T>()(object( j ), value);
+
             return value;
         }
 

@@ -202,6 +202,11 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     jpp_bool_t object::get( jpp_string_t _key, jpp_bool_t _default ) const
     {
+        if( m_object == nullptr )
+        {
+            return _default;
+        }
+
         json_t * j = this->get( _key );
 
         if( j == nullptr )
@@ -218,6 +223,11 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     jpp_int32_t object::get( jpp_string_t _key, jpp_int32_t _default ) const
     {
+        if( m_object == nullptr )
+        {
+            return _default;
+        }
+
         json_t * j = this->get( _key );
 
         if( j == nullptr )
@@ -234,6 +244,11 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     jpp_uint32_t object::get( jpp_string_t _key, jpp_uint32_t _default ) const
     {
+        if( m_object == nullptr )
+        {
+            return _default;
+        }
+
         json_t * j = this->get( _key );
 
         if( j == nullptr )
@@ -250,6 +265,11 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     jpp_long_t object::get( jpp_string_t _key, jpp_long_t _default ) const
     {
+        if( m_object == nullptr )
+        {
+            return _default;
+        }
+
         json_t * j = this->get( _key );
 
         if( j == nullptr )
@@ -266,6 +286,11 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     jpp_float_t object::get( jpp_string_t _key, jpp_float_t _default ) const
     {
+        if( m_object == nullptr )
+        {
+            return _default;
+        }
+
         json_t * j = this->get( _key );
 
         if( j == nullptr )
@@ -282,6 +307,11 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     jpp_double_t object::get( jpp_string_t _key, jpp_double_t _default ) const
     {
+        if( m_object == nullptr )
+        {
+            return _default;
+        }
+
         json_t * j = this->get( _key );
 
         if( j == nullptr )
@@ -298,6 +328,11 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     jpp_long_double_t object::get( jpp_string_t _key, jpp_long_double_t _default ) const
     {
+        if( m_object == nullptr )
+        {
+            return _default;
+        }
+
         json_t * j = this->get( _key );
 
         if( j == nullptr )
@@ -314,6 +349,11 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     jpp_string_t object::get( jpp_string_t _key, jpp_string_t _default ) const
     {
+        if( m_object == nullptr )
+        {
+            return _default;
+        }
+
         json_t * j = this->get( _key );
 
         if( j == nullptr )
