@@ -368,7 +368,7 @@ namespace jpp
         return (jpp_string_t)string;
     }
     //////////////////////////////////////////////////////////////////////////
-    object object::set( jpp_string_t _key, const object & _value ) const
+    object object::set( jpp_string_t _key, const object & _value )
     {
         assert( json_is_object( m_object ) == true );
 
@@ -379,7 +379,7 @@ namespace jpp
         return _value;
     }
     //////////////////////////////////////////////////////////////////////////
-    object object::set( jpp_string_t _key, jpp_bool_t _value ) const
+    object object::set( jpp_string_t _key, jpp_bool_t _value )
     {
         assert( json_is_object( m_object ) == true );
 
@@ -390,7 +390,7 @@ namespace jpp
         return object( j, detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
-    object object::set( jpp_string_t _key, jpp_int32_t _value ) const
+    object object::set( jpp_string_t _key, jpp_int32_t _value )
     {
         assert( json_is_object( m_object ) == true );
 
@@ -401,7 +401,7 @@ namespace jpp
         return object( j, detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
-    object object::set( jpp_string_t _key, jpp_uint32_t _value ) const
+    object object::set( jpp_string_t _key, jpp_uint32_t _value )
     {
         assert( json_is_object( m_object ) == true );
 
@@ -412,7 +412,7 @@ namespace jpp
         return object( j, detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
-    object object::set( jpp_string_t _key, jpp_long_t _value ) const
+    object object::set( jpp_string_t _key, jpp_long_t _value )
     {
         assert( json_is_object( m_object ) == true );
 
@@ -423,7 +423,7 @@ namespace jpp
         return object( j, detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
-    object object::set( jpp_string_t _key, jpp_float_t _value ) const
+    object object::set( jpp_string_t _key, jpp_float_t _value )
     {
         assert( json_is_object( m_object ) == true );
 
@@ -434,7 +434,7 @@ namespace jpp
         return object( j, detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
-    object object::set( jpp_string_t _key, jpp_double_t _value ) const
+    object object::set( jpp_string_t _key, jpp_double_t _value )
     {
         assert( json_is_object( m_object ) == true );
 
@@ -445,7 +445,7 @@ namespace jpp
         return object( j, detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
-    object object::set( jpp_string_t _key, jpp_long_double_t _value ) const
+    object object::set( jpp_string_t _key, jpp_long_double_t _value )
     {
         assert( json_is_object( m_object ) == true );
 
@@ -456,7 +456,7 @@ namespace jpp
         return object( j, detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
-    object object::set( jpp_string_t _key, jpp_string_t _value ) const
+    object object::set( jpp_string_t _key, jpp_string_t _value )
     {
         assert( json_is_object( m_object ) == true );
 

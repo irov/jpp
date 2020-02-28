@@ -79,15 +79,15 @@ namespace jpp
         }
 
     public:
-        object set( jpp_string_t _key, const object & _obj ) const;
-        object set( jpp_string_t _key, jpp_bool_t _value ) const;
-        object set( jpp_string_t _key, jpp_int32_t _value ) const;
-        object set( jpp_string_t _key, jpp_uint32_t _value ) const;
-        object set( jpp_string_t _key, jpp_long_t _value ) const;
-        object set( jpp_string_t _key, jpp_float_t _value ) const;
-        object set( jpp_string_t _key, jpp_double_t _value ) const;
-        object set( jpp_string_t _key, jpp_long_double_t _value ) const;
-        object set( jpp_string_t _key, jpp_string_t _value ) const;
+        object set( jpp_string_t _key, const object & _obj );
+        object set( jpp_string_t _key, jpp_bool_t _value );
+        object set( jpp_string_t _key, jpp_int32_t _value );
+        object set( jpp_string_t _key, jpp_uint32_t _value );
+        object set( jpp_string_t _key, jpp_long_t _value );
+        object set( jpp_string_t _key, jpp_float_t _value );
+        object set( jpp_string_t _key, jpp_double_t _value );
+        object set( jpp_string_t _key, jpp_long_double_t _value );
+        object set( jpp_string_t _key, jpp_string_t _value );
 
     public:
         jpp_bool_t operator == ( jpp_bool_t _value ) const;

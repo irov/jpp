@@ -12,6 +12,11 @@ namespace jpp
     {
     }
     //////////////////////////////////////////////////////////////////////////
+    array::array( const object & _obj, borrowed_t )
+        : base( _obj.ptr(), detail::borrowed )
+    {
+    }
+    //////////////////////////////////////////////////////////////////////////
     array::array( object && _obj )
         : base( _obj.ptr(), detail::borrowed )
     {
