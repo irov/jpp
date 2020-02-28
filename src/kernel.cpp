@@ -99,7 +99,7 @@ namespace jpp
         return object( jroot, detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
-    jpp_bool_t dump( const object & _obj, jpp_dump_callback_t _callback, void * _ud )
+    jpp_bool_t dump( const jpp::object & _obj, jpp_dump_callback_t _callback, void * _ud )
     {
         int writebytes = json_dump_callback( _obj.ptr(), _callback, _ud, JSON_INDENT( 2 ) );
 
@@ -111,7 +111,7 @@ namespace jpp
         return true;
     }
     //////////////////////////////////////////////////////////////////////////
-    static int __json_object_update( json_t * object, json_t * other )
+    static int __json_object_update( json_t * object, json_t * other, jpp_bool_t _recursive )
     {
         const char * key;
         json_t * value;
@@ -120,9 +120,9 @@ namespace jpp
         {
             json_t * j = json_object_get( object, key );
 
-            if( json_is_object( j ) && json_is_object( value ) )
+            if( json_is_object( j ) && json_is_object( value ) && _recursive == true )
             {
-                if( __json_object_update( j, value ) == -1 )
+                if( __json_object_update( j, value, _recursive ) == -1 )
                 {
                     return -1;
                 }
@@ -139,7 +139,7 @@ namespace jpp
         return 0;
     }
     //////////////////////////////////////////////////////////////////////////
-    static int __json_object_update_with_array( json_t * object, json_t * other )
+    static int __json_object_update_with_array( json_t * object, json_t * other, jpp_bool_t _recursive )
     {
         const char * key;
         json_t * value;
@@ -148,9 +148,9 @@ namespace jpp
         {
             json_t * j = json_object_get( object, key );
 
-            if( json_is_object( j ) && json_is_object( value ) )
+            if( json_is_object( j ) && json_is_object( value ) && _recursive == true )
             {
-                if( __json_object_update_with_array( j, value ) == -1 )
+                if( __json_object_update_with_array( j, value, _recursive ) == -1 )
                 {
                     return -1;
                 }
@@ -188,7 +188,7 @@ namespace jpp
         return jpp::object( jcopy, jpp::detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
-    jpp_bool_t merge( const object & _obj, const object & _merge, jpp_bool_t _copy, merge_mode_e _mode )
+    jpp_bool_t merge( const jpp::object & _obj, const jpp::object & _merge, jpp_bool_t _copy, jpp_bool_t _recursive, merge_mode_e _mode )
     {
         json_t * jb = _obj.ptr();
         json_t * jm = _merge.ptr();
@@ -207,7 +207,7 @@ namespace jpp
                     return false;
                 }
 
-                if( __json_object_update( jb, jm ) == -1 )
+                if( __json_object_update( jb, jm, _recursive ) == -1 )
                 {
                     return false;
                 }
@@ -219,7 +219,7 @@ namespace jpp
                     return false;
                 }
 
-                if( __json_object_update_with_array( jb, jm ) == -1 )
+                if( __json_object_update_with_array( jb, jm, _recursive ) == -1 )
                 {
                     return false;
                 }
@@ -249,5 +249,93 @@ namespace jpp
         }
 
         return true;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    static jpp_bool_t __json_array_once( json_t * j );
+    static jpp_bool_t __json_object_once( json_t * j );
+    //////////////////////////////////////////////////////////////////////////
+    static jpp_bool_t __json_array_once( json_t * j )
+    {
+        if( j->refcount != 1 )
+        {
+            return false;
+        }
+
+        size_t index;
+        json_t * value;
+
+        json_array_foreach( j, index, value )
+        {
+            if( json_is_object( value ) == true )
+            {
+                if( __json_object_once( value ) == false )
+                {
+                    return false;
+                }
+            }
+            else if( json_is_array( value ) )
+            {
+                if( __json_array_once( value ) == false )
+                {
+                    return false;
+                }
+            }
+            else if( json_is_string( value ) )
+            {
+                if( value->refcount != 1 )
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    static jpp_bool_t __json_object_once( json_t * j )
+    {
+        if( j->refcount != 1 )
+        {
+            return false;
+        }
+
+        const char * key;
+        json_t * value;
+
+        json_object_foreach( j, key, value )
+        {
+            if( json_is_object( value ) == true )
+            {
+                if( __json_object_once( value ) == false )
+                {
+                    return false;
+                }
+            }
+            else if( json_is_array( value ) )
+            {
+                if( __json_array_once( value ) == false )
+                {
+                    return false;
+                }
+            }
+            else if( json_is_string( value ) )
+            {
+                if( value->refcount != 1 )
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    jpp_bool_t once( const jpp::object & _obj )
+    {
+        json_t * j = _obj.ptr();
+
+        jpp_bool_t result = __json_object_once( j );
+
+        return result;
     }
 }

@@ -15,6 +15,7 @@ namespace jpp
 
     public:
         array( const object & _obj );
+        array( const object & _obj, borrowed_t );
         array( object && _obj );
 
     public:
