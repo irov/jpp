@@ -111,6 +111,18 @@ namespace jpp
         return true;
     }
     //////////////////////////////////////////////////////////////////////////
+    jpp_bool_t dump_compact( const jpp::object & _obj, jpp_dump_callback_t _callback, void * _ud )
+    {
+        int writebytes = json_dump_callback( _obj.ptr(), _callback, _ud, JSON_COMPACT );
+
+        if( writebytes == -1 )
+        {
+            return false;
+        }
+
+        return true;
+    }
+    //////////////////////////////////////////////////////////////////////////
     static int __json_object_update( json_t * object, json_t * other, jpp_bool_t _recursive )
     {
         const char * key;

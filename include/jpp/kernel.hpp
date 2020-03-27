@@ -25,6 +25,7 @@ namespace jpp
     object load( const void * _buffer, size_t _size, jpp_error_t _err, void * _ud );
     object load( jpp_load_callback_t _callback, jpp_error_t _err, void * _ud );
     jpp_bool_t dump( const jpp::object & _obj, jpp_dump_callback_t _callback, void * _ud );
+    jpp_bool_t dump_compact( const jpp::object & _obj, jpp_dump_callback_t _callback, void * _ud );
 
     enum class merge_mode_e
     {
