@@ -111,5 +111,16 @@ namespace jpp
     public:
         object operator [] ( jpp_string_t _key ) const;
         object operator [] ( jpp_mutable_string_t _key ) const;
-    };    
+
+    public:
+        template<class T>
+        object operator [] ( const T & _key ) const
+        {
+            jpp_string_t str_key = _key.c_str();
+
+            object j = this->operator []( str_key );
+
+            return j;
+        }
+    };
 }
