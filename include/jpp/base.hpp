@@ -46,6 +46,7 @@ namespace jpp
     public:
         const base & operator = ( invalid_t );
         const base & operator = ( const base & _base );
+        const base & operator = ( base && _base );
 
     public:
         jpp_bool_t invalid() const;
@@ -65,6 +66,9 @@ namespace jpp
 
     public:
         jpp_bool_t equal( const base & _base ) const;
+
+    protected:
+        json_t * get_( jpp_string_t _key ) const;
 
     protected:
         json_t * m_object;
