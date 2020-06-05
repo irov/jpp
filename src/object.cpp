@@ -15,23 +15,6 @@ namespace jpp
         return o;
     }
     //////////////////////////////////////////////////////////////////////////
-    const object & object::operator = ( const object & _obj )
-    {
-        if( m_object != nullptr )
-        {
-            json_decref( m_object );
-        }
-
-        m_object = _obj.ptr();
-
-        if( m_object != nullptr )
-        {
-            json_incref( m_object );
-        }
-
-        return *this;
-    }
-    //////////////////////////////////////////////////////////////////////////
     object::operator jpp_bool_t() const
     {
         assert( m_object != nullptr );
@@ -190,14 +173,14 @@ namespace jpp
         return object( j );
     }
     //////////////////////////////////////////////////////////////////////////
-    json_t * object::get( jpp_string_t _key ) const
+    object object::get( jpp_string_t _key ) const
     {
         assert( m_object != nullptr );
         assert( json_is_object( m_object ) == true );
 
         json_t * j = json_object_get( m_object, _key );
 
-        return j;
+        return object( j );
     }
     //////////////////////////////////////////////////////////////////////////
     jpp_bool_t object::get( jpp_string_t _key, jpp_bool_t _default ) const
@@ -207,7 +190,7 @@ namespace jpp
             return _default;
         }
 
-        json_t * j = this->get( _key );
+        json_t * j = this->get_( _key );
 
         if( j == nullptr )
         {
@@ -228,7 +211,7 @@ namespace jpp
             return _default;
         }
 
-        json_t * j = this->get( _key );
+        json_t * j = this->get_( _key );
 
         if( j == nullptr )
         {
@@ -249,7 +232,7 @@ namespace jpp
             return _default;
         }
 
-        json_t * j = this->get( _key );
+        json_t * j = this->get_( _key );
 
         if( j == nullptr )
         {
@@ -270,7 +253,7 @@ namespace jpp
             return _default;
         }
 
-        json_t * j = this->get( _key );
+        json_t * j = this->get_( _key );
 
         if( j == nullptr )
         {
@@ -291,7 +274,7 @@ namespace jpp
             return _default;
         }
 
-        json_t * j = this->get( _key );
+        json_t * j = this->get_( _key );
 
         if( j == nullptr )
         {
@@ -312,7 +295,7 @@ namespace jpp
             return _default;
         }
 
-        json_t * j = this->get( _key );
+        json_t * j = this->get_( _key );
 
         if( j == nullptr )
         {
@@ -333,7 +316,7 @@ namespace jpp
             return _default;
         }
 
-        json_t * j = this->get( _key );
+        json_t * j = this->get_( _key );
 
         if( j == nullptr )
         {
@@ -354,7 +337,7 @@ namespace jpp
             return _default;
         }
 
-        json_t * j = this->get( _key );
+        json_t * j = this->get_( _key );
 
         if( j == nullptr )
         {
@@ -368,103 +351,96 @@ namespace jpp
         return (jpp_string_t)string;
     }
     //////////////////////////////////////////////////////////////////////////
-    object object::set( jpp_string_t _key, const object & _value )
+    void object::set( jpp_string_t _key, const object & _value )
     {
         assert( json_is_object( m_object ) == true );
 
         json_t * j = _value.ptr();
 
         json_object_set( m_object, _key, j );
-
-        return _value;
     }
     //////////////////////////////////////////////////////////////////////////
-    object object::set( jpp_string_t _key, jpp_bool_t _value )
+    void object::set( jpp_string_t _key, object && _value )
+    {
+        assert( json_is_object( m_object ) == true );
+
+        json_t * j = _value.ptr();
+        
+        json_object_set( m_object, _key, j );
+
+        _value.reset();
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void object::set( jpp_string_t _key, jpp_bool_t _value )
     {
         assert( json_is_object( m_object ) == true );
 
         json_t * j = json_boolean( _value );
 
         json_object_set( m_object, _key, j );
-
-        return object( j, detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
-    object object::set( jpp_string_t _key, jpp_int32_t _value )
+    void object::set( jpp_string_t _key, jpp_int32_t _value )
     {
         assert( json_is_object( m_object ) == true );
 
         json_t * j = json_integer( _value );
 
         json_object_set( m_object, _key, j );
-
-        return object( j, detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
-    object object::set( jpp_string_t _key, jpp_uint32_t _value )
+    void object::set( jpp_string_t _key, jpp_uint32_t _value )
     {
         assert( json_is_object( m_object ) == true );
 
         json_t * j = json_integer( _value );
 
         json_object_set( m_object, _key, j );
-
-        return object( j, detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
-    object object::set( jpp_string_t _key, jpp_long_t _value )
+    void object::set( jpp_string_t _key, jpp_long_t _value )
     {
         assert( json_is_object( m_object ) == true );
 
         json_t * j = json_integer( _value );
 
         json_object_set( m_object, _key, j );
-
-        return object( j, detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
-    object object::set( jpp_string_t _key, jpp_float_t _value )
+    void object::set( jpp_string_t _key, jpp_float_t _value )
     {
         assert( json_is_object( m_object ) == true );
 
         json_t * j = json_real( _value );
 
         json_object_set( m_object, _key, j );
-
-        return object( j, detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
-    object object::set( jpp_string_t _key, jpp_double_t _value )
+    void object::set( jpp_string_t _key, jpp_double_t _value )
     {
         assert( json_is_object( m_object ) == true );
 
         json_t * j = json_real( _value );
 
         json_object_set( m_object, _key, j );
-
-        return object( j, detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
-    object object::set( jpp_string_t _key, jpp_long_double_t _value )
+    void object::set( jpp_string_t _key, jpp_long_double_t _value )
     {
         assert( json_is_object( m_object ) == true );
 
         json_t * j = json_real( (double)_value );
 
         json_object_set( m_object, _key, j );
-
-        return object( j, detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
-    object object::set( jpp_string_t _key, jpp_string_t _value )
+    void object::set( jpp_string_t _key, jpp_string_t _value )
     {
         assert( json_is_object( m_object ) == true );
 
         json_t * j = json_string( _value );
 
         json_object_set( m_object, _key, j );
-
-        return object( j, detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
     jpp_bool_t object::operator == ( jpp_bool_t _value ) const

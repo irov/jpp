@@ -2,6 +2,8 @@
 
 #include "jansson.h"
 
+#include <assert.h>
+
 namespace jpp
 {
     //////////////////////////////////////////////////////////////////////////
@@ -71,6 +73,15 @@ namespace jpp
         return *this;
     }
     //////////////////////////////////////////////////////////////////////////
+    const base & base::operator = ( base && _base )
+    {
+        m_object = _base.ptr();
+
+        _base.reset();        
+
+        return *this;
+    }
+    //////////////////////////////////////////////////////////////////////////
     jpp_bool_t base::invalid() const
     {
         return m_object == nullptr;
@@ -122,5 +133,15 @@ namespace jpp
         }
 
         return true;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    json_t * base::get_( jpp_string_t _key ) const
+    {
+        assert( m_object != nullptr );
+        assert( json_is_object( m_object ) == true );
+
+        json_t * j = json_object_get( m_object, _key );
+
+        return j;
     }
 }
