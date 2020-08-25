@@ -80,7 +80,7 @@ file(GLOB files_public_headers ${PUBLIC_DIR}/*.hpp)
 file(GLOB files_private_headers ${PRIVATE_DIR}/*.hpp)
 file(GLOB files_private_sources ${PRIVATE_DIR}/*.cpp)
 
-INCLUDE_DIRECTORIES(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/include)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 if(JPP_JANSSON_INCLUDE_PATH)
     include_directories(${JPP_JANSSON_INCLUDE_PATH})
