@@ -63,6 +63,14 @@ namespace jpp
         return o;
     }
     //////////////////////////////////////////////////////////////////////////
+    array make_array()
+    {
+        json_t * j = json_array();
+        array a( j, detail::borrowed );
+
+        return a;
+    }
+    //////////////////////////////////////////////////////////////////////////
     object load( const void * _buffer, size_t _size, jpp_error_t _error, void * _ud )
     {
         json_error_t er;
