@@ -105,8 +105,8 @@ namespace jpp
         }
 
     public:
-        void set( jpp_string_t _key, const object & _obj );
-        void set( jpp_string_t _key, object && _obj );
+        void set( jpp_string_t _key, const base & _obj );
+        void set( jpp_string_t _key, base && _obj );
         void set( jpp_string_t _key, jpp_bool_t _value );
         void set( jpp_string_t _key, jpp_int32_t _value );
         void set( jpp_string_t _key, jpp_uint32_t _value );

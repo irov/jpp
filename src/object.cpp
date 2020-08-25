@@ -351,7 +351,7 @@ namespace jpp
         return (jpp_string_t)string;
     }
     //////////////////////////////////////////////////////////////////////////
-    void object::set( jpp_string_t _key, const object & _value )
+    void object::set( jpp_string_t _key, const base & _value )
     {
         assert( json_is_object( m_object ) == true );
 
@@ -360,13 +360,13 @@ namespace jpp
         json_object_set( m_object, _key, j );
     }
     //////////////////////////////////////////////////////////////////////////
-    void object::set( jpp_string_t _key, object && _value )
+    void object::set( jpp_string_t _key, base && _value )
     {
         assert( json_is_object( m_object ) == true );
 
         json_t * j = _value.ptr();
         
-        json_object_set( m_object, _key, j );
+        json_object_set_new( m_object, _key, j );
 
         _value.reset();
     }
@@ -377,7 +377,7 @@ namespace jpp
 
         json_t * j = json_boolean( _value );
 
-        json_object_set( m_object, _key, j );
+        json_object_set_new( m_object, _key, j );
     }
     //////////////////////////////////////////////////////////////////////////
     void object::set( jpp_string_t _key, jpp_int32_t _value )
@@ -386,7 +386,7 @@ namespace jpp
 
         json_t * j = json_integer( _value );
 
-        json_object_set( m_object, _key, j );
+        json_object_set_new( m_object, _key, j );
     }
     //////////////////////////////////////////////////////////////////////////
     void object::set( jpp_string_t _key, jpp_uint32_t _value )
@@ -395,7 +395,7 @@ namespace jpp
 
         json_t * j = json_integer( _value );
 
-        json_object_set( m_object, _key, j );
+        json_object_set_new( m_object, _key, j );
     }
     //////////////////////////////////////////////////////////////////////////
     void object::set( jpp_string_t _key, jpp_long_t _value )
@@ -404,7 +404,7 @@ namespace jpp
 
         json_t * j = json_integer( _value );
 
-        json_object_set( m_object, _key, j );
+        json_object_set_new( m_object, _key, j );
     }
     //////////////////////////////////////////////////////////////////////////
     void object::set( jpp_string_t _key, jpp_float_t _value )
@@ -413,7 +413,7 @@ namespace jpp
 
         json_t * j = json_real( _value );
 
-        json_object_set( m_object, _key, j );
+        json_object_set_new( m_object, _key, j );
     }
     //////////////////////////////////////////////////////////////////////////
     void object::set( jpp_string_t _key, jpp_double_t _value )
@@ -422,7 +422,7 @@ namespace jpp
 
         json_t * j = json_real( _value );
 
-        json_object_set( m_object, _key, j );
+        json_object_set_new( m_object, _key, j );
     }
     //////////////////////////////////////////////////////////////////////////
     void object::set( jpp_string_t _key, jpp_long_double_t _value )
@@ -431,7 +431,7 @@ namespace jpp
 
         json_t * j = json_real( (double)_value );
 
-        json_object_set( m_object, _key, j );
+        json_object_set_new( m_object, _key, j );
     }
     //////////////////////////////////////////////////////////////////////////
     void object::set( jpp_string_t _key, jpp_string_t _value )
@@ -440,7 +440,7 @@ namespace jpp
 
         json_t * j = json_string( _value );
 
-        json_object_set( m_object, _key, j );
+        json_object_set_new( m_object, _key, j );
     }
     //////////////////////////////////////////////////////////////////////////
     jpp_bool_t object::operator == ( jpp_bool_t _value ) const
