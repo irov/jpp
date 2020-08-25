@@ -24,5 +24,8 @@ namespace jpp
     public:
         size_type size() const;
         object operator [] ( size_type _index ) const;
+
+    public:
+        void push_back( const base & _obj );
     };
 }
