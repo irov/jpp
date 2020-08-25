@@ -27,5 +27,6 @@ namespace jpp
 
     public:
         void push_back( const base & _obj );
+        void push_back( float _obj );
     };
 }

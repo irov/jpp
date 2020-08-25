@@ -3,6 +3,8 @@
 #include "jpp/object.hpp"
 #include "jpp/array.hpp"
 
+#include <tuple>
+
 namespace jpp
 {
     typedef jpp_size_t( *jpp_load_callback_t )(void * _buffer, jpp_size_t _size, void * _ud);
@@ -19,11 +21,22 @@ namespace jpp
     object make_false();
     object make_boolean( jpp_bool_t _value );
     object make_null();
+    object make_object();
+    array make_array();
+
+    template<class ... Args>
+    array make_tuple( Args && ... _args )
+    {
+        array a = make_array();
+
+        (a.push_back( _args ), ...);
+
+        return a;
+    }
 
     void set_object_seed( size_t _seed );
     void set_alloc_funcs( jpp_malloc_t _malloc, jpp_free_t _free );
-    object make_object();
-    array make_array();
+
     object load( const void * _buffer, size_t _size, jpp_error_t _err, void * _ud );
     object load( jpp_load_callback_t _callback, jpp_error_t _err, void * _ud );
     jpp_bool_t dump( const jpp::object & _obj, jpp_dump_callback_t _callback, void * _ud );

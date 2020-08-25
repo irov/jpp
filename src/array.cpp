@@ -57,4 +57,14 @@ namespace jpp
 
         json_array_append( m_object, j );
     }
+    //////////////////////////////////////////////////////////////////////////
+    void array::push_back( float _value )
+    {
+        assert( m_object != nullptr );
+        assert( json_is_array( m_object ) == true );
+
+        json_t * j = json_real( _value );
+
+        json_array_append_new( m_object, j );
+    }
 }
