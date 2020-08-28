@@ -136,6 +136,8 @@ namespace jpp
         jpp_bool_t includes( const jpp::object & _obj ) const;
 
     public:
+        object operator [] ( int32_t _index ) const;
+        object operator [] ( uint32_t _index ) const;
         object operator [] ( jpp_string_t _key ) const;
         object operator [] ( jpp_mutable_string_t _key ) const;
 

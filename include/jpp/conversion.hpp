@@ -10,6 +10,7 @@ namespace jpp
     class conversion
     {
     public:
+        conversion( const object & _obj );
         conversion( json_t * _obj );
         ~conversion();
 
