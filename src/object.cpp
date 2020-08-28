@@ -153,6 +153,26 @@ namespace jpp
         return true;
     }
     //////////////////////////////////////////////////////////////////////////
+    object object::operator [] ( int32_t _index ) const
+    {
+        assert( m_object != nullptr );
+        assert( json_is_array( m_object ) == true );
+
+        json_t * j = json_array_get( m_object, _index );
+
+        return object( j );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    object object::operator [] ( uint32_t _index ) const
+    {
+        assert( m_object != nullptr );
+        assert( json_is_array( m_object ) == true );
+
+        json_t * j = json_array_get( m_object, _index );
+
+        return object( j );
+    }
+    //////////////////////////////////////////////////////////////////////////
     object object::operator [] ( jpp_string_t _key ) const
     {
         assert( m_object != nullptr );
