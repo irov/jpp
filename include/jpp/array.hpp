@@ -2,6 +2,7 @@
 
 #include "jpp/base.hpp"
 #include "jpp/object.hpp"
+#include "jpp/cast.hpp"
 
 namespace jpp
 {
@@ -25,8 +26,16 @@ namespace jpp
         size_type size() const;
         object operator [] ( size_type _index ) const;
 
+    protected:
+        void push_back_( json_t * _j );
+
     public:
-        void push_back( const base & _obj );
-        void push_back( float _obj );
+        template<class T>
+        void push_back( T _value )
+        {
+            json_t * j = cast_value( _value );
+
+            this->push_back_( j );
+        }
     };
 }

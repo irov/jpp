@@ -1,6 +1,7 @@
 #pragma once
 
 #include "jpp/base.hpp"
+#include "jpp/cast.hpp"
 
 #include <utility>
 
@@ -104,17 +105,17 @@ namespace jpp
             return std::move( value );
         }
 
+    protected:
+        void set_( jpp_string_t _key, json_t * _value );
+
     public:
-        void set( jpp_string_t _key, const base & _obj );
-        void set( jpp_string_t _key, base && _obj );
-        void set( jpp_string_t _key, jpp_bool_t _value );
-        void set( jpp_string_t _key, jpp_int32_t _value );
-        void set( jpp_string_t _key, jpp_uint32_t _value );
-        void set( jpp_string_t _key, jpp_long_t _value );
-        void set( jpp_string_t _key, jpp_float_t _value );
-        void set( jpp_string_t _key, jpp_double_t _value );
-        void set( jpp_string_t _key, jpp_long_double_t _value );
-        void set( jpp_string_t _key, jpp_string_t _value );
+        template<class T>
+        void set( jpp_string_t _key, T _value )
+        {
+            json_t * j = cast_value( _value );
+
+            this->set_( _key, j );
+        }
 
     public:
         jpp_bool_t operator == ( jpp_bool_t _value ) const;

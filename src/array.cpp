@@ -48,23 +48,12 @@ namespace jpp
         return object( j );
     }
     //////////////////////////////////////////////////////////////////////////
-    void array::push_back( const base & _obj )
+    void array::push_back_( json_t * _j )
     {
         assert( m_object != nullptr );
         assert( json_is_array( m_object ) == true );
 
-        json_t * j = _obj.ptr();
-
-        json_array_append( m_object, j );
+        json_array_append( m_object, _j );
     }
     //////////////////////////////////////////////////////////////////////////
-    void array::push_back( float _value )
-    {
-        assert( m_object != nullptr );
-        assert( json_is_array( m_object ) == true );
-
-        json_t * j = json_real( _value );
-
-        json_array_append_new( m_object, j );
-    }
 }
