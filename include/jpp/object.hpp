@@ -7,6 +7,14 @@
 
 namespace jpp
 {
+    class object;
+
+    template<class T>
+    struct cast_object_extern
+    {
+        void operator()( const jpp::object & _obj, T * _value ) const;
+    };
+
     class object
         : public base
     {
@@ -112,4 +120,11 @@ namespace jpp
             return std::move( j );
         }
     };
+    //////////////////////////////////////////////////////////////////////////
+    template<class T>
+    void cast_object_internal::operator()( json_t * _j, T * _value ) const
+    {
+        jpp::cast_object_extern<T>()(object( _j ), _value);
+    }
+    //////////////////////////////////////////////////////////////////////////
 }

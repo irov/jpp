@@ -8,12 +8,6 @@ namespace jpp
     class object;
     class array;
 
-    template<class T>
-    struct cast_object_extern
-    {
-        void operator()( const jpp::object & _obj, T * _value ) const;
-    };
-
     struct cast_object_internal
     {
         void operator()( json_t * _j, jpp::base * _value ) const;
@@ -35,10 +29,7 @@ namespace jpp
         }
 
         template<class T>
-        void operator()( json_t * _j, T * _value ) const
-        {
-            jpp::cast_object_extern<T>()(object( _j ), _value);
-        }
+        void operator()( json_t * _j, T * _value ) const;
 
         json_t * operator()( const jpp::base & _value ) const;
         json_t * operator()( jpp_bool_t _value ) const;
