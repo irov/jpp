@@ -77,7 +77,7 @@ namespace jpp
     {
         m_object = _base.ptr();
 
-        _base.reset();        
+        _base.reset();
 
         return *this;
     }
@@ -135,7 +135,15 @@ namespace jpp
         return true;
     }
     //////////////////////////////////////////////////////////////////////////
-    json_t * base::get_( jpp_string_t _key ) const
+    void base::set_( const char * _key, json_t * _value )
+    {
+        assert( m_object != nullptr );
+        assert( json_is_object( m_object ) == true );
+
+        json_object_set_new( m_object, _key, _value );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    json_t * base::get_( const char * _key ) const
     {
         assert( m_object != nullptr );
         assert( json_is_object( m_object ) == true );

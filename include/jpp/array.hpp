@@ -33,9 +33,15 @@ namespace jpp
         template<class T>
         void push_back( T _value )
         {
-            json_t * j = cast_value( _value );
+            json_t * j = cast_object_internal()(_value);
 
             this->push_back_( j );
         }
+
+    public:
+        void clear();
+        void remove( size_type _index );
+        void remove_back();
+        void remove_front();
     };
 }

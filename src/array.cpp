@@ -56,4 +56,41 @@ namespace jpp
         json_array_append( m_object, _j );
     }
     //////////////////////////////////////////////////////////////////////////
+    void array::clear()
+    {
+        assert( m_object != nullptr );
+        assert( json_is_array( m_object ) == true );
+
+        json_array_clear( m_object );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void array::remove( size_type _index )
+    {
+        assert( m_object != nullptr );
+        assert( json_is_array( m_object ) == true );
+        assert( json_array_size( m_object ) > _index );
+
+        json_array_remove( m_object, _index );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void array::remove_back()
+    {
+        assert( m_object != nullptr );
+        assert( json_is_array( m_object ) == true );
+        assert( json_array_size( m_object ) != 0 );
+
+        size_t count = json_array_size( m_object );
+
+        json_array_remove( m_object, count - 1 );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void array::remove_front()
+    {
+        assert( m_object != nullptr );
+        assert( json_is_array( m_object ) == true );
+        assert( json_array_size( m_object ) != 0 );
+
+        json_array_remove( m_object, 0 );
+    }
+    //////////////////////////////////////////////////////////////////////////
 }

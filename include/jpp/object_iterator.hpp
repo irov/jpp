@@ -11,7 +11,7 @@ namespace jpp
 
     struct object_iterator_pair
     {
-        jpp_string_t key;
+        const char * key;
         jpp::object value;
     };
 
