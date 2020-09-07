@@ -7,14 +7,6 @@
 
 namespace jpp
 {
-    class object;
-
-    template<class T>
-    struct cast_object
-    {
-        void operator()( const jpp::object & _obj, T & _value ) const;
-    };
-
     class object
         : public base
     {
@@ -24,16 +16,6 @@ namespace jpp
         using base::operator==;
 
     public:
-        operator jpp_bool_t() const;
-        operator jpp_int32_t() const;
-        operator jpp_uint32_t() const;
-        operator jpp_long_t() const;
-        operator jpp_float_t() const;
-        operator jpp_double_t() const;
-        operator jpp_long_double_t() const;
-        operator jpp_string_t () const;
-
-    public:
         static const object & none();
 
     public:
@@ -41,7 +23,8 @@ namespace jpp
         operator T () const
         {
             T value;
-            jpp::cast_object<T>()(*this, value);
+            jpp::cast_object_internal()(m_object, &value);
+
             return std::move( value );
         }
 
@@ -49,19 +32,18 @@ namespace jpp
         operator json_t * () const = delete;
 
     public:
-        object get( jpp_string_t _key ) const;
-        jpp_bool_t get( jpp_string_t _key, jpp_bool_t _default ) const;
-        jpp_int32_t get( jpp_string_t _key, jpp_int32_t _default ) const;
-        jpp_uint32_t get( jpp_string_t _key, jpp_uint32_t _default ) const;
-        jpp_long_t get( jpp_string_t _key, jpp_long_t _default ) const;
-        jpp_float_t get( jpp_string_t _key, jpp_float_t _default ) const;
-        jpp_double_t get( jpp_string_t _key, jpp_double_t _default ) const;
-        jpp_long_double_t get( jpp_string_t _key, jpp_long_double_t _default ) const;
-        jpp_string_t get( jpp_string_t _key, jpp_string_t _default ) const;
+        object get( const char * _key ) const;
 
     public:
+        const char * get( const char * _key, const char * _default ) const
+        {
+            const char * value = this->get<const char *>( _key, _default );
+
+            return value;
+        }
+
         template<class T>
-        T get( jpp_string_t _key, const T & _default ) const
+        T get( const char * _key, T _default ) const
         {
             if( m_object == nullptr )
             {
@@ -76,62 +58,40 @@ namespace jpp
             }
 
             T value;
-            jpp::cast_object<T>()(object( j ), value);
+            jpp::cast_object_internal()(j, &value);
 
             return std::move( value );
         }
 
     public:
         template<class T>
-        typename std::remove_reference<T>::type get( jpp_string_t _key, T && _default ) const
+        void set( const char * _key, T _value )
         {
-            typedef typename std::remove_reference<T>::type RRT;
-
-            if( m_object == nullptr )
-            {
-                return std::forward<RRT &&>( _default );
-            }
-
-            json_t * j = this->get_( _key );
-
-            if( j == nullptr )
-            {
-                return std::forward<RRT &&>( _default );
-            }
-
-            RRT value;
-            jpp::cast_object<RRT>()(object( j ), value);
-
-            return std::move( value );
-        }
-
-    protected:
-        void set_( jpp_string_t _key, json_t * _value );
-
-    public:
-        template<class T>
-        void set( jpp_string_t _key, T _value )
-        {
-            json_t * j = cast_value( _value );
+            json_t * j = cast_object_internal()(_value);
 
             this->set_( _key, j );
         }
 
     public:
-        jpp_bool_t operator == ( jpp_bool_t _value ) const;
-        jpp_bool_t operator == ( jpp_int32_t _value ) const;
-        jpp_bool_t operator == ( jpp_uint32_t _value ) const;
-        jpp_bool_t operator == ( jpp_long_t _value ) const;
-        jpp_bool_t operator == ( jpp_float_t _value ) const;
-        jpp_bool_t operator == ( jpp_double_t _value ) const;
-        jpp_bool_t operator == ( jpp_long_double_t _value ) const;
-        jpp_bool_t operator == ( jpp_string_t _value ) const;
+        jpp_bool_t operator == ( const jpp::object & _value ) const;
+        jpp_bool_t operator == ( const char * _value ) const;
+
+        template<class T>
+        jpp_bool_t operator == ( T _value ) const
+        {
+            T value;
+            jpp::cast_object_internal()(m_object, &value);
+
+            jpp_bool_t successful = (value == _value);
+
+            return successful;
+        }
 
     public:
         size_t size() const;
 
     public:
-        jpp_bool_t exist( jpp_string_t _key, jpp::object * _obj ) const;
+        jpp_bool_t exist( const char * _key, jpp::object * _obj ) const;
 
     public:
         jpp_bool_t includes( const jpp::object & _obj ) const;
@@ -139,14 +99,13 @@ namespace jpp
     public:
         object operator [] ( int32_t _index ) const;
         object operator [] ( uint32_t _index ) const;
-        object operator [] ( jpp_string_t _key ) const;
-        object operator [] ( jpp_mutable_string_t _key ) const;
+        object operator [] ( const char * _key ) const;
 
     public:
         template<class T>
         object operator [] ( const T & _key ) const
         {
-            jpp_string_t str_key = _key.c_str();
+            const char * str_key = _key.c_str();
 
             object j = this->operator []( str_key );
 

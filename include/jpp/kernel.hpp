@@ -11,7 +11,7 @@ namespace jpp
     typedef int (*jpp_dump_callback_t)(const char * _buffer, jpp_size_t _size, void * _ud);
     typedef void * (*jpp_malloc_t)(jpp_size_t);
     typedef void (*jpp_free_t)(void *);
-    typedef void (*jpp_error_t)(jpp_int32_t _line, jpp_int32_t _column, jpp_int32_t _position, jpp_string_t _source, jpp_string_t _text, void * _ud);
+    typedef void (*jpp_error_t)(jpp_int32_t _line, jpp_int32_t _column, jpp_int32_t _position, const char * _source, const char * _text, void * _ud);
 
     object make_string( const char * value );
     object make_stringn( const char * value, size_t len );
