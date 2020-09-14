@@ -45,7 +45,7 @@ namespace jpp
         return (jpp_size_t)size;
     }
     //////////////////////////////////////////////////////////////////////////
-    jpp_bool_t object::exist( const char * _key, jpp::object * _obj ) const
+    jpp_bool_t object::exist( const char * _key, jpp::object * const _obj ) const
     {
         assert( m_object != nullptr );
         assert( json_is_object( m_object ) == true );

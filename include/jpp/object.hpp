@@ -12,7 +12,7 @@ namespace jpp
     template<class T>
     struct cast_object_extern
     {
-        void operator()( const jpp::object & _obj, T * _value ) const;
+        void operator()( const jpp::object & _obj, T * const _value ) const;
     };
 
     class object
@@ -99,7 +99,7 @@ namespace jpp
         size_t size() const;
 
     public:
-        jpp_bool_t exist( const char * _key, jpp::object * _obj ) const;
+        jpp_bool_t exist( const char * _key, jpp::object * const _obj ) const;
 
     public:
         jpp_bool_t includes( const jpp::object & _obj ) const;
@@ -122,7 +122,7 @@ namespace jpp
     };
     //////////////////////////////////////////////////////////////////////////
     template<class T>
-    void cast_object_internal::operator()( json_t * _j, T * _value ) const
+    void cast_object_internal::operator()( json_t * _j, T * const _value ) const
     {
         jpp::cast_object_extern<T>()(object( _j ), _value);
     }
