@@ -116,6 +116,16 @@ namespace jpp
 
             return std::move( o );
         }
+
+        template<class T>
+        object operator [] ( const T & _key ) const
+        {
+            const char * key_str = _key.c_str();
+
+            object o = this->operator []( key_str );
+
+            return std::move( o );
+        }
     };
     //////////////////////////////////////////////////////////////////////////
     template<class T>
