@@ -109,15 +109,12 @@ namespace jpp
         object operator [] ( uint32_t _index ) const;
         object operator [] ( const char * _key ) const;
 
-    public:
-        template<class T>
-        object operator [] ( const T & _key ) const
+        template<size_t I>
+        object operator [] ( const char( &_key )[I] ) const
         {
-            const char * str_key = _key.c_str();
+            object o = this->operator []( _key );
 
-            object j = this->operator []( str_key );
-
-            return std::move( j );
+            return std::move( o );
         }
     };
     //////////////////////////////////////////////////////////////////////////
