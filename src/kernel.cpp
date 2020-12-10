@@ -314,6 +314,11 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     static jpp_bool_t __json_object_once( json_t * j )
     {
+        if( j->refcount == (size_t)-1 )
+        {
+            return true;
+        }
+
         if( j->refcount != 1 )
         {
             return false;
