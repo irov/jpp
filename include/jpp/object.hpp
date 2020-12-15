@@ -114,7 +114,7 @@ namespace jpp
         {
             object o = this->operator []( _key );
 
-            return std::move( o );
+            return o;
         }
 
         template<class T>
@@ -124,7 +124,7 @@ namespace jpp
 
             object o = this->operator []( key_str );
 
-            return std::move( o );
+            return o;
         }
     };
     //////////////////////////////////////////////////////////////////////////
