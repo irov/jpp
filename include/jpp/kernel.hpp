@@ -13,21 +13,21 @@ namespace jpp
     typedef void (*jpp_free_t)(void *);
     typedef void (*jpp_error_t)(jpp_int32_t _line, jpp_int32_t _column, jpp_int32_t _position, const char * _source, const char * _text, void * _ud);
 
-    object make_string( const char * value );
-    object make_stringn( const char * value, size_t len );
-    object make_integer( jpp_long_t value );
-    object make_real( jpp_double_t value );
-    object make_true();
-    object make_false();
-    object make_boolean( jpp_bool_t _value );
-    object make_null();
-    object make_object();
-    array make_array();
+    jpp::object make_string( const char * value );
+    jpp::object make_stringn( const char * value, size_t len );
+    jpp::object make_integer( jpp_long_t value );
+    jpp::object make_real( jpp_double_t value );
+    jpp::object make_true();
+    jpp::object make_false();
+    jpp::object make_boolean( jpp_bool_t _value );
+    jpp::object make_null();
+    jpp::object make_object();
+    jpp::array make_array();
 
     template<class ... Args>
-    array make_tuple( Args && ... _args )
+    jpp::array make_tuple( Args && ... _args )
     {
-        array a = make_array();
+        array a = jpp::make_array();
 
         (a.push_back( _args ), ...);
 
@@ -37,8 +37,8 @@ namespace jpp
     void set_object_seed( size_t _seed );
     void set_alloc_funcs( jpp_malloc_t _malloc, jpp_free_t _free );
 
-    object load( const void * _buffer, size_t _size, jpp_error_t _err, void * _ud );
-    object load( jpp_load_callback_t _callback, jpp_error_t _err, void * _ud );
+    jpp::object load( const void * _buffer, size_t _size, jpp_error_t _err, void * _ud );
+    jpp::object load( jpp_load_callback_t _callback, jpp_error_t _err, void * _ud );
     jpp_bool_t dump( const jpp::object & _obj, jpp_dump_callback_t _callback, void * _ud );
     jpp_bool_t dump_compact( const jpp::object & _obj, jpp_dump_callback_t _callback, void * _ud );
 
@@ -50,7 +50,8 @@ namespace jpp
         missing
     };
 
-    object copy( const jpp::object & _obj );
+    jpp::object copy( const jpp::object & _obj );
+    jpp::array copy( const jpp::array & _array );
     jpp_bool_t merge( const jpp::object & _obj, const jpp::object & _merge, jpp_bool_t _copy, jpp_bool_t _recursive, merge_mode_e _mode );
     jpp_bool_t once( const jpp::object & _obj );
 }
