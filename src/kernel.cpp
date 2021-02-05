@@ -208,6 +208,20 @@ namespace jpp
         return jpp::object( jcopy, jpp::detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
+    jpp::array copy( const jpp::array & _array )
+    {
+        json_t * j = _array.ptr();
+
+        if( j == nullptr )
+        {
+            return make_object();
+        }
+
+        json_t * jcopy = json_deep_copy( j );
+
+        return jpp::array( jcopy, jpp::detail::borrowed );
+    }
+    //////////////////////////////////////////////////////////////////////////
     jpp_bool_t merge( const jpp::object & _obj, const jpp::object & _merge, jpp_bool_t _copy, jpp_bool_t _recursive, merge_mode_e _mode )
     {
         json_t * jb = _obj.ptr();
