@@ -10,7 +10,7 @@ namespace jpp
         return jpp::object( json_string( value ), detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
-    object make_stringn( const char * value, size_t len )
+    object make_stringn( const char * value, jpp_size_t len )
     {
         return jpp::object( json_stringn( value, len ), detail::borrowed );
     }
@@ -45,7 +45,7 @@ namespace jpp
         return jpp::object( json_null(), detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
-    void set_object_seed( size_t _seed )
+    void set_object_seed( jpp_size_t _seed )
     {
         json_object_seed( _seed );
     }
@@ -71,7 +71,7 @@ namespace jpp
         return a;
     }
     //////////////////////////////////////////////////////////////////////////
-    object load( const void * _buffer, size_t _size, jpp_error_t _error, void * _ud )
+    object load( const void * _buffer, jpp_size_t _size, jpp_error_t _error, void * _ud )
     {
         json_error_t er;
         json_t * jroot = json_loadb( (const char *)_buffer, _size, 0, &er );

@@ -14,7 +14,7 @@ namespace jpp
     typedef void (*jpp_error_t)(jpp_int32_t _line, jpp_int32_t _column, jpp_int32_t _position, const char * _source, const char * _text, void * _ud);
 
     jpp::object make_string( const char * value );
-    jpp::object make_stringn( const char * value, size_t len );
+    jpp::object make_stringn( const char * value, jpp_size_t len );
     jpp::object make_integer( jpp_long_t value );
     jpp::object make_real( jpp_double_t value );
     jpp::object make_true();
@@ -34,10 +34,10 @@ namespace jpp
         return a;
     }
 
-    void set_object_seed( size_t _seed );
+    void set_object_seed( jpp_size_t _seed );
     void set_alloc_funcs( jpp_malloc_t _malloc, jpp_free_t _free );
 
-    jpp::object load( const void * _buffer, size_t _size, jpp_error_t _err, void * _ud );
+    jpp::object load( const void * _buffer, jpp_size_t _size, jpp_error_t _err, void * _ud );
     jpp::object load( jpp_load_callback_t _callback, jpp_error_t _err, void * _ud );
     jpp_bool_t dump( const jpp::object & _obj, jpp_dump_callback_t _callback, void * _ud );
     jpp_bool_t dump_compact( const jpp::object & _obj, jpp_dump_callback_t _callback, void * _ud );
