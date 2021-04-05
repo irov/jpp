@@ -35,14 +35,24 @@ namespace jpp
         return true;
     }
     //////////////////////////////////////////////////////////////////////////
-    jpp_size_t object::size() const
+    object::size_type object::size() const
     {
         assert( m_object != nullptr );
         assert( json_is_object( m_object ) == true );
 
         size_t size = json_object_size( m_object );
 
-        return (jpp_size_t)size;
+        return (object::size_type)size;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    bool object::empty() const
+    {
+        assert( m_object != nullptr );
+        assert( json_is_object( m_object ) == true );
+
+        size_t size = json_object_size( m_object );
+
+        return size == 0;
     }
     //////////////////////////////////////////////////////////////////////////
     jpp_bool_t object::exist( const char * _key, jpp::object * const _obj ) const

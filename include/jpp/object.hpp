@@ -24,6 +24,9 @@ namespace jpp
         using base::operator==;
 
     public:
+        typedef jpp_size_t size_type;
+
+    public:
         static const object & none();
 
     public:
@@ -96,7 +99,8 @@ namespace jpp
         }
 
     public:
-        size_t size() const;
+        size_type size() const;
+        bool empty() const;
 
     public:
         jpp_bool_t exist( const char * _key, jpp::object * const _obj ) const;
@@ -109,7 +113,7 @@ namespace jpp
         object operator [] ( uint32_t _index ) const;
         object operator [] ( const char * _key ) const;
 
-        template<size_t I>
+        template<jpp_size_t I>
         object operator [] ( const char( &_key )[I] ) const
         {
             object o = this->operator []( _key );

@@ -6,7 +6,7 @@
 static size_t musage = 0;
 
 //////////////////////////////////////////////////////////////////////////
-static size_t my_jpp_load_callback( void* _buffer, size_t _size, void* _ud )
+static size_t my_jpp_load_callback( void* _buffer, jpp::jpp_size_t _size, void* _ud )
 {
     FILE* f = (FILE*)_ud;
 
@@ -15,7 +15,7 @@ static size_t my_jpp_load_callback( void* _buffer, size_t _size, void* _ud )
     return r;
 }
 //////////////////////////////////////////////////////////////////////////
-static void* my_jpp_malloc( size_t _size )
+static void* my_jpp_malloc( jpp::jpp_size_t _size )
 {
     void* ptr = malloc( _size + sizeof( size_t ) );
 

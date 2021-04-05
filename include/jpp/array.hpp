@@ -9,10 +9,11 @@ namespace jpp
     class array
         : public base
     {
+    public:
         using base::base;
 
     public:
-        typedef size_t size_type;
+        typedef jpp_size_t size_type;
 
     public:
         array( const object & _obj );
@@ -24,6 +25,9 @@ namespace jpp
 
     public:
         size_type size() const;
+        bool empty() const;
+
+    public:
         object operator [] ( size_type _index ) const;
 
     protected:
