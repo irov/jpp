@@ -8,7 +8,7 @@
 namespace jpp
 {
     //////////////////////////////////////////////////////////////////////////
-    const object & object::none()
+    const jpp::object & object::none()
     {
         static object o( detail::invalid );
 
@@ -35,14 +35,14 @@ namespace jpp
         return true;
     }
     //////////////////////////////////////////////////////////////////////////
-    object::size_type object::size() const
+    jpp::object::size_type object::size() const
     {
         assert( m_object != nullptr );
         assert( json_is_object( m_object ) == true );
 
         size_t size = json_object_size( m_object );
 
-        return (object::size_type)size;
+        return (jpp::object::size_type)size;
     }
     //////////////////////////////////////////////////////////////////////////
     bool object::empty() const
@@ -130,7 +130,7 @@ namespace jpp
 
         json_t * j = json_object_get( m_object, _key );
 
-        return object( j );
+        return jpp::object( j );
     }
     //////////////////////////////////////////////////////////////////////////
     object object::get( const char * _key ) const
@@ -140,7 +140,14 @@ namespace jpp
 
         json_t * j = json_object_get( m_object, _key );
 
-        return object( j );
+        return jpp::object( j );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    const char * object::get( const char * _key, const char * _default ) const
+    {
+        const char * value = this->get<const char *>( _key, _default );
+
+        return value;
     }
     //////////////////////////////////////////////////////////////////////////
 }

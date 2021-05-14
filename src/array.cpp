@@ -7,37 +7,37 @@
 namespace jpp
 {
     //////////////////////////////////////////////////////////////////////////
-    array::array( const object & _obj )
+    array::array( const jpp::object & _obj )
         : base( _obj.ptr() )
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    array::array( const object & _obj, borrowed_t )
+    array::array( const jpp::object & _obj, jpp::borrowed_t )
         : base( _obj.ptr(), detail::borrowed )
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    array::array( object && _obj )
+    array::array( jpp::object && _obj )
         : base( _obj.ptr(), detail::borrowed )
     {
         _obj.reset();
     }
     //////////////////////////////////////////////////////////////////////////
-    const array & array::none()
+    const jpp::array & array::none()
     {
-        static array a( detail::invalid );
+        static jpp::array a( detail::invalid );
 
         return a;
     }
     //////////////////////////////////////////////////////////////////////////
-    array::size_type array::size() const
+    jpp::array::size_type array::size() const
     {
         assert( m_object != nullptr );
         assert( json_is_array( m_object ) == true );
 
         size_t size = json_array_size( m_object );
 
-        return (array::size_type)size;
+        return (jpp::array::size_type)size;
     }
     //////////////////////////////////////////////////////////////////////////
     bool array::empty() const
@@ -50,14 +50,14 @@ namespace jpp
         return size == 0;
     }
     //////////////////////////////////////////////////////////////////////////
-    object array::operator [] ( array::size_type _index ) const
+    jpp::object array::operator [] ( jpp::array::size_type _index ) const
     {
         assert( m_object != nullptr );
         assert( json_is_array( m_object ) == true );
 
         json_t * j = json_array_get( m_object, _index );
 
-        return object( j );
+        return jpp::object( j );
     }
     //////////////////////////////////////////////////////////////////////////
     void array::push_back_( json_t * _j )

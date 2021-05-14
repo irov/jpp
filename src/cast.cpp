@@ -104,9 +104,21 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     json_t * cast_object_internal::operator()( const base & _value ) const
     {
-        json_t * j = _value.ptr();
+        json_t * j = _value.ret();
 
-        json_incref( j );
+        return j;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    json_t * cast_object_internal::operator()( const jpp::object & _value ) const
+    {
+        json_t * j = _value.ret();
+
+        return j;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    json_t * cast_object_internal::operator()( const jpp::array & _value ) const
+    {
+        json_t * j = _value.ret();
 
         return j;
     }
@@ -156,6 +168,13 @@ namespace jpp
     json_t * cast_object_internal::operator()( jpp_long_double_t _value ) const
     {
         json_t * j = json_real( (double)_value );
+
+        return j;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    json_t * cast_object_internal::operator()( char * _value ) const
+    {
+        json_t * j = json_string( _value );
 
         return j;
     }

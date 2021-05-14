@@ -27,7 +27,7 @@ namespace jpp
     template<class ... Args>
     jpp::array make_tuple( Args && ... _args )
     {
-        array a = jpp::make_array();
+        jpp::array a = jpp::make_array();
 
         (a.push_back( _args ), ...);
 

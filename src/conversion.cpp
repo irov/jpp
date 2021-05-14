@@ -6,7 +6,7 @@
 namespace jpp
 {
     //////////////////////////////////////////////////////////////////////////
-    conversion::conversion( const object & _obj )
+    conversion::conversion( const jpp::object & _obj )
         : m_obj( _obj.ptr() )
     {
     }

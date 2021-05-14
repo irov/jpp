@@ -5,42 +5,42 @@
 namespace jpp
 {
     //////////////////////////////////////////////////////////////////////////
-    object make_string( const char * value )
+    jpp::object make_string( const char * value )
     {
         return jpp::object( json_string( value ), detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
-    object make_stringn( const char * value, jpp_size_t len )
+    jpp::object make_stringn( const char * value, jpp_size_t len )
     {
         return jpp::object( json_stringn( value, len ), detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
-    object make_integer( jpp_long_t value )
+    jpp::object make_integer( jpp_long_t value )
     {
         return jpp::object( json_integer( value ), detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
-    object make_real( jpp_double_t value )
+    jpp::object make_real( jpp_double_t value )
     {
         return jpp::object( json_real( value ), detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
-    object make_true()
+    jpp::object make_true()
     {
         return jpp::object( json_true(), detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
-    object make_false()
+    jpp::object make_false()
     {
         return jpp::object( json_false(), detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
-    object make_boolean( jpp_bool_t _value )
+    jpp::object make_boolean( jpp_bool_t _value )
     {
         return jpp::object( json_boolean( _value ), detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
-    object make_null()
+    jpp::object make_null()
     {
         return jpp::object( json_null(), detail::borrowed );
     }
@@ -55,23 +55,23 @@ namespace jpp
         json_set_alloc_funcs( _malloc, _free );
     }
     //////////////////////////////////////////////////////////////////////////
-    object make_object()
+    jpp::object make_object()
     {
         json_t * j = json_object();
-        object o( j, detail::borrowed );
+        jpp::object o( j, detail::borrowed );
 
         return o;
     }
     //////////////////////////////////////////////////////////////////////////
-    array make_array()
+    jpp::array make_array()
     {
         json_t * j = json_array();
-        array a( j, detail::borrowed );
+        jpp::array a( j, detail::borrowed );
 
         return a;
     }
     //////////////////////////////////////////////////////////////////////////
-    object load( const void * _buffer, jpp_size_t _size, jpp_error_t _error, void * _ud )
+    jpp::object load( const void * _buffer, jpp_size_t _size, jpp_error_t _error, void * _ud )
     {
         json_error_t er;
         json_t * jroot = json_loadb( (const char *)_buffer, _size, 0, &er );
@@ -83,13 +83,13 @@ namespace jpp
                 (*_error)(er.line, er.column, er.position, er.source, er.text, _ud);
             }
 
-            return object( detail::invalid );
+            return jpp::object( detail::invalid );
         }
 
-        return object( jroot, detail::borrowed );
+        return jpp::object( jroot, detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
-    object load( jpp_load_callback_t _callback, jpp_error_t _error, void * _ud )
+    jpp::object load( jpp_load_callback_t _callback, jpp_error_t _error, void * _ud )
     {
         json_error_t er;
         json_t * jroot = json_load_callback( _callback, _ud, 0, &er );
@@ -101,10 +101,10 @@ namespace jpp
                 (*_error)(er.line, er.column, er.position, er.source, er.text, _ud);
             }
 
-            return object( detail::invalid );
+            return jpp::object( detail::invalid );
         }
 
-        return object( jroot, detail::borrowed );
+        return jpp::object( jroot, detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
     jpp_bool_t dump( const jpp::object & _obj, jpp_dump_callback_t _callback, void * _ud )
@@ -194,7 +194,7 @@ namespace jpp
         return 0;
     }
     //////////////////////////////////////////////////////////////////////////
-    object copy( const object & _obj )
+    jpp::object copy( const jpp::object & _obj )
     {
         json_t * j = _obj.ptr();
 

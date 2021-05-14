@@ -15,6 +15,12 @@ namespace jpp
         void operator()( const jpp::object & _obj, T * const _value ) const;
     };
 
+    template<class T>
+    struct extract_object_extern
+    {
+        jpp::object operator()( const T & _value ) const;
+    };
+
     class object
         : public base
     {
@@ -27,7 +33,7 @@ namespace jpp
         typedef jpp_size_t size_type;
 
     public:
-        static const object & none();
+        static const jpp::object & none();
 
     public:
         template<class T>
@@ -43,15 +49,10 @@ namespace jpp
         operator json_t * () const = delete;
 
     public:
-        object get( const char * _key ) const;
+        jpp::object get( const char * _key ) const;
 
     public:
-        const char * get( const char * _key, const char * _default ) const
-        {
-            const char * value = this->get<const char *>( _key, _default );
-
-            return value;
-        }
+        const char * get( const char * _key, const char * _default ) const;
 
         template<class T>
         T get( const char * _key, T _default ) const
@@ -78,9 +79,19 @@ namespace jpp
         template<class T>
         void set( const char * _key, T _value )
         {
-            json_t * j = cast_object_internal()(_value);
+            json_t * j = jpp::cast_object_internal()(_value);
 
             this->set_( _key, j );
+        }
+
+        template<class K, class T>
+        void set( const K & _key, T _value )
+        {
+            const char * key_str = _key.c_str();
+
+            json_t * j = jpp::cast_object_internal()(_value);
+
+            this->set_( key_str, j );
         }
 
     public:
@@ -109,24 +120,24 @@ namespace jpp
         jpp_bool_t includes( const jpp::object & _obj ) const;
 
     public:
-        object operator [] ( int32_t _index ) const;
-        object operator [] ( uint32_t _index ) const;
-        object operator [] ( const char * _key ) const;
+        jpp::object operator [] ( int32_t _index ) const;
+        jpp::object operator [] ( uint32_t _index ) const;
+        jpp::object operator [] ( const char * _key ) const;
 
         template<jpp_size_t I>
-        object operator [] ( const char( &_key )[I] ) const
+        jpp::object operator [] ( const char( &_key )[I] ) const
         {
-            object o = this->operator []( _key );
+            jpp::object o = this->operator []( _key );
 
             return o;
         }
 
         template<class T>
-        object operator [] ( const T & _key ) const
+        jpp::object operator [] ( const T & _key ) const
         {
             const char * key_str = _key.c_str();
 
-            object o = this->operator []( key_str );
+            jpp::object o = this->operator []( key_str );
 
             return o;
         }
@@ -135,7 +146,17 @@ namespace jpp
     template<class T>
     void cast_object_internal::operator()( json_t * _j, T * const _value ) const
     {
-        jpp::cast_object_extern<T>()(object( _j ), _value);
+        jpp::cast_object_extern<T>()(jpp::object( _j ), _value);
+    }
+    //////////////////////////////////////////////////////////////////////////
+    template<class T>
+    json_t * cast_object_internal::operator()( const T & _value ) const
+    {
+        jpp::object o = jpp::extract_object_extern<T>()(_value);
+
+        json_t * j = o.pop();
+
+        return j;
     }
     //////////////////////////////////////////////////////////////////////////
 }
