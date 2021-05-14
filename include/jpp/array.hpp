@@ -16,19 +16,19 @@ namespace jpp
         typedef jpp_size_t size_type;
 
     public:
-        array( const object & _obj );
-        array( const object & _obj, borrowed_t );
-        array( object && _obj );
+        array( const jpp::object & _obj );
+        array( const jpp::object & _obj, jpp::borrowed_t );
+        array( jpp::object && _obj );
 
     public:
-        static const array & none();
+        static const jpp::array & none();
 
     public:
         size_type size() const;
         bool empty() const;
 
     public:
-        object operator [] ( size_type _index ) const;
+        jpp::object operator [] ( size_type _index ) const;
 
     protected:
         void push_back_( json_t * _j );

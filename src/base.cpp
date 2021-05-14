@@ -97,6 +97,27 @@ namespace jpp
         return m_object;
     }
     //////////////////////////////////////////////////////////////////////////
+    json_t * base::ret() const
+    {
+        if( m_object == nullptr )
+        {
+            return nullptr;
+        }
+
+        json_incref( m_object );
+
+        return m_object;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    json_t * base::pop()
+    {
+        json_t * j = m_object;
+
+        m_object = nullptr;
+
+        return j;
+    }
+    //////////////////////////////////////////////////////////////////////////
     void base::reset()
     {
         m_object = nullptr;

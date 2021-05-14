@@ -56,6 +56,8 @@ namespace jpp
 
     public:
         json_t * ptr() const;
+        json_t * ret() const;
+        json_t * pop();
         void reset();
 
     public:
