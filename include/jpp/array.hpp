@@ -35,7 +35,7 @@ namespace jpp
 
     public:
         template<class T>
-        void push_back( T _value )
+        void push_back( const T & _value )
         {
             json_t * j = cast_object_internal()(_value);
 

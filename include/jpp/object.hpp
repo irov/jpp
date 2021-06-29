@@ -55,7 +55,7 @@ namespace jpp
         const char * get( const char * _key, const char * _default ) const;
 
         template<class T>
-        T get( const char * _key, T _default ) const
+        T get( const char * _key, const T & _default ) const
         {
             if( m_object == nullptr )
             {
@@ -77,7 +77,7 @@ namespace jpp
 
     public:
         template<class T>
-        void set( const char * _key, T _value )
+        void set( const char * _key, const T & _value )
         {
             json_t * j = jpp::cast_object_internal()(_value);
 
@@ -85,7 +85,7 @@ namespace jpp
         }
 
         template<class K, class T>
-        void set( const K & _key, T _value )
+        void set( const K & _key, const T & _value )
         {
             const char * key_str = _key.c_str();
 
@@ -95,11 +95,22 @@ namespace jpp
         }
 
     public:
+        template<class T>
+        const object & operator = ( const T & _value )
+        {
+            json_t * j = jpp::cast_object_internal()(_value);
+
+            this->reset_( j );
+
+            return *this;
+        }
+
+    public:
         jpp_bool_t operator == ( const jpp::object & _value ) const;
         jpp_bool_t operator == ( const char * _value ) const;
 
         template<class T>
-        jpp_bool_t operator == ( T _value ) const
+        jpp_bool_t operator == ( const T & _value ) const
         {
             T value;
             jpp::cast_object_internal()(m_object, &value);

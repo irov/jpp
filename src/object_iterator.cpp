@@ -78,4 +78,5 @@ namespace jpp
     {
         return jpp::object_iterator( _object.ptr(), jpp::object_iterator_end_t() );
     }
+    //////////////////////////////////////////////////////////////////////////
 }

@@ -58,17 +58,9 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     const base & base::operator = ( const base & _base )
     {
-        if( m_object != nullptr )
-        {
-            json_decref( m_object );
-        }
+        json_t * j = _base.ptr();
 
-        m_object = _base.ptr();
-
-        if( m_object != nullptr )
-        {
-            json_incref( m_object );
-        }
+        this->reset_( j );
 
         return *this;
     }
@@ -173,4 +165,20 @@ namespace jpp
 
         return j;
     }
+    //////////////////////////////////////////////////////////////////////////
+    void base::reset_( json_t * _value )
+    {
+        if( m_object != nullptr )
+        {
+            json_decref( m_object );
+        }
+
+        m_object = _value;
+
+        if( m_object != nullptr )
+        {
+            json_incref( m_object );
+        }
+    }
+    //////////////////////////////////////////////////////////////////////////
 }

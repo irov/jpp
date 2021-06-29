@@ -65,4 +65,5 @@ namespace jpp
     {
         return jpp::array_iterator( _array.ptr(), _array.size() );
     }
+    //////////////////////////////////////////////////////////////////////////
 }

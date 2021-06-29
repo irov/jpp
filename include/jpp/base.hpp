@@ -58,6 +58,8 @@ namespace jpp
         json_t * ptr() const;
         json_t * ret() const;
         json_t * pop();
+
+    public:
         void reset();
 
     public:
@@ -72,6 +74,8 @@ namespace jpp
     protected:
         void set_( const char * _key, json_t * _value );
         json_t * get_( const char * _key ) const;
+
+        void reset_( json_t * _value );
 
     protected:
         json_t * m_object;
