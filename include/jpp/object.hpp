@@ -2,8 +2,11 @@
 
 #include "jpp/base.hpp"
 #include "jpp/cast.hpp"
+#include "jpp/internal.hpp"
+#include "jpp/mpl.hpp"
 
 #include <utility>
+#include <type_traits>
 
 namespace jpp
 {
@@ -65,7 +68,7 @@ namespace jpp
 
             json_t * j = this->get_( _key );
 
-            if( j == nullptr )
+            if( j == nullptr || jpp::is_null( j ) == true )
             {
                 return _default;
             }
@@ -85,7 +88,7 @@ namespace jpp
             this->set_( _key, j );
         }
 
-        template<class K, class T>
+        template<class K, class T, typename std::enable_if<jpp::mpl::has_c_str<K>::value, T>::type * = nullptr>
         void set( const K & _key, const T & _value )
         {
             const char * key_str = _key.c_str();
@@ -136,16 +139,8 @@ namespace jpp
         jpp::object operator [] ( uint32_t _index ) const;
         jpp::object operator [] ( const char * _key ) const;
 
-        template<jpp_size_t I>
-        jpp::object operator [] ( const char( &_key )[I] ) const
-        {
-            jpp::object o = this->operator []( _key );
-
-            return o;
-        }
-
-        template<class T>
-        jpp::object operator [] ( const T & _key ) const
+        template<class K, typename std::enable_if<jpp::mpl::has_c_str<K>::value, K>::type * = nullptr>
+        jpp::object operator [] ( const K & _key ) const
         {
             const char * key_str = _key.c_str();
 
