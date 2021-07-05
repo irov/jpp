@@ -62,7 +62,7 @@ namespace jpp
 
         json_t * j = json_object_get( m_object, _key );
 
-        if( j == nullptr )
+        if( j == nullptr || jpp::is_null( j ) == true )
         {
             return false;
         }
