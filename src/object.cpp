@@ -10,7 +10,7 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     const jpp::object & object::none()
     {
-        static object o( detail::invalid );
+        static jpp::object o( detail::invalid );
 
         return o;
     }
@@ -103,7 +103,17 @@ namespace jpp
         return true;
     }
     //////////////////////////////////////////////////////////////////////////
-    object object::operator [] ( int32_t _index ) const
+    jpp::object object::operator [] ( int32_t _index ) const
+    {
+        assert( m_object != nullptr );
+        assert( json_is_array( m_object ) == true );
+
+        json_t * j = json_array_get( m_object, _index );
+
+        return jpp::object( j );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    jpp::object object::operator [] ( uint32_t _index ) const
     {
         assert( m_object != nullptr );
         assert( json_is_array( m_object ) == true );
@@ -113,17 +123,7 @@ namespace jpp
         return object( j );
     }
     //////////////////////////////////////////////////////////////////////////
-    object object::operator [] ( uint32_t _index ) const
-    {
-        assert( m_object != nullptr );
-        assert( json_is_array( m_object ) == true );
-
-        json_t * j = json_array_get( m_object, _index );
-
-        return object( j );
-    }
-    //////////////////////////////////////////////////////////////////////////
-    object object::operator [] ( const char * _key ) const
+    jpp::object object::operator [] ( const char * _key ) const
     {
         assert( m_object != nullptr );
         assert( json_is_object( m_object ) == true );
@@ -133,7 +133,7 @@ namespace jpp
         return jpp::object( j );
     }
     //////////////////////////////////////////////////////////////////////////
-    object object::get( const char * _key ) const
+    jpp::object object::get( const char * _key ) const
     {
         assert( m_object != nullptr );
         assert( json_is_object( m_object ) == true );

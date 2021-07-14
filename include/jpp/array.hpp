@@ -30,8 +30,9 @@ namespace jpp
     public:
         jpp::object operator [] ( size_type _index ) const;
 
-    protected:
-        void push_back_( json_t * _j );
+    public:
+        jpp::object front() const;
+        jpp::object back() const;
 
     public:
         template<class T>
@@ -47,5 +48,8 @@ namespace jpp
         void remove( size_type _index );
         void remove_back();
         void remove_front();
+
+    protected:
+        void push_back_( json_t * _j );
     };
 }
