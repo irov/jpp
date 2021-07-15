@@ -113,25 +113,6 @@ namespace jpp
         return jpp::object( j );
     }
     //////////////////////////////////////////////////////////////////////////
-    jpp::object object::update( const char * _key, const jpp::object & _default )
-    {
-        JPP_ASSERT( m_object != nullptr );
-        JPP_ASSERT( json_is_object( m_object ) == true );
-
-        json_t * j = json_object_get( m_object, _key );
-
-        if( j != nullptr )
-        {
-            return jpp::object( j );
-        }
-
-        json_t * j_default = _default.ptr();
-
-        json_object_set_new( m_object, _key, j_default );
-
-        return _default;
-    }
-    //////////////////////////////////////////////////////////////////////////
     jpp::object object::get( const char * _key ) const
     {
         JPP_ASSERT( m_object != nullptr );

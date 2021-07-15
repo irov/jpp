@@ -53,7 +53,22 @@ namespace jpp
         operator json_t * () const = delete;
 
     public:
-        jpp::object update( const char * _key, const jpp::object & _default );
+        template<class T>
+        jpp::object update( const char * _key, const T & _default )
+        {
+            json_t * j = this->get_( _key );
+
+            if( j == nullptr || jpp::is_null( j ) == true )
+            {
+                return jpp::object( j );
+            }
+
+            json_t * j_default = jpp::cast_object_internal()(_default);
+
+            this->set_( _key, j_default );
+
+            return jpp::object( j_default );
+        }
 
     public:
         jpp::object get( const char * _key ) const;
