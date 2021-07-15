@@ -1,5 +1,7 @@
 #pragma once
 
+#include "jpp/config.hpp"
+
 #include <cstddef>
 #include <cstdint>
 

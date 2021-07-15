@@ -1,8 +1,8 @@
 #include "jpp/array.hpp"
 
-#include "jansson.h"
+#include "jpp/assert.hpp"
 
-#include <assert.h>
+#include "jansson.h"
 
 namespace jpp
 {
@@ -10,17 +10,21 @@ namespace jpp
     array::array( const jpp::object & _obj )
         : base( _obj.ptr() )
     {
+        JPP_ASSERT( m_object == nullptr || json_is_array( m_object ) == true );
     }
     //////////////////////////////////////////////////////////////////////////
     array::array( const jpp::object & _obj, jpp::borrowed_t )
         : base( _obj.ptr(), detail::borrowed )
     {
+        JPP_ASSERT( m_object == nullptr || json_is_array( m_object ) == true );
     }
     //////////////////////////////////////////////////////////////////////////
     array::array( jpp::object && _obj )
         : base( _obj.ptr(), detail::borrowed )
     {
         _obj.reset();
+
+        JPP_ASSERT( m_object == nullptr || json_is_array( m_object ) == true );
     }
     //////////////////////////////////////////////////////////////////////////
     const jpp::array & array::none()
@@ -32,8 +36,8 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     jpp::array::size_type array::size() const
     {
-        assert( m_object != nullptr );
-        assert( json_is_array( m_object ) == true );
+        JPP_ASSERT( m_object != nullptr );
+        JPP_ASSERT( json_is_array( m_object ) == true );
 
         size_t size = json_array_size( m_object );
 
@@ -42,8 +46,8 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     bool array::empty() const
     {
-        assert( m_object != nullptr );
-        assert( json_is_array( m_object ) == true );
+        JPP_ASSERT( m_object != nullptr );
+        JPP_ASSERT( json_is_array( m_object ) == true );
 
         size_t size = json_array_size( m_object );
 
@@ -52,8 +56,8 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     jpp::object array::operator [] ( jpp::array::size_type _index ) const
     {
-        assert( m_object != nullptr );
-        assert( json_is_array( m_object ) == true );
+        JPP_ASSERT( m_object != nullptr );
+        JPP_ASSERT( json_is_array( m_object ) == true );
 
         json_t * j = json_array_get( m_object, _index );
 
@@ -62,17 +66,17 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     void array::push_back_( json_t * _j )
     {
-        assert( m_object != nullptr );
-        assert( json_is_array( m_object ) == true );
+        JPP_ASSERT( m_object != nullptr );
+        JPP_ASSERT( json_is_array( m_object ) == true );
 
         json_array_append( m_object, _j );
     }
     //////////////////////////////////////////////////////////////////////////
     jpp::object array::front() const
     {
-        assert( m_object != nullptr );
-        assert( json_is_array( m_object ) == true );
-        assert( json_array_size( m_object ) != 0 );
+        JPP_ASSERT( m_object != nullptr );
+        JPP_ASSERT( json_is_array( m_object ) == true );
+        JPP_ASSERT( json_array_size( m_object ) != 0 );
 
         json_t * j = json_array_get( m_object, 0 );
 
@@ -81,9 +85,9 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     jpp::object array::back() const
     {
-        assert( m_object != nullptr );
-        assert( json_is_array( m_object ) == true );
-        assert( json_array_size( m_object ) != 0 );
+        JPP_ASSERT( m_object != nullptr );
+        JPP_ASSERT( json_is_array( m_object ) == true );
+        JPP_ASSERT( json_array_size( m_object ) != 0 );
 
         size_t s = json_array_size( m_object );
 
@@ -94,26 +98,26 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     void array::clear()
     {
-        assert( m_object != nullptr );
-        assert( json_is_array( m_object ) == true );
+        JPP_ASSERT( m_object != nullptr );
+        JPP_ASSERT( json_is_array( m_object ) == true );
 
         json_array_clear( m_object );
     }
     //////////////////////////////////////////////////////////////////////////
     void array::remove( size_type _index )
     {
-        assert( m_object != nullptr );
-        assert( json_is_array( m_object ) == true );
-        assert( json_array_size( m_object ) > _index );
+        JPP_ASSERT( m_object != nullptr );
+        JPP_ASSERT( json_is_array( m_object ) == true );
+        JPP_ASSERT( json_array_size( m_object ) > _index );
 
         json_array_remove( m_object, _index );
     }
     //////////////////////////////////////////////////////////////////////////
     void array::remove_back()
     {
-        assert( m_object != nullptr );
-        assert( json_is_array( m_object ) == true );
-        assert( json_array_size( m_object ) != 0 );
+        JPP_ASSERT( m_object != nullptr );
+        JPP_ASSERT( json_is_array( m_object ) == true );
+        JPP_ASSERT( json_array_size( m_object ) != 0 );
 
         size_t count = json_array_size( m_object );
 
@@ -122,9 +126,9 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     void array::remove_front()
     {
-        assert( m_object != nullptr );
-        assert( json_is_array( m_object ) == true );
-        assert( json_array_size( m_object ) != 0 );
+        JPP_ASSERT( m_object != nullptr );
+        JPP_ASSERT( json_is_array( m_object ) == true );
+        JPP_ASSERT( json_array_size( m_object ) != 0 );
 
         json_array_remove( m_object, 0 );
     }
