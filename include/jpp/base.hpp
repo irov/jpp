@@ -72,9 +72,6 @@ namespace jpp
         jpp_bool_t equal( const base & _base ) const;
 
     protected:
-        void set_( const char * _key, json_t * _value );
-        json_t * get_( const char * _key ) const;
-
         void reset_( json_t * _value );
 
     protected:

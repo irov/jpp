@@ -53,6 +53,9 @@ namespace jpp
         operator json_t * () const = delete;
 
     public:
+        jpp::object update( const char * _key, const jpp::object & _default );
+
+    public:
         jpp::object get( const char * _key ) const;
 
     public:
@@ -135,8 +138,6 @@ namespace jpp
         jpp_bool_t includes( const jpp::object & _obj ) const;
 
     public:
-        jpp::object operator [] ( int32_t _index ) const;
-        jpp::object operator [] ( uint32_t _index ) const;
         jpp::object operator [] ( const char * _key ) const;
 
         template<class K, typename std::enable_if<jpp::mpl::has_c_str<K>::value, K>::type * = nullptr>
@@ -148,6 +149,10 @@ namespace jpp
 
             return o;
         }
+
+    protected:
+        void set_( const char * _key, json_t * _value );
+        json_t * get_( const char * _key ) const;
     };
     //////////////////////////////////////////////////////////////////////////
     template<class T>

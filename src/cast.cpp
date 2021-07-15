@@ -3,10 +3,9 @@
 #include "jpp/base.hpp"
 #include "jpp/object.hpp"
 #include "jpp/array.hpp"
+#include "jpp/assert.hpp"
 
 #include "jansson.h"
-
-#include <assert.h>
 
 namespace jpp
 {
@@ -18,21 +17,21 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     void cast_object_internal::operator()( json_t * _j, jpp::object * _value ) const
     {
-        assert( json_is_object( _j ) == true );
+        JPP_ASSERT( json_is_object( _j ) == true );
 
         *_value = jpp::object( _j );
     }
     //////////////////////////////////////////////////////////////////////////
     void cast_object_internal::operator()( json_t * _j, jpp::array * _value ) const
     {
-        assert( json_is_array( _j ) == true );
+        JPP_ASSERT( json_is_array( _j ) == true );
 
         *_value = jpp::array( _j );
     }
     //////////////////////////////////////////////////////////////////////////
     void cast_object_internal::operator()( json_t * _j, jpp_bool_t * _value ) const
     {
-        assert( json_is_boolean( _j ) == true );
+        JPP_ASSERT( json_is_boolean( _j ) == true );
 
         jpp_bool_t value = json_is_true( _j );
 
@@ -41,7 +40,7 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     void cast_object_internal::operator()( json_t * _j, jpp_int32_t * _value ) const
     {
-        assert( json_is_number( _j ) == true );
+        JPP_ASSERT( json_is_number( _j ) == true );
 
         if( json_is_integer( _j ) == true )
         {
@@ -59,7 +58,7 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     void cast_object_internal::operator()( json_t * _j, jpp_uint32_t * _value ) const
     {
-        assert( json_is_number( _j ) == true );
+        JPP_ASSERT( json_is_number( _j ) == true );
 
         if( json_is_integer( _j ) == true )
         {
@@ -77,7 +76,7 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     void cast_object_internal::operator()( json_t * _j, jpp_long_t * _value ) const
     {
-        assert( json_is_number( _j ) == true );
+        JPP_ASSERT( json_is_number( _j ) == true );
 
         if( json_is_integer( _j ) == true )
         {
@@ -95,7 +94,7 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     void cast_object_internal::operator()( json_t * _j, jpp_float_t * _value ) const
     {
-        assert( json_is_number( _j ) == true );
+        JPP_ASSERT( json_is_number( _j ) == true );
 
         if( json_is_real( _j ) == true )
         {
@@ -113,7 +112,7 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     void cast_object_internal::operator()( json_t * _j, jpp_double_t * _value ) const
     {
-        assert( json_is_number( _j ) == true );
+        JPP_ASSERT( json_is_number( _j ) == true );
 
         if( json_is_real( _j ) == true )
         {
@@ -131,7 +130,7 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     void cast_object_internal::operator()( json_t * _j, jpp_long_double_t * _value ) const
     {
-        assert( json_is_number( _j ) == true );
+        JPP_ASSERT( json_is_number( _j ) == true );
 
         if( json_is_real( _j ) == true )
         {
@@ -149,7 +148,7 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     void cast_object_internal::operator()( json_t * _j, const char ** _value ) const
     {
-        assert( json_is_string( _j ) == true );
+        JPP_ASSERT( json_is_string( _j ) == true );
 
         const char * string = json_string_value( _j );
 

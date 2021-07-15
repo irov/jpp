@@ -1,9 +1,9 @@
 #include "jpp/object.hpp"
 
-#include "jansson.h"
+#include "jpp/stdstr.hpp"
+#include "jpp/assert.hpp"
 
-#include <string.h>
-#include <assert.h>
+#include "jansson.h"
 
 namespace jpp
 {
@@ -27,7 +27,7 @@ namespace jpp
         const char * value;
         jpp::cast_object_internal()(m_object, &value);
 
-        if( strcmp( value, _value ) != 0 )
+        if( JPP_STRCMP( value, _value ) != 0 )
         {
             return false;
         }
@@ -37,8 +37,8 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     jpp::object::size_type object::size() const
     {
-        assert( m_object != nullptr );
-        assert( json_is_object( m_object ) == true );
+        JPP_ASSERT( m_object != nullptr );
+        JPP_ASSERT( json_is_object( m_object ) == true );
 
         size_t size = json_object_size( m_object );
 
@@ -47,8 +47,8 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     bool object::empty() const
     {
-        assert( m_object != nullptr );
-        assert( json_is_object( m_object ) == true );
+        JPP_ASSERT( m_object != nullptr );
+        JPP_ASSERT( json_is_object( m_object ) == true );
 
         size_t size = json_object_size( m_object );
 
@@ -57,8 +57,8 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     jpp_bool_t object::exist( const char * _key, jpp::object * const _obj ) const
     {
-        assert( m_object != nullptr );
-        assert( json_is_object( m_object ) == true );
+        JPP_ASSERT( m_object != nullptr );
+        JPP_ASSERT( json_is_object( m_object ) == true );
 
         json_t * j = json_object_get( m_object, _key );
 
@@ -79,8 +79,8 @@ namespace jpp
     {
         json_t * jb = _obj.ptr();
 
-        assert( json_is_object( m_object ) == true );
-        assert( json_is_object( jb ) == true );
+        JPP_ASSERT( json_is_object( m_object ) == true );
+        JPP_ASSERT( json_is_object( jb ) == true );
 
         const char * key;
         json_t * value;
@@ -103,40 +103,39 @@ namespace jpp
         return true;
     }
     //////////////////////////////////////////////////////////////////////////
-    jpp::object object::operator [] ( int32_t _index ) const
-    {
-        assert( m_object != nullptr );
-        assert( json_is_array( m_object ) == true );
-
-        json_t * j = json_array_get( m_object, _index );
-
-        return jpp::object( j );
-    }
-    //////////////////////////////////////////////////////////////////////////
-    jpp::object object::operator [] ( uint32_t _index ) const
-    {
-        assert( m_object != nullptr );
-        assert( json_is_array( m_object ) == true );
-
-        json_t * j = json_array_get( m_object, _index );
-
-        return object( j );
-    }
-    //////////////////////////////////////////////////////////////////////////
     jpp::object object::operator [] ( const char * _key ) const
     {
-        assert( m_object != nullptr );
-        assert( json_is_object( m_object ) == true );
+        JPP_ASSERT( m_object != nullptr );
+        JPP_ASSERT( json_is_object( m_object ) == true );
 
         json_t * j = json_object_get( m_object, _key );
 
         return jpp::object( j );
     }
     //////////////////////////////////////////////////////////////////////////
+    jpp::object object::update( const char * _key, const jpp::object & _default )
+    {
+        JPP_ASSERT( m_object != nullptr );
+        JPP_ASSERT( json_is_object( m_object ) == true );
+
+        json_t * j = json_object_get( m_object, _key );
+
+        if( j != nullptr )
+        {
+            return jpp::object( j );
+        }
+
+        json_t * j_default = _default.ptr();
+
+        json_object_set_new( m_object, _key, j_default );
+
+        return _default;
+    }
+    //////////////////////////////////////////////////////////////////////////
     jpp::object object::get( const char * _key ) const
     {
-        assert( m_object != nullptr );
-        assert( json_is_object( m_object ) == true );
+        JPP_ASSERT( m_object != nullptr );
+        JPP_ASSERT( json_is_object( m_object ) == true );
 
         json_t * j = json_object_get( m_object, _key );
 
@@ -148,6 +147,24 @@ namespace jpp
         const char * value = this->get<const char *>( _key, _default );
 
         return value;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void object::set_( const char * _key, json_t * _value )
+    {
+        JPP_ASSERT( m_object != nullptr );
+        JPP_ASSERT( json_is_object( m_object ) == true );
+
+        json_object_set_new( m_object, _key, _value );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    json_t * object::get_( const char * _key ) const
+    {
+        JPP_ASSERT( m_object != nullptr );
+        JPP_ASSERT( json_is_object( m_object ) == true );
+
+        json_t * j = json_object_get( m_object, _key );
+
+        return j;
     }
     //////////////////////////////////////////////////////////////////////////
 }
