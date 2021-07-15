@@ -37,16 +37,16 @@ namespace jpp
         ~base();
 
     public:
-        explicit base( invalid_t );
+        explicit base( jpp::invalid_t );
         explicit base( json_t * _object );
-        base( json_t * _object, borrowed_t );
-        base( const base & _base );
-        base( base && _base );
+        base( json_t * _object, jpp::borrowed_t );
+        base( const jpp::base & _base );
+        base( jpp::base && _base );
 
     public:
-        const base & operator = ( invalid_t );
-        const base & operator = ( const base & _base );
-        const base & operator = ( base && _base );
+        const jpp::base & operator = ( jpp::invalid_t );
+        const jpp::base & operator = ( const jpp::base & _base );
+        const jpp::base & operator = ( jpp::base && _base );
 
     public:
         jpp_bool_t invalid() const;
@@ -65,11 +65,11 @@ namespace jpp
     public:
         jpp_bool_t operator == ( invalid_t ) const;
         jpp_bool_t operator != ( invalid_t ) const;
-        jpp_bool_t operator == ( const base & _base ) const;
-        jpp_bool_t operator != ( const base & _base ) const;
+        jpp_bool_t operator == ( const jpp::base & _base ) const;
+        jpp_bool_t operator != ( const jpp::base & _base ) const;
 
     public:
-        jpp_bool_t equal( const base & _base ) const;
+        jpp_bool_t equal( const jpp::base & _base ) const;
 
     protected:
         void reset_( json_t * _value );

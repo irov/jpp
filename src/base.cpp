@@ -26,23 +26,23 @@ namespace jpp
         json_incref( m_object );
     }
     //////////////////////////////////////////////////////////////////////////
-    base::base( json_t * _object, borrowed_t )
+    base::base( json_t * _object, jpp::borrowed_t )
         : m_object( _object )
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    base::base( const base & _base )
+    base::base( const jpp::base & _base )
         : base( _base.ptr() )
     {
     }
     //////////////////////////////////////////////////////////////////////////
-    base::base( base && _base )
+    base::base( jpp::base && _base )
         : base( _base.ptr(), detail::borrowed )
     {
         _base.reset();
     }
     //////////////////////////////////////////////////////////////////////////
-    const base & base::operator = ( invalid_t )
+    const jpp::base & base::operator = ( jpp::invalid_t )
     {
         if( m_object != nullptr )
         {
@@ -54,7 +54,7 @@ namespace jpp
         return *this;
     }
     //////////////////////////////////////////////////////////////////////////
-    const base & base::operator = ( const base & _base )
+    const jpp::base & base::operator = ( const jpp::base & _base )
     {
         json_t * j = _base.ptr();
 
@@ -63,7 +63,7 @@ namespace jpp
         return *this;
     }
     //////////////////////////////////////////////////////////////////////////
-    const base & base::operator = ( base && _base )
+    const jpp::base & base::operator = ( jpp::base && _base )
     {
         m_object = _base.ptr();
 
@@ -113,27 +113,27 @@ namespace jpp
         m_object = nullptr;
     }
     //////////////////////////////////////////////////////////////////////////
-    jpp_bool_t base::operator == ( invalid_t ) const
+    jpp_bool_t base::operator == ( jpp::invalid_t ) const
     {
         return this->invalid();
     }
     //////////////////////////////////////////////////////////////////////////
-    jpp_bool_t base::operator != ( invalid_t ) const
+    jpp_bool_t base::operator != ( jpp::invalid_t ) const
     {
         return !this->operator ==( detail::invalid );
     }
     //////////////////////////////////////////////////////////////////////////
-    jpp_bool_t base::operator == ( const base & _base ) const
+    jpp_bool_t base::operator == ( const jpp::base & _base ) const
     {
         return m_object == _base.ptr();
     }
     //////////////////////////////////////////////////////////////////////////
-    jpp_bool_t base::operator != ( const base & _base ) const
+    jpp_bool_t base::operator != ( const jpp::base & _base ) const
     {
         return !this->operator ==( _base );
     }
     //////////////////////////////////////////////////////////////////////////
-    jpp_bool_t base::equal( const base & _base ) const
+    jpp_bool_t base::equal( const jpp::base & _base ) const
     {
         json_t * jbase = _base.ptr();
         json_t * jthis = this->ptr();
