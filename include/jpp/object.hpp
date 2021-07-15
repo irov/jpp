@@ -58,7 +58,7 @@ namespace jpp
         {
             json_t * j = this->get_( _key );
 
-            if( j == nullptr || jpp::is_null( j ) == true )
+            if( j != nullptr && jpp::is_null( j ) == false )
             {
                 return jpp::object( j );
             }
