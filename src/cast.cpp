@@ -31,11 +31,92 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     void cast_object_internal::operator()( json_t * _j, jpp_bool_t * _value ) const
     {
-        JPP_ASSERT( json_is_boolean( _j ) == true );
+        JPP_ASSERT( json_is_boolean( _j ) == true || (json_is_number( _j ) == true && (json_integer_value( _j ) == 1 || json_integer_value( _j ) == 0)) );
 
-        jpp_bool_t value = json_is_true( _j );
+        if( json_is_boolean( _j ) == true )
+        {
+            jpp_bool_t value = json_is_true( _j );
 
-        *_value = value;
+            *_value = value;
+        }
+        else
+        {
+            json_int_t integer = json_integer_value( _j );
+
+            *_value = (jpp_bool_t)integer;
+        }        
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void cast_object_internal::operator()( json_t * _j, jpp_int8_t * _value ) const
+    {
+        JPP_ASSERT( json_is_number( _j ) == true );
+
+        if( json_is_integer( _j ) == true )
+        {
+            json_int_t integer = json_integer_value( _j );
+
+            *_value = (jpp_int8_t)integer;
+        }
+        else
+        {
+            double real = json_real_value( _j );
+
+            *_value = (jpp_int8_t)real;
+        }
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void cast_object_internal::operator()( json_t * _j, jpp_uint8_t * _value ) const
+    {
+        JPP_ASSERT( json_is_number( _j ) == true );
+
+        if( json_is_integer( _j ) == true )
+        {
+            json_int_t integer = json_integer_value( _j );
+
+            *_value = (jpp_uint8_t)integer;
+        }
+        else
+        {
+            double real = json_real_value( _j );
+
+            *_value = (jpp_uint8_t)real;
+        }
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void cast_object_internal::operator()( json_t * _j, jpp_int16_t * _value ) const
+    {
+        JPP_ASSERT( json_is_number( _j ) == true );
+
+        if( json_is_integer( _j ) == true )
+        {
+            json_int_t integer = json_integer_value( _j );
+
+            *_value = (jpp_int16_t)integer;
+        }
+        else
+        {
+            double real = json_real_value( _j );
+
+            *_value = (jpp_int16_t)real;
+        }
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void cast_object_internal::operator()( json_t * _j, jpp_uint16_t * _value ) const
+    {
+        JPP_ASSERT( json_is_number( _j ) == true );
+
+        if( json_is_integer( _j ) == true )
+        {
+            json_int_t integer = json_integer_value( _j );
+
+            *_value = (jpp_uint16_t)integer;
+        }
+        else
+        {
+            double real = json_real_value( _j );
+
+            *_value = (jpp_uint16_t)real;
+        }
     }
     //////////////////////////////////////////////////////////////////////////
     void cast_object_internal::operator()( json_t * _j, jpp_int32_t * _value ) const
@@ -71,6 +152,42 @@ namespace jpp
             double real = json_real_value( _j );
 
             *_value = (jpp_uint32_t)real;
+        }
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void cast_object_internal::operator()( json_t * _j, jpp_int64_t * _value ) const
+    {
+        JPP_ASSERT( json_is_number( _j ) == true );
+
+        if( json_is_integer( _j ) == true )
+        {
+            json_int_t integer = json_integer_value( _j );
+
+            *_value = (jpp_int64_t)integer;
+        }
+        else
+        {
+            double real = json_real_value( _j );
+
+            *_value = (jpp_int64_t)real;
+        }
+    }
+    //////////////////////////////////////////////////////////////////////////
+    void cast_object_internal::operator()( json_t * _j, jpp_uint64_t * _value ) const
+    {
+        JPP_ASSERT( json_is_number( _j ) == true );
+
+        if( json_is_integer( _j ) == true )
+        {
+            json_int_t integer = json_integer_value( _j );
+
+            *_value = (jpp_uint64_t)integer;
+        }
+        else
+        {
+            double real = json_real_value( _j );
+
+            *_value = (jpp_uint64_t)real;
         }
     }
     //////////////////////////////////////////////////////////////////////////
@@ -183,6 +300,34 @@ namespace jpp
         return j;
     }
     //////////////////////////////////////////////////////////////////////////
+    json_t * cast_object_internal::operator()( jpp_int8_t _value ) const
+    {
+        json_t * j = json_integer( (json_int_t)_value );
+
+        return j;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    json_t * cast_object_internal::operator()( jpp_uint8_t _value ) const
+    {
+        json_t * j = json_integer( (json_int_t)_value );
+
+        return j;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    json_t * cast_object_internal::operator()( jpp_int16_t _value ) const
+    {
+        json_t * j = json_integer( (json_int_t)_value );
+
+        return j;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    json_t * cast_object_internal::operator()( jpp_uint16_t _value ) const
+    {
+        json_t * j = json_integer( (json_int_t)_value );
+
+        return j;
+    }
+    //////////////////////////////////////////////////////////////////////////
     json_t * cast_object_internal::operator()( jpp_int32_t _value ) const
     {
         json_t * j = json_integer( (json_int_t)_value );
@@ -191,6 +336,20 @@ namespace jpp
     }
     //////////////////////////////////////////////////////////////////////////
     json_t * cast_object_internal::operator()( jpp_uint32_t _value ) const
+    {
+        json_t * j = json_integer( (json_int_t)_value );
+
+        return j;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    json_t * cast_object_internal::operator()( jpp_int64_t _value ) const
+    {
+        json_t * j = json_integer( (json_int_t)_value );
+
+        return j;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    json_t * cast_object_internal::operator()( jpp_uint64_t _value ) const
     {
         json_t * j = json_integer( (json_int_t)_value );
 
