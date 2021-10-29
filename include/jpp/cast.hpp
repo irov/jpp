@@ -22,10 +22,8 @@ namespace jpp
         void operator()( json_t * _j, jpp_uint32_t * _value ) const;
         void operator()( json_t * _j, jpp_int64_t * _value ) const;
         void operator()( json_t * _j, jpp_uint64_t * _value ) const;
-        void operator()( json_t * _j, jpp_long_t * _value ) const;
         void operator()( json_t * _j, jpp_float_t * _value ) const;
         void operator()( json_t * _j, jpp_double_t * _value ) const;
-        void operator()( json_t * _j, jpp_long_double_t * _value ) const;
         void operator()( json_t * _j, const char ** _value ) const;
 
         template<size_t I>
@@ -49,10 +47,8 @@ namespace jpp
         json_t * operator()( jpp_uint32_t _value ) const;
         json_t * operator()( jpp_int64_t _value ) const;
         json_t * operator()( jpp_uint64_t _value ) const;
-        json_t * operator()( jpp_long_t _value ) const;
         json_t * operator()( jpp_float_t _value ) const;
         json_t * operator()( jpp_double_t _value ) const;
-        json_t * operator()( jpp_long_double_t _value ) const;
         json_t * operator()( char * _value ) const;
         json_t * operator()( const char * _value ) const;
 

@@ -15,7 +15,7 @@ namespace jpp
 
     jpp::object make_string( const char * value );
     jpp::object make_stringn( const char * value, jpp_size_t len );
-    jpp::object make_integer( jpp_long_t value );
+    jpp::object make_integer( jpp_int64_t value );
     jpp::object make_real( jpp_double_t value );
     jpp::object make_true();
     jpp::object make_false();

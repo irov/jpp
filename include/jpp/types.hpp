@@ -18,10 +18,8 @@ namespace jpp
     typedef uint32_t jpp_uint32_t;
     typedef int64_t jpp_int64_t;
     typedef uint64_t jpp_uint64_t;
-    typedef long jpp_long_t;
     typedef float jpp_float_t;
     typedef double jpp_double_t;
-    typedef long double jpp_long_double_t;
     typedef char * jpp_mutable_string_t;
 
     typedef size_t jpp_size_t;

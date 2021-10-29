@@ -15,9 +15,9 @@ namespace jpp
         return jpp::object( json_stringn( value, len ), detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
-    jpp::object make_integer( jpp_long_t value )
+    jpp::object make_integer( jpp_int64_t value )
     {
-        return jpp::object( json_integer( value ), detail::borrowed );
+        return jpp::object( json_integer( (json_int_t)value ), detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
     jpp::object make_real( jpp_double_t value )

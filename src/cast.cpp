@@ -191,24 +191,6 @@ namespace jpp
         }
     }
     //////////////////////////////////////////////////////////////////////////
-    void cast_object_internal::operator()( json_t * _j, jpp_long_t * _value ) const
-    {
-        JPP_ASSERT( json_is_number( _j ) == true );
-
-        if( json_is_integer( _j ) == true )
-        {
-            json_int_t integer = json_integer_value( _j );
-
-            *_value = (jpp_long_t)integer;
-        }
-        else
-        {
-            double real = json_real_value( _j );
-
-            *_value = (jpp_long_t)real;
-        }
-    }
-    //////////////////////////////////////////////////////////////////////////
     void cast_object_internal::operator()( json_t * _j, jpp_float_t * _value ) const
     {
         JPP_ASSERT( json_is_number( _j ) == true );
@@ -242,24 +224,6 @@ namespace jpp
             json_int_t integer = json_integer_value( _j );
 
             *_value = (jpp_double_t)integer;
-        }
-    }
-    //////////////////////////////////////////////////////////////////////////
-    void cast_object_internal::operator()( json_t * _j, jpp_long_double_t * _value ) const
-    {
-        JPP_ASSERT( json_is_number( _j ) == true );
-
-        if( json_is_real( _j ) == true )
-        {
-            double real = json_real_value( _j );
-
-            *_value = (jpp_long_double_t)real;
-        }
-        else
-        {
-            json_int_t integer = json_integer_value( _j );
-
-            *_value = (jpp_long_double_t)integer;
         }
     }
     //////////////////////////////////////////////////////////////////////////
@@ -356,13 +320,6 @@ namespace jpp
         return j;
     }
     //////////////////////////////////////////////////////////////////////////
-    json_t * cast_object_internal::operator()( jpp_long_t _value ) const
-    {
-        json_t * j = json_integer( (json_int_t)_value );
-
-        return j;
-    }
-    //////////////////////////////////////////////////////////////////////////
     json_t * cast_object_internal::operator()( jpp_float_t _value ) const
     {
         json_t * j = json_real( (double)_value );
@@ -373,13 +330,6 @@ namespace jpp
     json_t * cast_object_internal::operator()( jpp_double_t _value ) const
     {
         json_t * j = json_real( _value );
-
-        return j;
-    }
-    //////////////////////////////////////////////////////////////////////////
-    json_t * cast_object_internal::operator()( jpp_long_double_t _value ) const
-    {
-        json_t * j = json_real( (double)_value );
 
         return j;
     }
