@@ -71,10 +71,10 @@ namespace jpp
         return a;
     }
     //////////////////////////////////////////////////////////////////////////
-    jpp::object load( const void * _buffer, jpp_size_t _size, jpp_error_t _error, void * _ud )
+    jpp::object load( const void * _buffer, jpp_size_t _size, uint32_t _mode, jpp_error_t _error, void * _ud )
     {
         json_error_t er;
-        json_t * jroot = json_loadb( (const char *)_buffer, _size, 0, &er );
+        json_t * jroot = json_loadb( (const char *)_buffer, _size, _mode, &er );
 
         if( jroot == nullptr )
         {
@@ -89,10 +89,10 @@ namespace jpp
         return jpp::object( jroot, detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
-    jpp::object load( jpp_load_callback_t _callback, jpp_error_t _error, void * _ud )
+    jpp::object load( jpp_load_callback_t _callback, uint32_t _mode, jpp_error_t _error, void * _ud )
     {
         json_error_t er;
-        json_t * jroot = json_load_callback( _callback, _ud, 0, &er );
+        json_t * jroot = json_load_callback( _callback, _ud, _mode, &er );
 
         if( jroot == nullptr )
         {
