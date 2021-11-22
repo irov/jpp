@@ -46,7 +46,7 @@ namespace jpp
             T value;
             jpp::cast_object_internal()(m_object, &value);
 
-            return std::move( value );
+            return value;
         }
 
     protected:
@@ -94,7 +94,7 @@ namespace jpp
             T value;
             jpp::cast_object_internal()(j, &value);
 
-            return std::move( value );
+            return value;
         }
 
     public:
