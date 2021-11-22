@@ -117,7 +117,7 @@ jpp::jpp_bool_t jpp_test( const char * _filepath )
         return false;
     }
 
-    jpp::object root = jpp::load( &my_jpp_load_callback, &my_jpp_error, f );
+    jpp::object root = jpp::load( &my_jpp_load_callback, jpp::JPP_LOAD_MODE_NONE, &my_jpp_error, f );
 
     fclose( f );
 

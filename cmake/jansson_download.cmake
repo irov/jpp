@@ -2,7 +2,7 @@ include(ExternalProject)
 
 ExternalProject_Add(jansson_download PREFIX jansson
     GIT_REPOSITORY https://github.com/akheron/jansson.git
-    GIT_TAG "v2.12"
+    GIT_TAG "v2.14"
     GIT_PROGRESS TRUE
     
     CMAKE_ARGS 

@@ -20,7 +20,6 @@ namespace jpp
     typedef uint64_t jpp_uint64_t;
     typedef float jpp_float_t;
     typedef double jpp_double_t;
-    typedef char * jpp_mutable_string_t;
 
     typedef size_t jpp_size_t;
 }

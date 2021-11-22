@@ -13,6 +13,8 @@ namespace jpp
     typedef void (*jpp_free_t)(void *);
     typedef void (*jpp_error_t)(jpp_int32_t _line, jpp_int32_t _column, jpp_int32_t _position, const char * _source, const char * _text, void * _ud);
 
+    const char * get_version();
+
     jpp::object make_string( const char * value );
     jpp::object make_stringn( const char * value, jpp_size_t len );
     jpp::object make_integer( jpp_int64_t value );
@@ -37,17 +39,18 @@ namespace jpp
     void set_object_seed( jpp_size_t _seed );
     void set_alloc_funcs( jpp_malloc_t _malloc, jpp_free_t _free );
 
-    enum ejson_load_mode
+    enum ejpp_load_mode
     {
-        JPP_REJECT_DUPLICATES = 1 << (0),
-        JPP_DISABLE_EOF_CHECK = 1 << (1),
-        JPP_DECODE_ANY = 1 << (2),
-        JPP_DECODE_INT_AS_REAL = 1 << (3),
-        JPP_ALLOW_NUL = 1 << (4),
+        JPP_LOAD_MODE_NONE = 0,
+        JPP_LOAD_MODE_REJECT_DUPLICATES = 1 << (0),
+        JPP_LOAD_MODE_DISABLE_EOF_CHECK = 1 << (1),
+        JPP_LOAD_MODE_DECODE_ANY = 1 << (2),
+        JPP_LOAD_MODE_DECODE_INT_AS_REAL = 1 << (3),
+        JPP_LOAD_MODE_ALLOW_NUL = 1 << (4),
     };
 
-    jpp::object load( const void * _buffer, jpp_size_t _size, uint32_t _mode, jpp_error_t _err, void * _ud );
-    jpp::object load( jpp_load_callback_t _callback, uint32_t _mode, jpp_error_t _err, void * _ud );
+    jpp::object load( const void * _buffer, jpp_size_t _size, jpp_uint32_t _mode, jpp_error_t _err, void * _ud );
+    jpp::object load( jpp_load_callback_t _callback, jpp_uint32_t _mode, jpp_error_t _err, void * _ud );
     jpp_bool_t dump( const jpp::object & _obj, jpp_dump_callback_t _callback, void * _ud );
     jpp_bool_t dump_compact( const jpp::object & _obj, jpp_dump_callback_t _callback, void * _ud );
 
