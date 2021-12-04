@@ -146,6 +146,46 @@ namespace jpp
         return true;
     }
     //////////////////////////////////////////////////////////////////////////
+    jpp_bool_t base::is_type_object() const
+    {
+        return json_is_object( m_object );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    jpp_bool_t base::is_type_array() const
+    {
+        return json_is_array( m_object );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    jpp_bool_t base::is_type_string() const
+    {
+        return json_is_string( m_object );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    jpp_bool_t base::is_type_integer() const
+    {
+        return json_is_integer( m_object );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    jpp_bool_t base::is_type_real() const
+    {
+        return json_is_real( m_object );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    jpp_bool_t base::is_type_true() const
+    {
+        return json_is_true( m_object );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    jpp_bool_t base::is_type_false() const
+    {
+        return json_is_false( m_object );
+    }
+    //////////////////////////////////////////////////////////////////////////
+    jpp_bool_t base::is_type_null() const
+    {
+        return json_is_null( m_object );
+    }
+    //////////////////////////////////////////////////////////////////////////
     void base::reset_( json_t * _value )
     {
         if( m_object != nullptr )
@@ -159,6 +199,35 @@ namespace jpp
         {
             json_incref( m_object );
         }
+    }
+    //////////////////////////////////////////////////////////////////////////
+    const char * get_jpp_type_string( const jpp::base & _o )
+    {
+        e_type t = _o.type();
+
+        switch( t )
+        {
+        case e_type::JPP_OBJECT:
+            return "JPP_OBJECT";
+        case e_type::JPP_ARRAY:
+            return "JPP_ARRAY";
+        case e_type::JPP_STRING:
+            return "JPP_STRING";
+        case e_type::JPP_INTEGER:
+            return "JPP_INTEGER";
+        case e_type::JPP_REAL:
+            return "JPP_REAL";
+        case e_type::JPP_TRUE:
+            return "JPP_TRUE";
+        case e_type::JPP_FALSE:
+            return "JPP_FALSE";
+        case e_type::JPP_NULL:
+            return "JPP_NULL";
+        default:
+            break;
+        }
+
+        return "UNKNOWN";
     }
     //////////////////////////////////////////////////////////////////////////
 }

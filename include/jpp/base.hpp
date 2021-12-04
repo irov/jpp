@@ -71,10 +71,23 @@ namespace jpp
     public:
         jpp_bool_t equal( const jpp::base & _base ) const;
 
+
+    public:
+        jpp_bool_t is_type_object() const;
+        jpp_bool_t is_type_array() const;
+        jpp_bool_t is_type_string() const;
+        jpp_bool_t is_type_integer() const;
+        jpp_bool_t is_type_real() const;
+        jpp_bool_t is_type_true() const;
+        jpp_bool_t is_type_false() const;
+        jpp_bool_t is_type_null() const;
+
     protected:
         void reset_( json_t * _value );
 
     protected:
         json_t * m_object;
     };
+
+    const char * get_jpp_type_string( const jpp::base & _o );
 }

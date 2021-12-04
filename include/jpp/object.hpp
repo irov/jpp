@@ -1,6 +1,7 @@
 #pragma once
 
 #include "jpp/base.hpp"
+#include "jpp/check.hpp"
 #include "jpp/cast.hpp"
 #include "jpp/internal.hpp"
 #include "jpp/mpl.hpp"
@@ -12,6 +13,12 @@ namespace jpp
 {
     //////////////////////////////////////////////////////////////////////////
     class object;
+    //////////////////////////////////////////////////////////////////////////
+    template<class T>
+    struct check_object_extern
+    {
+        bool operator()( const jpp::object & _obj, T * const ) const;
+    };
     //////////////////////////////////////////////////////////////////////////
     template<class T>
     struct cast_object_extern
@@ -169,6 +176,14 @@ namespace jpp
         void set_( const char * _key, json_t * _value );
         json_t * get_( const char * _key ) const;
     };
+    //////////////////////////////////////////////////////////////////////////
+    template<class T>
+    bool check_object_internal::operator()( json_t * _j, T * const _value ) const
+    {
+        bool result = jpp::check_object_extern<T>()(jpp::object( _j ), _value);
+
+        return result;
+    }
     //////////////////////////////////////////////////////////////////////////
     template<class T>
     void cast_object_internal::operator()( json_t * _j, T * const _value ) const

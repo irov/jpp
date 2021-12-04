@@ -39,7 +39,7 @@ static void my_jpp_free( void* _free )
 //////////////////////////////////////////////////////////////////////////
 static void my_jpp_error( int32_t _line, int32_t _column, int32_t _position, const char * _source, const char * _text, void* _ud )
 {
-    (void)_ud;
+    JPP_UNUSED( _ud );
 
     printf( "error: %s\nline: %d\n column: %d\nposition: %d\nsource: %s\n"
         , _text
