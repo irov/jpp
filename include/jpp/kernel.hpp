@@ -15,6 +15,7 @@ namespace jpp
 
     const char * get_version();
 
+    jpp::object make_invalid();
     jpp::object make_string( const char * value );
     jpp::object make_stringn( const char * value, jpp_size_t len );
     jpp::object make_integer( jpp_int64_t value );

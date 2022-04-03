@@ -15,6 +15,11 @@ namespace jpp
         json_decref( m_object );
     }
     //////////////////////////////////////////////////////////////////////////
+    base::base( jpp_nullptr_t )
+        : m_object( nullptr )
+    {
+    }
+    //////////////////////////////////////////////////////////////////////////
     base::base( invalid_t )
         : base( nullptr )
     {
@@ -40,6 +45,18 @@ namespace jpp
         : base( _base.ptr(), detail::borrowed )
     {
         _base.reset();
+    }
+    //////////////////////////////////////////////////////////////////////////
+    const jpp::base & base::operator = ( jpp_nullptr_t )
+    {
+        if( m_object != nullptr )
+        {
+            json_decref( m_object );
+        }
+
+        m_object = nullptr;
+
+        return *this;
     }
     //////////////////////////////////////////////////////////////////////////
     const jpp::base & base::operator = ( jpp::invalid_t )
@@ -113,6 +130,16 @@ namespace jpp
         m_object = nullptr;
     }
     //////////////////////////////////////////////////////////////////////////
+    jpp_bool_t base::operator == ( jpp_nullptr_t ) const
+    {
+        return this->invalid();
+    }
+    //////////////////////////////////////////////////////////////////////////
+    jpp_bool_t base::operator != ( jpp_nullptr_t ) const
+    {
+        return !this->operator ==( nullptr );
+    }
+    //////////////////////////////////////////////////////////////////////////
     jpp_bool_t base::operator == ( jpp::invalid_t ) const
     {
         return this->invalid();
@@ -171,17 +198,17 @@ namespace jpp
         return json_is_real( m_object );
     }
     //////////////////////////////////////////////////////////////////////////
-    jpp_bool_t base::is_type_true() const
+    jpp_bool_t base::is_true() const
     {
         return json_is_true( m_object );
     }
     //////////////////////////////////////////////////////////////////////////
-    jpp_bool_t base::is_type_false() const
+    jpp_bool_t base::is_false() const
     {
         return json_is_false( m_object );
     }
     //////////////////////////////////////////////////////////////////////////
-    jpp_bool_t base::is_type_null() const
+    jpp_bool_t base::is_null() const
     {
         return json_is_null( m_object );
     }

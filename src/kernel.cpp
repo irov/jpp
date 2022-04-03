@@ -10,6 +10,11 @@ namespace jpp
         return jansson_version_str();
     }
     //////////////////////////////////////////////////////////////////////////
+    jpp::object make_invalid()
+    {
+        return jpp::object( jpp::detail::invalid );
+    }
+    //////////////////////////////////////////////////////////////////////////
     jpp::object make_string( const char * value )
     {
         return jpp::object( json_string( value ), detail::borrowed );

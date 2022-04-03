@@ -9,6 +9,7 @@ struct json_t;
 
 namespace jpp
 {
+    typedef std::nullptr_t jpp_nullptr_t;
     typedef bool jpp_bool_t;
     typedef int8_t jpp_int8_t;
     typedef uint8_t jpp_uint8_t;

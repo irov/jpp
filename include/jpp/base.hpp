@@ -37,6 +37,7 @@ namespace jpp
         ~base();
 
     public:
+        explicit base( jpp_nullptr_t );
         explicit base( jpp::invalid_t );
         explicit base( json_t * _object );
         base( json_t * _object, jpp::borrowed_t );
@@ -44,6 +45,7 @@ namespace jpp
         base( jpp::base && _base );
 
     public:
+        const jpp::base & operator = ( jpp_nullptr_t );
         const jpp::base & operator = ( jpp::invalid_t );
         const jpp::base & operator = ( const jpp::base & _base );
         const jpp::base & operator = ( jpp::base && _base );
@@ -63,6 +65,8 @@ namespace jpp
         void reset();
 
     public:
+        jpp_bool_t operator == ( jpp_nullptr_t ) const;
+        jpp_bool_t operator != ( jpp_nullptr_t ) const;
         jpp_bool_t operator == ( invalid_t ) const;
         jpp_bool_t operator != ( invalid_t ) const;
         jpp_bool_t operator == ( const jpp::base & _base ) const;
@@ -78,9 +82,11 @@ namespace jpp
         jpp_bool_t is_type_string() const;
         jpp_bool_t is_type_integer() const;
         jpp_bool_t is_type_real() const;
-        jpp_bool_t is_type_true() const;
-        jpp_bool_t is_type_false() const;
-        jpp_bool_t is_type_null() const;
+
+    public:
+        jpp_bool_t is_true() const;
+        jpp_bool_t is_false() const;
+        jpp_bool_t is_null() const;
 
     protected:
         void reset_( json_t * _value );
