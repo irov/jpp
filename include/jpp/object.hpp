@@ -5,6 +5,7 @@
 #include "jpp/cast.hpp"
 #include "jpp/internal.hpp"
 #include "jpp/mpl.hpp"
+#include "jpp/extract.hpp"
 
 #include <utility>
 #include <type_traits>
@@ -78,7 +79,7 @@ namespace jpp
         }
 
     public:
-        jpp::object get( const char * _key ) const;
+        jpp::extract get( const char * _key ) const;
 
     public:
         const char * get( const char * _key, const char * _default ) const;
@@ -160,14 +161,14 @@ namespace jpp
         jpp_bool_t includes( const jpp::object & _obj ) const;
 
     public:
-        jpp::object operator [] ( const char * _key ) const;
+        jpp::extract operator [] ( const char * _key ) const;
 
         template<class K, typename std::enable_if<jpp::mpl::has_c_str<K>::value, K>::type * = nullptr>
-        jpp::object operator [] ( const K & _key ) const
+        jpp::extract operator [] ( const K & _key ) const
         {
             const char * key_str = _key.c_str();
 
-            jpp::object o = this->operator []( key_str );
+            jpp::extract o = this->operator []( key_str );
 
             return o;
         }

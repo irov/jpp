@@ -103,24 +103,24 @@ namespace jpp
         return true;
     }
     //////////////////////////////////////////////////////////////////////////
-    jpp::object object::operator [] ( const char * _key ) const
+    jpp::extract object::operator [] ( const char * _key ) const
     {
         JPP_ASSERT( m_object != nullptr );
         JPP_ASSERT( json_is_object( m_object ) == true );
 
         json_t * j = json_object_get( m_object, _key );
 
-        return jpp::object( j );
+        return jpp::extract( j );
     }
     //////////////////////////////////////////////////////////////////////////
-    jpp::object object::get( const char * _key ) const
+    jpp::extract object::get( const char * _key ) const
     {
         JPP_ASSERT( m_object != nullptr );
         JPP_ASSERT( json_is_object( m_object ) == true );
 
         json_t * j = json_object_get( m_object, _key );
 
-        return jpp::object( j );
+        return jpp::extract( j );
     }
     //////////////////////////////////////////////////////////////////////////
     const char * object::get( const char * _key, const char * _default ) const
