@@ -71,7 +71,7 @@ namespace jpp
 
         json_array_append( m_object, _j );
 
-        json_decref( m_object );
+        json_decref( _j );
     }
     //////////////////////////////////////////////////////////////////////////
     jpp::object array::front() const
