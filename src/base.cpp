@@ -75,7 +75,19 @@ namespace jpp
     {
         json_t * j = _base.ptr();
 
-        this->reset_( j );
+        json_t * old_object = m_object;
+
+        m_object = j;
+
+        if( m_object != nullptr )
+        {
+            json_incref( m_object );
+        }
+
+        if( old_object != nullptr )
+        {
+            json_decref( old_object );
+        }
 
         return *this;
     }
@@ -221,11 +233,6 @@ namespace jpp
         }
 
         m_object = _value;
-
-        if( m_object != nullptr )
-        {
-            json_incref( m_object );
-        }
     }
     //////////////////////////////////////////////////////////////////////////
     const char * get_jpp_type_string( const jpp::base & _o )

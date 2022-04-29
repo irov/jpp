@@ -70,6 +70,8 @@ namespace jpp
         JPP_ASSERT( json_is_array( m_object ) == true );
 
         json_array_append( m_object, _j );
+
+        json_decref( m_object );
     }
     //////////////////////////////////////////////////////////////////////////
     jpp::object array::front() const
