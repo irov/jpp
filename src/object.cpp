@@ -35,6 +35,21 @@ namespace jpp
         return true;
     }
     //////////////////////////////////////////////////////////////////////////
+    jpp::object object::get_or_create( const char * _key, const std::function<jpp::object()> & _creator )
+    {
+        jpp::object o;
+        if( this->exist( _key, &o ) == true )
+        {
+            return o;
+        }
+
+        jpp::object new_o = _creator();
+
+        this->set( _key, new_o );
+
+        return new_o;
+    }
+    //////////////////////////////////////////////////////////////////////////
     jpp::object::size_type object::size() const
     {
         JPP_ASSERT( m_object != nullptr );

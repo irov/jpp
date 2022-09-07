@@ -24,6 +24,9 @@ namespace jpp
         static const jpp::array & none();
 
     public:
+        jpp::object to_object() const;
+
+    public:
         size_type size() const;
         bool empty() const;
 

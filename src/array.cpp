@@ -34,6 +34,11 @@ namespace jpp
         return a;
     }
     //////////////////////////////////////////////////////////////////////////
+    jpp::object array::to_object() const
+    {
+        return jpp::object( m_object );
+    }
+    //////////////////////////////////////////////////////////////////////////
     jpp::array::size_type array::size() const
     {
         JPP_ASSERT( m_object != nullptr );

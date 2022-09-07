@@ -9,6 +9,7 @@
 
 #include <utility>
 #include <type_traits>
+#include <functional>
 
 namespace jpp
 {
@@ -119,9 +120,41 @@ namespace jpp
         {
             const char * key_str = _key.c_str();
 
+            this->set( key_str, _value );
+        }
+
+    public:
+        template<class T>
+        jpp::object emplace( const char * _key, const T & _value )
+        {
             json_t * j = jpp::cast_object_internal()(_value);
 
-            this->set_( key_str, j );
+            this->set_( _key, j );
+
+            return jpp::object( j );
+        }
+
+        template<class K, class T, typename std::enable_if<jpp::mpl::has_c_str<K>::value, T>::type * = nullptr>
+        jpp::object emplace( const K & _key, const T & _value )
+        {
+            const char * key_str = _key.c_str();
+
+            return this->emplace( key_str, _value );
+        }
+
+    public:
+        jpp::object get_or_create( const char * _key, const std::function<jpp::object()> & _creator );
+
+    public:
+        template<class K>
+        jpp::object get_or_create( const K & _key, const std::function<jpp::object()> & _creator ) = delete;
+
+        template<class K, typename std::enable_if<jpp::mpl::has_c_str<K>::value, K>::type * = nullptr>
+        jpp::object get_or_create( const K & _key, const std::function<jpp::object()> & _creator )
+        {
+            const char * key_str = _key.c_str();
+
+            return this->get_or_create( key_str, _creator );
         }
 
     public:
