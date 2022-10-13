@@ -227,6 +227,15 @@ namespace jpp
         }
     }
     //////////////////////////////////////////////////////////////////////////
+    void cast_object_internal::operator()( json_t * _j, char * _value ) const
+    {
+        JPP_ASSERT( json_is_string( _j ) == true );
+
+        const char * string = json_string_value( _j );
+
+        *_value = string[0];
+    }
+    //////////////////////////////////////////////////////////////////////////
     void cast_object_internal::operator()( json_t * _j, const char ** _value ) const
     {
         JPP_ASSERT( json_is_string( _j ) == true );
@@ -337,6 +346,13 @@ namespace jpp
     json_t * cast_object_internal::operator()( char * _value ) const
     {
         json_t * j = json_string( _value );
+
+        return j;
+    }
+    //////////////////////////////////////////////////////////////////////////
+    json_t * cast_object_internal::operator()( char _value ) const
+    {
+        json_t * j = json_stringn( &_value, 1 );
 
         return j;
     }
