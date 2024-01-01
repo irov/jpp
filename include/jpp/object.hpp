@@ -6,6 +6,7 @@
 #include "jpp/internal.hpp"
 #include "jpp/mpl.hpp"
 #include "jpp/extract.hpp"
+#include "jpp/extract_safe.hpp"
 
 #include <utility>
 #include <type_traits>
@@ -80,7 +81,7 @@ namespace jpp
         }
 
     public:
-        jpp::extract get( const char * _key ) const;
+        jpp::extract_safe get( const char * _key ) const;
 
     public:
         const char * get( const char * _key, const char * _default ) const;

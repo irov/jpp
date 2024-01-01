@@ -128,14 +128,14 @@ namespace jpp
         return jpp::extract( j );
     }
     //////////////////////////////////////////////////////////////////////////
-    jpp::extract object::get( const char * _key ) const
+    jpp::extract_safe object::get( const char * _key ) const
     {
         JPP_ASSERT( m_object != nullptr );
         JPP_ASSERT( json_is_object( m_object ) == true );
 
         json_t * j = json_object_get( m_object, _key );
 
-        return jpp::extract( j );
+        return jpp::extract_safe( j );
     }
     //////////////////////////////////////////////////////////////////////////
     const char * object::get( const char * _key, const char * _default ) const

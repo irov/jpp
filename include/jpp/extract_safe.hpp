@@ -5,22 +5,27 @@
 
 namespace jpp
 {
-	class extract
+	class extract_safe
 	{
 	public:
-        explicit extract( json_t * _j )
+		explicit extract_safe( json_t * _j )
             : m_j( _j )
-        {
+		{
         }
 
-        ~extract()
-        {
+		~extract_safe()
+		{
         }
 
 	public:
 		template<class T>
 		operator T ()
 		{
+			if( m_j == nullptr )
+			{
+                return T();
+			}
+
             T value;
             jpp::cast_object_internal()(m_j, &value);
 
