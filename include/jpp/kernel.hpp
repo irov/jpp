@@ -37,6 +37,8 @@ namespace jpp
         return a;
     }
 
+    const char * get_string_and_size( const jpp::object & _obj, jpp_size_t * const _size );
+
     void set_object_seed( jpp_size_t _seed );
     void set_alloc_funcs( jpp_malloc_t _malloc, jpp_free_t _free );
 

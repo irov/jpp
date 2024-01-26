@@ -55,6 +55,23 @@ namespace jpp
         return jpp::object( json_null(), detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
+    const char * get_string_and_size( const jpp::object & _obj, jpp_size_t * const _size )
+    {
+        json_t * j = _obj.ptr();
+
+        if( json_is_string( j ) == false )
+        {
+            return nullptr;
+        }
+
+        const char * value = json_string_value( j );
+        size_t size = json_string_length( j );
+
+        *_size = (jpp_size_t)size;
+
+        return value;
+    }
+    //////////////////////////////////////////////////////////////////////////
     void set_object_seed( jpp_size_t _seed )
     {
         json_object_seed( _seed );
