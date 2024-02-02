@@ -42,6 +42,7 @@ namespace jpp
         using base::base;
         using base::operator=;
         using base::operator==;
+        using base::operator!=;
 
     public:
         typedef jpp_size_t size_type;

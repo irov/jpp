@@ -67,8 +67,8 @@ namespace jpp
     public:
         jpp_bool_t operator == ( jpp_nullptr_t ) const;
         jpp_bool_t operator != ( jpp_nullptr_t ) const;
-        jpp_bool_t operator == ( invalid_t ) const;
-        jpp_bool_t operator != ( invalid_t ) const;
+        jpp_bool_t operator == ( jpp::invalid_t ) const;
+        jpp_bool_t operator != ( jpp::invalid_t ) const;
         jpp_bool_t operator == ( const jpp::base & _base ) const;
         jpp_bool_t operator != ( const jpp::base & _base ) const;
 
