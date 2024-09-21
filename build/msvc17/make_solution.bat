@@ -12,4 +12,3 @@ CMake -G "Visual Studio 17 2022" -A Win32 -S "%CD%\..\..\.." -DCMAKE_CONFIGURATI
 @popd
 
 @echo on
-@pause

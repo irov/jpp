@@ -7,7 +7,9 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     const char * get_version()
     {
-        return jansson_version_str();
+        const char * version = ::jansson_version_str();
+
+        return version;
     }
     //////////////////////////////////////////////////////////////////////////
     jpp::object make_invalid()
@@ -15,44 +17,60 @@ namespace jpp
         return jpp::object( jpp::detail::invalid );
     }
     //////////////////////////////////////////////////////////////////////////
-    jpp::object make_string( const char * value )
+    jpp::object make_string( const char * _value )
     {
-        return jpp::object( json_string( value ), detail::borrowed );
+        json_t * j = ::json_string( _value );
+
+        return jpp::object( j, detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
-    jpp::object make_stringn( const char * value, jpp_size_t len )
+    jpp::object make_stringn( const char * _value, jpp_size_t _len )
     {
-        return jpp::object( json_stringn( value, len ), detail::borrowed );
+        json_t * j = ::json_stringn( _value, _len );
+
+        return jpp::object( j, detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
-    jpp::object make_integer( jpp_int64_t value )
+    jpp::object make_integer( jpp_int64_t _value )
     {
-        return jpp::object( json_integer( (json_int_t)value ), detail::borrowed );
+        json_t * j = ::json_integer( _value );
+
+        return jpp::object( j, detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
-    jpp::object make_real( jpp_double_t value )
+    jpp::object make_real( jpp_double_t _value )
     {
-        return jpp::object( json_real( value ), detail::borrowed );
+        json_t * j = ::json_real( _value );
+
+        return jpp::object( j, detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
     jpp::object make_true()
     {
-        return jpp::object( json_true(), detail::borrowed );
+        json_t * j = ::json_true();
+
+        return jpp::object( j, detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
     jpp::object make_false()
     {
-        return jpp::object( json_false(), detail::borrowed );
+        json_t * j = ::json_false();
+
+        return jpp::object( j, detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
     jpp::object make_boolean( jpp_bool_t _value )
     {
-        return jpp::object( json_boolean( _value ), detail::borrowed );
+        json_t * j = json_boolean( _value );
+
+        return jpp::object( j, detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
     jpp::object make_null()
     {
-        return jpp::object( json_null(), detail::borrowed );
+        json_t * j = ::json_null();
+
+        return jpp::object( j, detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
     const char * get_string_and_size( const jpp::object & _obj, jpp_size_t * const _size )
@@ -64,8 +82,8 @@ namespace jpp
             return nullptr;
         }
 
-        const char * value = json_string_value( j );
-        size_t size = json_string_length( j );
+        const char * value = ::json_string_value( j );
+        size_t size = ::json_string_length( j );
 
         *_size = (jpp_size_t)size;
 
@@ -74,17 +92,18 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     void set_object_seed( jpp_size_t _seed )
     {
-        json_object_seed( _seed );
+        ::json_object_seed( _seed );
     }
     //////////////////////////////////////////////////////////////////////////
     void set_alloc_funcs( jpp_malloc_t _malloc, jpp_free_t _free )
     {
-        json_set_alloc_funcs( _malloc, _free );
+        ::json_set_alloc_funcs( _malloc, _free );
     }
     //////////////////////////////////////////////////////////////////////////
     jpp::object make_object()
     {
-        json_t * j = json_object();
+        json_t * j = ::json_object();
+
         jpp::object o( j, detail::borrowed );
 
         return o;
@@ -92,7 +111,8 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     jpp::array make_array()
     {
-        json_t * j = json_array();
+        json_t * j = ::json_array();
+
         jpp::array a( j, detail::borrowed );
 
         return a;
@@ -101,7 +121,7 @@ namespace jpp
     jpp::object load( const void * _buffer, jpp_size_t _size, jpp_uint32_t _mode, jpp_error_t _error, void * _ud )
     {
         json_error_t er;
-        json_t * jroot = json_loadb( (const char *)_buffer, _size, _mode, &er );
+        json_t * jroot = ::json_loadb( (const char *)_buffer, _size, _mode, &er );
 
         if( jroot == nullptr )
         {
@@ -119,7 +139,7 @@ namespace jpp
     jpp::object load( jpp_load_callback_t _callback, jpp_uint32_t _mode, jpp_error_t _error, void * _ud )
     {
         json_error_t er;
-        json_t * jroot = json_load_callback( _callback, _ud, _mode, &er );
+        json_t * jroot = ::json_load_callback( _callback, _ud, _mode, &er );
 
         if( jroot == nullptr )
         {
@@ -136,7 +156,7 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     jpp_bool_t dump( const jpp::object & _obj, jpp_dump_callback_t _callback, void * _ud )
     {
-        int writebytes = json_dump_callback( _obj.ptr(), _callback, _ud, JSON_INDENT( 2 ) );
+        int writebytes = ::json_dump_callback( _obj.ptr(), _callback, _ud, JSON_INDENT( 2 ) );
 
         if( writebytes == -1 )
         {
@@ -148,7 +168,7 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     jpp_bool_t dump_compact( const jpp::object & _obj, jpp_dump_callback_t _callback, void * _ud )
     {
-        int writebytes = json_dump_callback( _obj.ptr(), _callback, _ud, JSON_COMPACT );
+        int writebytes = ::json_dump_callback( _obj.ptr(), _callback, _ud, JSON_COMPACT );
 
         if( writebytes == -1 )
         {
@@ -158,14 +178,14 @@ namespace jpp
         return true;
     }
     //////////////////////////////////////////////////////////////////////////
-    static int __json_object_update( json_t * object, json_t * other, jpp_bool_t _recursive )
+    static int __json_object_update( json_t * _object, json_t * _other, jpp_bool_t _recursive )
     {
         const char * key;
         json_t * value;
 
-        json_object_foreach( other, key, value )
+        json_object_foreach( _other, key, value )
         {
-            json_t * j = json_object_get( object, key );
+            json_t * j = ::json_object_get( _object, key );
 
             if( json_is_object( j ) && json_is_object( value ) && _recursive == true )
             {
@@ -176,7 +196,7 @@ namespace jpp
             }
             else
             {
-                if( json_object_set_nocheck( object, key, value ) == -1 )
+                if( ::json_object_set_nocheck( _object, key, value ) == -1 )
                 {
                     return -1;
                 }
@@ -186,14 +206,14 @@ namespace jpp
         return 0;
     }
     //////////////////////////////////////////////////////////////////////////
-    static int __json_object_update_with_array( json_t * object, json_t * other, jpp_bool_t _recursive )
+    static int __json_object_update_with_array( json_t * _object, json_t * _other, jpp_bool_t _recursive )
     {
         const char * key;
         json_t * value;
 
-        json_object_foreach( other, key, value )
+        json_object_foreach( _other, key, value )
         {
-            json_t * j = json_object_get( object, key );
+            json_t * j = ::json_object_get( _object, key );
 
             if( json_is_object( j ) && json_is_object( value ) && _recursive == true )
             {
@@ -204,14 +224,14 @@ namespace jpp
             }
             else if( json_is_array( j ) && json_is_array( value ) )
             {
-                if( json_array_extend( j, value ) == -1 )
+                if( ::json_array_extend( j, value ) == -1 )
                 {
                     return -1;
                 }
             }
             else
             {
-                if( json_object_set_nocheck( object, key, value ) == -1 )
+                if( ::json_object_set_nocheck( _object, key, value ) == -1 )
                 {
                     return -1;
                 }
@@ -227,10 +247,10 @@ namespace jpp
 
         if( j == nullptr )
         {
-            return make_object();
+            return jpp::make_object();
         }
 
-        json_t * jcopy = json_deep_copy( j );
+        json_t * jcopy = ::json_deep_copy( j );
 
         return jpp::object( jcopy, jpp::detail::borrowed );
     }
@@ -241,10 +261,10 @@ namespace jpp
 
         if( j == nullptr )
         {
-            return make_object();
+            return jpp::make_object();
         }
 
-        json_t * jcopy = json_deep_copy( j );
+        json_t * jcopy = ::json_deep_copy( j );
 
         return jpp::array( jcopy, jpp::detail::borrowed );
     }
@@ -256,7 +276,7 @@ namespace jpp
 
         if( _copy == true )
         {
-            jm = json_deep_copy( jm );
+            jm = ::json_deep_copy( jm );
         }
 
         switch( _mode )
@@ -287,14 +307,14 @@ namespace jpp
             }break;
         case merge_mode_e::existing:
             {
-                if( json_object_update_existing( jb, jm ) == -1 )
+                if( ::json_object_update_existing( jb, jm ) == -1 )
                 {
                     return false;
                 }
             }break;
         case merge_mode_e::missing:
             {
-                if( json_object_update_missing( jb, jm ) == -1 )
+                if( ::json_object_update_missing( jb, jm ) == -1 )
                 {
                     return false;
                 }
@@ -306,7 +326,7 @@ namespace jpp
 
         if( _copy == true )
         {
-            json_decref( jm );
+            ::json_decref( jm );
         }
 
         return true;

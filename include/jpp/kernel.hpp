@@ -16,10 +16,10 @@ namespace jpp
     const char * get_version();
 
     jpp::object make_invalid();
-    jpp::object make_string( const char * value );
-    jpp::object make_stringn( const char * value, jpp_size_t len );
-    jpp::object make_integer( jpp_int64_t value );
-    jpp::object make_real( jpp_double_t value );
+    jpp::object make_string( const char * _value );
+    jpp::object make_stringn( const char * _value, jpp_size_t _len );
+    jpp::object make_integer( jpp_int64_t _value );
+    jpp::object make_real( jpp_double_t _value );
     jpp::object make_true();
     jpp::object make_false();
     jpp::object make_boolean( jpp_bool_t _value );

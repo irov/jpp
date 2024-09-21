@@ -4,24 +4,26 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 if(POLICY CMP0025)
   cmake_policy(SET CMP0025 NEW)
-endif ()
+endif()
 
-OPTION(JPP_EXTERNAL_BUILD "JPP_EXTERNAL_BUILD"  OFF)
+OPTION(JPP_EXTERNAL_BUILD "JPP_EXTERNAL_BUILD" OFF)
 OPTION(JPP_TEST "JPP_TEST" ON)
 OPTION(JPP_INSTALL "JPP_INSTALL" OFF)
 
 set(JPP_JANSSON_INCLUDE_PATH "" CACHE STRING "JPP_JANSSON_INCLUDE_PATH")
 
-if (MSVC)
+if(MSVC)
    option(JPP_STATIC_CRT "Link the static CRT libraries" ON)
-endif ()
+endif()
 
 PROJECT(jpp)
 
 IF(NOT JPP_EXTERNAL_BUILD)
     set(CMAKE_CXX_STANDARD 17)
 
-    add_definitions(-D_CRT_SECURE_NO_DEPRECATE -D_SCL_SECURE_NO_WARNINGS)
+    IF(WIN32)
+        add_definitions(-D_CRT_SECURE_NO_DEPRECATE -D_SCL_SECURE_NO_WARNINGS)
+    ENDIF()
     
     if(WIN32)
         if(MINGW)
@@ -56,10 +58,10 @@ IF(NOT JPP_EXTERNAL_BUILD)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4706")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4710") #function not inlined 
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4738") #storing 32-bit float result in memory, possible loss of performance
-        if (JPP_STATIC_CRT)
+        if(JPP_STATIC_CRT)
             set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
             set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
-        endif()        
+        endif()
     endif()
 ENDIF()
 
@@ -67,10 +69,6 @@ IF(NOT JPP_EXTERNAL_BUILD)
     include(cmake/jansson_download.cmake)
     
     set(JPP_JANSSON_INCLUDE_PATH ${JANSSON_INCLUDE_DIR} CACHE STRING "JPP_JANSSON_INCLUDE_PATH" FORCE)
-    
-    IF(WIN32)
-        add_definitions(-D_CRT_SECURE_NO_WARNINGS)
-    ENDIF()    
 ENDIF()
 
 set(PUBLIC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include/jpp)
@@ -87,11 +85,11 @@ if(JPP_JANSSON_INCLUDE_PATH)
 endif()
 
 ADD_LIBRARY(${PROJECT_NAME} STATIC 
-	${files_public_headers} 
-	${files_private_headers} 
-	${files_private_sources} 
-	)
-    
+    ${files_public_headers} 
+    ${files_private_headers} 
+    ${files_private_sources} 
+    )
+
 IF(NOT JPP_EXTERNAL_BUILD)
     add_dependencies(${PROJECT_NAME} jansson_download)
 ENDIF()
