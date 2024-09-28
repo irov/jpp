@@ -224,6 +224,11 @@ namespace jpp
     template<class T>
     void cast_object_internal::operator()( json_t * _j, T * const _value ) const
     {
+        if( _j == nullptr )
+        {
+            return;
+        }
+
         jpp::cast_object_extern<T>()(jpp::object( _j ), _value);
     }
     //////////////////////////////////////////////////////////////////////////
