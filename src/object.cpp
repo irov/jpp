@@ -45,7 +45,9 @@ namespace jpp
 
         jpp::object new_o = _creator();
 
-        this->set( _key, new_o );
+        json_t* j = new_o.ptr();
+
+        this->set_( _key, j );
 
         return new_o;
     }
