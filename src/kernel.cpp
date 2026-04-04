@@ -95,9 +95,9 @@ namespace jpp
         ::json_object_seed( _seed );
     }
     //////////////////////////////////////////////////////////////////////////
-    void set_alloc_funcs( jpp_malloc_t _malloc, jpp_free_t _free )
+    void set_alloc_funcs( jpp_malloc_t _malloc, jpp_realloc_t _realloc, jpp_free_t _free )
     {
-        ::json_set_alloc_funcs( _malloc, _free );
+        ::json_set_alloc_funcs2( _malloc, _realloc, _free );
     }
     //////////////////////////////////////////////////////////////////////////
     jpp::object make_object()

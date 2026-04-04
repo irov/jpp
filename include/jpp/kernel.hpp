@@ -10,6 +10,7 @@ namespace jpp
     typedef jpp_size_t( *jpp_load_callback_t )(void * _buffer, jpp_size_t _size, void * _ud);
     typedef int (*jpp_dump_callback_t)(const char * _buffer, jpp_size_t _size, void * _ud);
     typedef void * (*jpp_malloc_t)(jpp_size_t);
+    typedef void * (*jpp_realloc_t)(void *, jpp_size_t);
     typedef void (*jpp_free_t)(void *);
     typedef void (*jpp_error_t)(jpp_int32_t _line, jpp_int32_t _column, jpp_int32_t _position, const char * _source, const char * _text, void * _ud);
 
@@ -40,7 +41,7 @@ namespace jpp
     const char * get_string_and_size( const jpp::object & _obj, jpp_size_t * const _size );
 
     void set_object_seed( jpp_size_t _seed );
-    void set_alloc_funcs( jpp_malloc_t _malloc, jpp_free_t _free );
+    void set_alloc_funcs( jpp_malloc_t _malloc, jpp_realloc_t _realloc, jpp_free_t _free );
 
     enum ejpp_load_mode
     {
