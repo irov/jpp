@@ -2,8 +2,11 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <utility>
 
 static size_t musage = 0;
+
+static void my_jpp_free( void* _free );
 
 //////////////////////////////////////////////////////////////////////////
 static size_t my_jpp_load_callback( void* _buffer, jpp::jpp_size_t _size, void* _ud )
@@ -17,7 +20,17 @@ static size_t my_jpp_load_callback( void* _buffer, jpp::jpp_size_t _size, void* 
 //////////////////////////////////////////////////////////////////////////
 static void* my_jpp_malloc( jpp::jpp_size_t _size )
 {
+    if( _size == 0 )
+    {
+        _size = 1;
+    }
+
     void* ptr = malloc( _size + sizeof( size_t ) );
+
+    if( ptr == nullptr )
+    {
+        return nullptr;
+    }
 
     *(size_t*)ptr = _size;
 
@@ -26,8 +39,48 @@ static void* my_jpp_malloc( jpp::jpp_size_t _size )
     return (size_t*)ptr + 1;
 }
 //////////////////////////////////////////////////////////////////////////
+static void* my_jpp_realloc( void* _ptr, jpp::jpp_size_t _size )
+{
+    if( _ptr == nullptr )
+    {
+        return my_jpp_malloc( _size );
+    }
+
+    if( _size == 0 )
+    {
+        my_jpp_free( _ptr );
+
+        return nullptr;
+    }
+
+    size_t* ptr = (size_t*)_ptr - 1;
+
+    size_t old_size = *ptr;
+
+    size_t* new_ptr = (size_t*)realloc( ptr, _size + sizeof( size_t ) );
+
+    if( new_ptr == nullptr )
+    {
+        return nullptr;
+    }
+
+    ptr = new_ptr;
+
+    *ptr = _size;
+
+    musage -= old_size;
+    musage += _size;
+
+    return ptr + 1;
+}
+//////////////////////////////////////////////////////////////////////////
 static void my_jpp_free( void* _free )
 {
+    if( _free == nullptr )
+    {
+        return;
+    }
+
     size_t* ptr = (size_t*)_free - 1;
 
     size_t size = *ptr;
@@ -108,7 +161,7 @@ void jpp_printf( const jpp::object& _obj, uint32_t _ident = 0 )
 //////////////////////////////////////////////////////////////////////////
 jpp::jpp_bool_t jpp_test( const char * _filepath )
 {
-    jpp::set_alloc_funcs( &my_jpp_malloc, &my_jpp_free );
+    jpp::set_alloc_funcs( &my_jpp_malloc, &my_jpp_realloc, &my_jpp_free );
 
     FILE* f = fopen( _filepath, "rb" );
 
@@ -131,19 +184,76 @@ jpp::jpp_bool_t jpp_test( const char * _filepath )
     return true;
 }
 //////////////////////////////////////////////////////////////////////////
+static jpp::jpp_bool_t jpp_test_move_assignment()
+{
+    size_t begin_musage = musage;
+
+    {
+        jpp::object a = jpp::make_object();
+        jpp::object b = jpp::make_object();
+
+        a = std::move( b );
+    }
+
+    return musage == begin_musage;
+}
+//////////////////////////////////////////////////////////////////////////
+static jpp::jpp_bool_t jpp_test_copy_invalid_array()
+{
+    size_t begin_musage = musage;
+
+    {
+        jpp::array a;
+        jpp::array copy = jpp::copy( a );
+
+        if( copy.is_type_array() == false )
+        {
+            return false;
+        }
+    }
+
+    return musage == begin_musage;
+}
+//////////////////////////////////////////////////////////////////////////
+static jpp::jpp_bool_t jpp_test_merge_copy_fail_cleanup()
+{
+    size_t begin_musage = musage;
+
+    {
+        jpp::object invalid = jpp::make_invalid();
+        jpp::object merge = jpp::make_object();
+
+        if( jpp::merge( invalid, merge, true, false, jpp::merge_mode_e::update ) == true )
+        {
+            return false;
+        }
+    }
+
+    return musage == begin_musage;
+}
+//////////////////////////////////////////////////////////////////////////
+static jpp::jpp_bool_t jpp_test_compare_non_string()
+{
+    jpp::object value = jpp::make_integer( 1 );
+
+    const char * text = "1";
+
+    return (value == text) == false;
+}
+//////////////////////////////////////////////////////////////////////////
 int main(int argc, char* argv[])
 {
     char full_example_file_path[256];
     if( argc > 1 )
     {
-        sprintf( full_example_file_path, "%s/%s"
+        snprintf( full_example_file_path, sizeof( full_example_file_path ), "%s/%s"
             , argv[1]
             , "example.json"
         );
     }
     else
     {
-        sprintf( full_example_file_path, "%s"
+        snprintf( full_example_file_path, sizeof( full_example_file_path ), "%s"
             , "example.json"
         );
     }
@@ -153,6 +263,31 @@ int main(int argc, char* argv[])
         return EXIT_FAILURE;
     }
     
+    if( musage != 0 )
+    {
+        return EXIT_FAILURE;
+    }
+
+    if( jpp_test_move_assignment() == false )
+    {
+        return EXIT_FAILURE;
+    }
+
+    if( jpp_test_copy_invalid_array() == false )
+    {
+        return EXIT_FAILURE;
+    }
+
+    if( jpp_test_merge_copy_fail_cleanup() == false )
+    {
+        return EXIT_FAILURE;
+    }
+
+    if( jpp_test_compare_non_string() == false )
+    {
+        return EXIT_FAILURE;
+    }
+
     if( musage != 0 )
     {
         return EXIT_FAILURE;

@@ -94,6 +94,16 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     const jpp::base & base::operator = ( jpp::base && _base )
     {
+        if( this == &_base )
+        {
+            return *this;
+        }
+
+        if( m_object != nullptr )
+        {
+            json_decref( m_object );
+        }
+
         m_object = _base.ptr();
 
         _base.reset();

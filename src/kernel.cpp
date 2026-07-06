@@ -261,7 +261,7 @@ namespace jpp
 
         if( j == nullptr )
         {
-            return jpp::make_object();
+            return jpp::make_array();
         }
 
         json_t * jcopy = ::json_deep_copy( j );
@@ -279,48 +279,52 @@ namespace jpp
             jm = ::json_deep_copy( jm );
         }
 
+        jpp_bool_t successful = true;
+
         switch( _mode )
         {
         case merge_mode_e::update:
             {
                 if( !json_is_object( jb ) || !json_is_object( jm ) )
                 {
-                    return false;
+                    successful = false;
+                    break;
                 }
 
                 if( __json_object_update( jb, jm, _recursive ) == -1 )
                 {
-                    return false;
+                    successful = false;
                 }
             }break;
         case merge_mode_e::update_with_array:
             {
                 if( !json_is_object( jb ) || !json_is_object( jm ) )
                 {
-                    return false;
+                    successful = false;
+                    break;
                 }
 
                 if( __json_object_update_with_array( jb, jm, _recursive ) == -1 )
                 {
-                    return false;
+                    successful = false;
                 }
             }break;
         case merge_mode_e::existing:
             {
                 if( ::json_object_update_existing( jb, jm ) == -1 )
                 {
-                    return false;
+                    successful = false;
                 }
             }break;
         case merge_mode_e::missing:
             {
                 if( ::json_object_update_missing( jb, jm ) == -1 )
                 {
-                    return false;
+                    successful = false;
                 }
             }break;
         default:
-            return false;
+            successful = false;
             break;
         }
 
@@ -329,7 +333,7 @@ namespace jpp
             ::json_decref( jm );
         }
 
-        return true;
+        return successful;
     }
     //////////////////////////////////////////////////////////////////////////
     static jpp_bool_t __json_array_once( json_t * j );

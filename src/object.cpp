@@ -24,8 +24,12 @@ namespace jpp
     //////////////////////////////////////////////////////////////////////////
     jpp_bool_t object::operator == ( const char * _value ) const
     {
-        const char * value;
-        jpp::cast_object_internal()(m_object, &value);
+        if( _value == nullptr || json_is_string( m_object ) == false )
+        {
+            return false;
+        }
+
+        const char * value = json_string_value( m_object );
 
         if( JPP_STRCMP( value, _value ) != 0 )
         {
