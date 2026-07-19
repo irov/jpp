@@ -36,6 +36,7 @@ namespace jpp
 
         object_iterator_pair operator -> () const;
         object_iterator_pair operator * () const;
+        jpp_size_t key_size() const;
 
     protected:
         json_t * m_object;

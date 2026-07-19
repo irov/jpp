@@ -159,6 +159,16 @@ namespace jpp
         json_object_set_new( m_object, _key, _value );
     }
     //////////////////////////////////////////////////////////////////////////
+    jpp_bool_t object::setn_( const char * _key, size_type _key_size, json_t * _value )
+    {
+        JPP_ASSERT( m_object != nullptr );
+        JPP_ASSERT( json_is_object( m_object ) == true );
+
+        int result = json_object_setn_new( m_object, _key, _key_size, _value );
+
+        return result == 0;
+    }
+    //////////////////////////////////////////////////////////////////////////
     json_t * object::get_( const char * _key ) const
     {
         JPP_ASSERT( m_object != nullptr );

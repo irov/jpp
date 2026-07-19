@@ -69,6 +69,13 @@ namespace jpp
         return {it_key, jpp::object( it_value )};
     }
     //////////////////////////////////////////////////////////////////////////
+    jpp_size_t object_iterator::key_size() const
+    {
+        size_t key_size = json_object_iter_key_len( m_iter );
+
+        return (jpp_size_t)key_size;
+    }
+    //////////////////////////////////////////////////////////////////////////
     jpp::object_iterator begin( const jpp::object & _object )
     {
         return jpp::object_iterator( _object.ptr() );

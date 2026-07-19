@@ -125,6 +125,14 @@ namespace jpp
             this->set( key_str, _value );
         }
 
+        template<class T>
+        jpp_bool_t setn( const char * _key, size_type _key_size, const T & _value )
+        {
+            json_t * j = jpp::cast_object_internal()(_value);
+
+            return this->setn_( _key, _key_size, j );
+        }
+
     public:
         template<class T>
         jpp::object emplace( const char * _key, const T & _value )
@@ -210,6 +218,7 @@ namespace jpp
 
     protected:
         void set_( const char * _key, json_t * _value );
+        jpp_bool_t setn_( const char * _key, size_type _key_size, json_t * _value );
         json_t * get_( const char * _key ) const;
     };
     //////////////////////////////////////////////////////////////////////////
