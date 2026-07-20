@@ -92,8 +92,9 @@ static void my_jpp_free( void* _free )
     free( ptr );
 }
 //////////////////////////////////////////////////////////////////////////
-static void my_jpp_error( int32_t _line, int32_t _column, int32_t _position, const char * _source, const char * _text, void* _ud )
+static void my_jpp_error( int32_t _line, int32_t _column, int32_t _position, const char * _source, const char * _text, jpp::load_error_code_e _code, void* _ud )
 {
+    JPP_UNUSED( _code );
     JPP_UNUSED( _ud );
 
     printf( "error: %s\nline: %d\n column: %d\nposition: %d\nsource: %s\n"
@@ -252,7 +253,7 @@ static int jpp_test_dump_callback( const char * _buffer, jpp::jpp_size_t _size, 
     return 0;
 }
 //////////////////////////////////////////////////////////////////////////
-static void jpp_test_error_ex_callback( jpp::jpp_int32_t _line, jpp::jpp_int32_t _column, jpp::jpp_int32_t _position, const char * _source, const char * _text, jpp::load_error_code_e _code, void * _ud )
+static void jpp_test_error_callback( jpp::jpp_int32_t _line, jpp::jpp_int32_t _column, jpp::jpp_int32_t _position, const char * _source, const char * _text, jpp::load_error_code_e _code, void * _ud )
 {
     (void)_line;
     (void)_column;
@@ -268,7 +269,7 @@ static jpp::jpp_bool_t jpp_test_load_error_code()
 {
     const char value[] = "9223372036854775808";
     jpp::load_error_code_e code = jpp::load_error_code_e::invalid;
-    jpp::object result = jpp::load_ex( value, sizeof( value ) - 1, jpp::JPP_LOAD_MODE_DECODE_ANY, &jpp_test_error_ex_callback, &code );
+    jpp::object result = jpp::load( value, sizeof( value ) - 1, jpp::JPP_LOAD_MODE_DECODE_ANY, &jpp_test_error_callback, &code );
 
     return result.invalid() == true && code == jpp::load_error_code_e::numeric_overflow;
 }
@@ -288,25 +289,25 @@ static jpp::jpp_bool_t jpp_test_dump_modes()
     }
 
     std::string indent_zero;
-    if( jpp::dump_indent( root, 0, &jpp_test_dump_callback, &indent_zero ) == false || indent_zero != "{\n\"items\": [\n1,\n2\n]\n}" )
+    if( jpp::dump( root, 0, &jpp_test_dump_callback, &indent_zero ) == false || indent_zero != "{\n\"items\": [\n1,\n2\n]\n}" )
     {
         return false;
     }
 
     std::string indent_one;
-    if( jpp::dump_indent( root, 1, &jpp_test_dump_callback, &indent_one ) == false || indent_one != "{\n \"items\": [\n  1,\n  2\n ]\n}" )
+    if( jpp::dump( root, 1, &jpp_test_dump_callback, &indent_one ) == false || indent_one != "{\n \"items\": [\n  1,\n  2\n ]\n}" )
     {
         return false;
     }
 
     std::string indent_two;
-    if( jpp::dump_indent( root, 2, &jpp_test_dump_callback, &indent_two ) == false || indent_two != "{\n  \"items\": [\n    1,\n    2\n  ]\n}" )
+    if( jpp::dump( root, 2, &jpp_test_dump_callback, &indent_two ) == false || indent_two != "{\n  \"items\": [\n    1,\n    2\n  ]\n}" )
     {
         return false;
     }
 
     std::string indent_large;
-    if( jpp::dump_indent( root, 40, &jpp_test_dump_callback, &indent_large ) == false )
+    if( jpp::dump( root, 40, &jpp_test_dump_callback, &indent_large ) == false )
     {
         return false;
     }
@@ -324,7 +325,7 @@ static jpp::jpp_bool_t jpp_test_dump_modes()
     }
 
     std::string scalar_pretty;
-    if( jpp::dump_indent( scalar, 8, &jpp_test_dump_callback, &scalar_pretty ) == false || scalar_pretty != "42" )
+    if( jpp::dump( scalar, 8, &jpp_test_dump_callback, &scalar_pretty ) == false || scalar_pretty != "42" )
     {
         return false;
     }
@@ -352,10 +353,11 @@ struct jpp_test_load_error_t
     std::string message;
 };
 //////////////////////////////////////////////////////////////////////////
-static void jpp_test_load_error( int32_t _line, int32_t _column, int32_t _position, const char * _source, const char * _text, void * _ud )
+static void jpp_test_load_error( int32_t _line, int32_t _column, int32_t _position, const char * _source, const char * _text, jpp::load_error_code_e _code, void * _ud )
 {
     JPP_UNUSED( _position );
     JPP_UNUSED( _source );
+    JPP_UNUSED( _code );
 
     jpp_test_load_error_t * error = static_cast<jpp_test_load_error_t *>(_ud);
     error->line = _line;

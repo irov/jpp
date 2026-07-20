@@ -129,24 +129,6 @@ namespace jpp
         {
             if( _error != nullptr )
             {
-                (*_error)(er.line, er.column, er.position, er.source, er.text, _ud);
-            }
-
-            return jpp::object( detail::invalid );
-        }
-
-        return jpp::object( jroot, detail::borrowed );
-    }
-    //////////////////////////////////////////////////////////////////////////
-    jpp::object load_ex( const void * _buffer, jpp_size_t _size, jpp_uint32_t _mode, jpp_error_ex_t _error, void * _ud )
-    {
-        json_error_t er;
-        json_t * jroot = ::json_loadb( (const char *)_buffer, _size, _mode, &er );
-
-        if( jroot == nullptr )
-        {
-            if( _error != nullptr )
-            {
                 jpp::load_error_code_e error_code = ::json_error_code( &er ) == json_error_numeric_overflow
                     ? jpp::load_error_code_e::numeric_overflow
                     : jpp::load_error_code_e::invalid;
@@ -169,7 +151,11 @@ namespace jpp
         {
             if( _error != nullptr )
             {
-                (*_error)(er.line, er.column, er.position, er.source, er.text, _ud);
+                jpp::load_error_code_e error_code = ::json_error_code( &er ) == json_error_numeric_overflow
+                    ? jpp::load_error_code_e::numeric_overflow
+                    : jpp::load_error_code_e::invalid;
+
+                (*_error)(er.line, er.column, er.position, er.source, er.text, error_code, _ud);
             }
 
             return jpp::object( detail::invalid );
@@ -178,15 +164,10 @@ namespace jpp
         return jpp::object( jroot, detail::borrowed );
     }
     //////////////////////////////////////////////////////////////////////////
-    jpp_bool_t dump( const jpp::object & _obj, jpp_dump_callback_t _callback, void * _ud )
-    {
-        return jpp::dump_indent( _obj, 2, _callback, _ud );
-    }
-    //////////////////////////////////////////////////////////////////////////
     namespace Detail
     {
         //////////////////////////////////////////////////////////////////////////
-        struct dump_indent_state
+        struct dump_state
         {
             jpp_dump_callback_t callback;
             void * user_data;
@@ -195,7 +176,7 @@ namespace jpp
             jpp_bool_t line_start;
         };
         //////////////////////////////////////////////////////////////////////////
-        static int __dump_indent_emit( dump_indent_state * _state, const char * _buffer, jpp_size_t _size )
+        static int __dump_emit( dump_state * _state, const char * _buffer, jpp_size_t _size )
         {
             if( _size == 0 )
             {
@@ -205,7 +186,7 @@ namespace jpp
             return (*_state->callback)( _buffer, _size, _state->user_data );
         }
         //////////////////////////////////////////////////////////////////////////
-        static int __dump_indent_emit_spaces( dump_indent_state * _state, jpp_size_t _count )
+        static int __dump_emit_spaces( dump_state * _state, jpp_size_t _count )
         {
             static const char spaces[] = "                                                                ";
 
@@ -213,7 +194,7 @@ namespace jpp
             {
                 jpp_size_t chunk_size = _count < sizeof( spaces ) - 1 ? _count : sizeof( spaces ) - 1;
 
-                if( __dump_indent_emit( _state, spaces, chunk_size ) != 0 )
+                if( __dump_emit( _state, spaces, chunk_size ) != 0 )
                 {
                     return -1;
                 }
@@ -224,9 +205,9 @@ namespace jpp
             return 0;
         }
         //////////////////////////////////////////////////////////////////////////
-        static int __dump_indent_callback( const char * _buffer, jpp_size_t _size, void * _ud )
+        static int __dump_callback( const char * _buffer, jpp_size_t _size, void * _ud )
         {
-            dump_indent_state * state = static_cast<dump_indent_state *>(_ud);
+            dump_state * state = static_cast<dump_state *>(_ud);
             jpp_size_t position = 0;
 
             while( position != _size )
@@ -246,7 +227,7 @@ namespace jpp
 
                     for( jpp_size_t index = 0; index != state->pending_spaces; ++index )
                     {
-                        if( __dump_indent_emit_spaces( state, state->indent ) != 0 )
+                        if( __dump_emit_spaces( state, state->indent ) != 0 )
                         {
                             return -1;
                         }
@@ -260,13 +241,13 @@ namespace jpp
 
                 if( newline_memory == nullptr )
                 {
-                    return __dump_indent_emit( state, _buffer + position, _size - position );
+                    return __dump_emit( state, _buffer + position, _size - position );
                 }
 
                 const char * newline = static_cast<const char *>(newline_memory);
                 jpp_size_t line_size = (jpp_size_t)(newline - (_buffer + position)) + 1;
 
-                if( __dump_indent_emit( state, _buffer + position, line_size ) != 0 )
+                if( __dump_emit( state, _buffer + position, line_size ) != 0 )
                 {
                     return -1;
                 }
@@ -280,16 +261,16 @@ namespace jpp
         //////////////////////////////////////////////////////////////////////////
     }
     //////////////////////////////////////////////////////////////////////////
-    jpp_bool_t dump_indent( const jpp::object & _obj, jpp_size_t _indent, jpp_dump_callback_t _callback, void * _ud )
+    jpp_bool_t dump( const jpp::object & _obj, jpp_size_t _indent, jpp_dump_callback_t _callback, void * _ud )
     {
-        Detail::dump_indent_state state;
+        Detail::dump_state state;
         state.callback = _callback;
         state.user_data = _ud;
         state.indent = _indent;
         state.pending_spaces = 0;
         state.line_start = true;
 
-        int writebytes = ::json_dump_callback( _obj.ptr(), &Detail::__dump_indent_callback, &state, JSON_INDENT( 1 ) | JSON_ENCODE_ANY );
+        int writebytes = ::json_dump_callback( _obj.ptr(), &Detail::__dump_callback, &state, JSON_INDENT( 1 ) | JSON_ENCODE_ANY );
 
         if( writebytes == -1 )
         {

@@ -12,7 +12,6 @@ namespace jpp
     typedef void * (*jpp_malloc_t)(jpp_size_t);
     typedef void * (*jpp_realloc_t)(void *, jpp_size_t);
     typedef void (*jpp_free_t)(void *);
-    typedef void (*jpp_error_t)(jpp_int32_t _line, jpp_int32_t _column, jpp_int32_t _position, const char * _source, const char * _text, void * _ud);
 
     enum class load_error_code_e
     {
@@ -20,7 +19,7 @@ namespace jpp
         numeric_overflow
     };
 
-    typedef void (*jpp_error_ex_t)(jpp_int32_t _line, jpp_int32_t _column, jpp_int32_t _position, const char * _source, const char * _text, load_error_code_e _code, void * _ud);
+    typedef void (*jpp_error_t)(jpp_int32_t _line, jpp_int32_t _column, jpp_int32_t _position, const char * _source, const char * _text, load_error_code_e _code, void * _ud);
 
     const char * get_version();
 
@@ -62,10 +61,8 @@ namespace jpp
     };
 
     jpp::object load( const void * _buffer, jpp_size_t _size, jpp_uint32_t _mode, jpp_error_t _err, void * _ud );
-    jpp::object load_ex( const void * _buffer, jpp_size_t _size, jpp_uint32_t _mode, jpp_error_ex_t _err, void * _ud );
     jpp::object load( jpp_load_callback_t _callback, jpp_uint32_t _mode, jpp_error_t _err, void * _ud );
-    jpp_bool_t dump( const jpp::object & _obj, jpp_dump_callback_t _callback, void * _ud );
-    jpp_bool_t dump_indent( const jpp::object & _obj, jpp_size_t _indent, jpp_dump_callback_t _callback, void * _ud );
+    jpp_bool_t dump( const jpp::object & _obj, jpp_size_t _indent, jpp_dump_callback_t _callback, void * _ud );
     jpp_bool_t dump_compact( const jpp::object & _obj, jpp_dump_callback_t _callback, void * _ud );
 
     enum class merge_mode_e
